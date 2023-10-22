@@ -1,58 +1,71 @@
-# create-svelte
+# Mode Watcher
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Simple utilities to manage light & dark mode in your SvelteKit app.
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+npm install mode-watcher
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Inside your SvelteKit app, import the `ModeWatcher` component and use it in your root layout:
 
-```bash
-npm run dev
+```svelte
+<script lang="ts">
+	import { ModeWatcher } from 'mode-watcher';
+</script>
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+<ModeWatcher />
+<slot />
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `dark` class to the `html` element.
 
-## Building
+## API
 
-To build your library:
+### toggleMode
 
-```bash
-npm run package
+A function that toggles the current mode.
+
+```svelte
+<script lang="ts">
+	import { toggleMode } from 'mode-watcher';
+</script>
+
+<button on:click={toggleMode}>Toggle Mode</button>
 ```
 
-To create a production version of your showcase app:
+### setMode
 
-```bash
-npm run build
+A function that sets the current mode. It accepts a string with the value `light` or `dark`.
+
+```svelte
+<script lang="ts">
+	import { setMode } from 'mode-watcher';
+</script>
+
+<button on:click={() => setMode('light')}>Set Light Mode</button>
+<button on:click={() => setMode('dark')}>Set Dark Mode</button>
 ```
 
-You can preview the production build with `npm run preview`.
+### mode
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+A readable store that contains the current mode. It can be `light` or `dark`.
 
-## Publishing
+```svelte
+<script lang="ts">
+	import { setMode, mode } from 'mode-watcher';
 
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
+	function handleModeChange() {
+		if ($mode === 'light') {
+			setMode('dark');
+		} else {
+			setMode('light');
+		}
+	}
+</script>
 
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
+<button on:click={handleModeChange}>{$mode}</button>
 ```
