@@ -13,7 +13,9 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:integration": "playwright test",
-		"test:unit": "vitest"
+		"test:unit": "vitest",
+		"release": "changeset publish",
+		"changeset": "changeset"
 	},
 	"exports": {
 		".": {
