@@ -50,12 +50,14 @@ function setModeUserPrefers(value: boolean | undefined): void {
 
 /** Set the current mode */
 export function setModeCurrent(value: boolean): void {
-	const htmlElClasses = document.documentElement.classList;
+	const htmlEl = document.documentElement;
 	const classDark = 'dark';
 	if (value === true) {
-		htmlElClasses.remove(classDark);
+		htmlEl.classList.remove(classDark);
+		htmlEl.style.colorScheme = 'light';
 	} else {
-		htmlElClasses.add(classDark);
+		htmlEl.classList.add(classDark);
+		htmlEl.style.colorScheme = 'dark';
 	}
 	modeCurrent.set(value);
 }
@@ -66,16 +68,18 @@ export function setModeCurrent(value: boolean): void {
 
 /** Set the visible light/dark mode on page load */
 export function setInitialClassState() {
-	const htmlElClasses = document.documentElement.classList;
+	const htmlEl = document.documentElement;
 
 	const condLocalStorageUserPrefs = localStorage.getItem('modeUserPrefers') === 'false';
 	const condLocalStorageUserPrefsExist = !('modeUserPrefers' in localStorage);
 	const condMatchMedia = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 	if (condLocalStorageUserPrefs || (condLocalStorageUserPrefsExist && condMatchMedia)) {
-		htmlElClasses.add('dark');
+		htmlEl.classList.add('dark');
+		htmlEl.style.colorScheme = 'dark';
 	} else {
-		htmlElClasses.remove('dark');
+		htmlEl.classList.remove('dark');
+		htmlEl.style.colorScheme = 'light';
 	}
 }
 
@@ -87,12 +91,14 @@ export function setInitialClassState() {
 export function autoModeWatcher(): void {
 	const mql = window.matchMedia('(prefers-color-scheme: dark)');
 	function setMode(value: boolean) {
-		const htmlElClasses = document.documentElement.classList;
+		const htmlEl = document.documentElement;
 		const classDark = 'dark';
 		if (value === true) {
-			htmlElClasses.remove(classDark);
+			htmlEl.classList.remove(classDark);
+			htmlEl.style.colorScheme = 'light';
 		} else {
-			htmlElClasses.add(classDark);
+			htmlEl.classList.add(classDark);
+			htmlEl.style.colorScheme = 'dark';
 		}
 	}
 	setMode(mql.matches);
