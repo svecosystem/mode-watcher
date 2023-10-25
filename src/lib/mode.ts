@@ -131,3 +131,15 @@ export function setMode(mode: 'light' | 'dark'): void {
 		return next;
 	});
 }
+
+/**
+ * Reset the mode to OS preference
+ */
+export function resetMode(): void {
+	modeCurrent.update(() => {
+		setModeUserPrefers(undefined);
+		const next = getModeOsPrefers();
+		setModeCurrent(next);
+		return next;
+	});
+}

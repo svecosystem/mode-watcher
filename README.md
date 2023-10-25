@@ -50,6 +50,18 @@ A function that sets the current mode. It accepts a string with the value `light
 <button on:click={() => setMode('dark')}>Set Dark Mode</button>
 ```
 
+### resetMode
+
+A function that resets the mode to system preferences.
+
+```svelte
+<script lang="ts">
+	import { resetMode } from 'mode-watcher';
+</script>
+
+<button on:click={() => resetMode()}>System</button>
+```
+
 ### mode
 
 A readable store that contains the current mode. It can be `light` or `dark`.
