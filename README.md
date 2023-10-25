@@ -52,7 +52,7 @@ A function that sets the current mode. It accepts a string with the value `light
 
 ### resetMode
 
-A function that reset the mode to system preferences.
+A function that resets the mode to system preferences.
 
 ```svelte
 <script lang="ts">
