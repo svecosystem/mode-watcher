@@ -1,42 +1,30 @@
 // Modified version of the light switch by: https://skeleton.dev
 
-import { derived, get } from 'svelte/store';
 import { persisted } from 'svelte-persisted-store';
+import { readonly } from 'svelte/store';
 
 /**
  * Stores
- * ----
- * TRUE: Light mode | FALSE: Dark mode
  */
 
-const modeOsPrefers = persisted<boolean>('modeOsPrefers', false);
-const modeUserPrefers = persisted<boolean | undefined>('modeUserPrefers', undefined);
-const modeCurrent = persisted<boolean>('modeCurrent', false);
+const systemPrefersMode = persisted<'dark' | 'light'>('systemPrefersMode', 'dark');
+const userPrefersMode = persisted<'dark' | 'light' | undefined>('userPrefersMode', undefined);
+const activeMode = persisted<'dark' | 'light'>('mode', 'dark');
 
-/** Derived store with either `"light"` or `"dark"` depending on the current mode */
-export const mode = derived(modeCurrent, ($modeCurrent) => ($modeCurrent ? 'light' : 'dark'));
+/** Readonly store with either `"light"` or `"dark"` depending on the active mode */
+export const mode = readonly(activeMode);
 
 /**
  * Getters
  */
 
-/** Get the OS preference */
-export function getModeOsPrefers(): boolean {
-	const prefersLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
-	modeOsPrefers.set(prefersLightMode);
+/** Get the operating system preference */
+export function getSystemPrefersMode(): 'dark' | 'light' {
+	const prefersLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+		? 'light'
+		: 'dark';
+	systemPrefersMode.set(prefersLightMode);
 	return prefersLightMode;
-}
-
-/** Get the User preference */
-function getModeUserPrefers(): boolean | undefined {
-	return get(modeUserPrefers);
-}
-
-/** Get the automatic preference */
-export function getModeAutoPrefers(): boolean {
-	const os = getModeOsPrefers();
-	const user = getModeUserPrefers();
-	return user !== undefined ? user : os;
 }
 
 /**
@@ -44,102 +32,83 @@ export function getModeAutoPrefers(): boolean {
  */
 
 /** Set the user preference */
-function setModeUserPrefers(value: boolean | undefined): void {
-	modeUserPrefers.set(value);
+function setUserPrefersMode(value: 'dark' | 'light' | undefined): void {
+	userPrefersMode.set(value);
 }
 
-/** Set the current mode */
-export function setModeCurrent(value: boolean): void {
+/** Set the active mode */
+export function setActiveMode(value: 'dark' | 'light'): void {
 	const htmlEl = document.documentElement;
-	const classDark = 'dark';
-	if (value === true) {
-		htmlEl.classList.remove(classDark);
+
+	if (value === 'light') {
+		htmlEl.classList.remove('dark');
 		htmlEl.style.colorScheme = 'light';
 	} else {
-		htmlEl.classList.add(classDark);
+		htmlEl.classList.add('dark');
 		htmlEl.style.colorScheme = 'dark';
 	}
-	modeCurrent.set(value);
+
+	activeMode.set(value);
 }
 
 /**
  * Lightswitch Utility
  */
 
-/** Set the visible light/dark mode on page load */
+/**
+ * Set light/dark class based on user/system preference
+ *
+ * Should be added to <head> to prevent FOUC
+ *
+ * This function needs to be able to be stringified and thus it cannot use other functions
+ */
 export function setInitialClassState() {
 	const htmlEl = document.documentElement;
 
-	const condLocalStorageUserPrefs = localStorage.getItem('modeUserPrefers') === 'false';
-	const condLocalStorageUserPrefsExist = !('modeUserPrefers' in localStorage);
-	const condMatchMedia = window.matchMedia('(prefers-color-scheme: dark)').matches;
+	let userPref: string | null = null;
+	try {
+		userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'null');
+	} catch {
+		// ignore JSON parsing errors
+	}
 
-	if (condLocalStorageUserPrefs || (condLocalStorageUserPrefsExist && condMatchMedia)) {
-		htmlEl.classList.add('dark');
-		htmlEl.style.colorScheme = 'dark';
-	} else {
+	const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+	if (userPref === 'light' || (userPref === null && systemPref === 'light')) {
 		htmlEl.classList.remove('dark');
 		htmlEl.style.colorScheme = 'light';
+	} else {
+		htmlEl.classList.add('dark');
+		htmlEl.style.colorScheme = 'dark';
 	}
 }
 
-/**
- * Auto Mode Watcher
- */
-
-/** Automatically set the visible light/dark updates on change */
-export function autoModeWatcher(): void {
-	const mql = window.matchMedia('(prefers-color-scheme: dark)');
-	function setMode(value: boolean) {
-		const htmlEl = document.documentElement;
-		const classDark = 'dark';
-		if (value === true) {
-			htmlEl.classList.remove(classDark);
-			htmlEl.style.colorScheme = 'light';
-		} else {
-			htmlEl.classList.add(classDark);
-			htmlEl.style.colorScheme = 'dark';
-		}
-	}
-	setMode(mql.matches);
-	mql.onchange = () => {
-		setMode(mql.matches);
-	};
-}
-
-/**
- * Toggle between light and dark mode
- */
+/** Toggle between light and dark mode */
 export function toggleMode(): void {
-	modeCurrent.update((curr) => {
-		const next = !curr;
-		setModeUserPrefers(next);
-		setModeCurrent(next);
+	activeMode.update((curr) => {
+		const next = curr === 'dark' ? 'light' : 'dark';
+		setUserPrefersMode(next);
+		setActiveMode(next);
 		return next;
 	});
 }
 
-/**
- * Set the mode to light or dark
- */
-export function setMode(mode: 'light' | 'dark'): void {
-	modeCurrent.update((curr) => {
-		const next = mode === 'light';
-		if (curr === next) return curr;
-		setModeUserPrefers(next);
-		setModeCurrent(next);
-		return next;
+/** Set the mode to light or dark */
+export function setMode(mode: 'dark' | 'light'): void {
+	activeMode.update((curr) => {
+		if (curr === mode) return curr;
+		setUserPrefersMode(mode);
+		setActiveMode(mode);
+		return mode;
 	});
 }
 
-/**
- * Reset the mode to OS preference
- */
+/** Reset the mode to operating system preference */
 export function resetMode(): void {
-	modeCurrent.update(() => {
-		setModeUserPrefers(undefined);
-		const next = getModeOsPrefers();
-		setModeCurrent(next);
+	activeMode.update(() => {
+		setUserPrefersMode(undefined);
+		const next = getSystemPrefersMode();
+		setActiveMode(next);
 		return next;
 	});
 }
