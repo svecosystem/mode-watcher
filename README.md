@@ -64,7 +64,7 @@ A function that resets the mode to system preferences.
 
 ### mode
 
-A readable store that contains the current mode. It can be `light` or `dark`.
+A readable store that contains the current mode. It can be `light`, `dark` or `system`.
 
 ```svelte
 <script lang="ts">

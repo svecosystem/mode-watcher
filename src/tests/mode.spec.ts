@@ -85,6 +85,7 @@ it('resets the mode to OS preferences (dark?)', async () => {
 	const rootEl = container.parentElement;
 	const light = getByTestId('light');
 	const reset = getByTestId('reset');
+	const toggle = getByTestId('toggle');
 	const mode = getByTestId('mode');
 	const classes = getClasses(rootEl);
 	const colorScheme = getColorScheme(rootEl);
@@ -104,7 +105,14 @@ it('resets the mode to OS preferences (dark?)', async () => {
 	const colorScheme3 = getColorScheme(rootEl);
 	expect(classes3).toContain('dark');
 	expect(colorScheme3).toBe('dark');
-	expect(mode.textContent).toBe('dark');
+	expect(mode.textContent).toBe('system');
+
+	await userEvent.click(toggle);
+	const classes4 = getClasses(rootEl);
+	const colorScheme4 = getColorScheme(rootEl);
+	expect(classes4).not.toContain('dark');
+	expect(colorScheme4).toBe('light');
+	expect(mode.textContent).toBe('light');
 });
 
 function getClasses(element: HTMLElement | null): string[] {

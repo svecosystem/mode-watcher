@@ -1,145 +1,86 @@
 // Modified version of the light switch by: https://skeleton.dev
 
-import { derived, get } from 'svelte/store';
 import { persisted } from 'svelte-persisted-store';
+import { get } from 'svelte/store';
 
-/**
- * Stores
- * ----
- * TRUE: Light mode | FALSE: Dark mode
- */
-
-const modeOsPrefers = persisted<boolean>('modeOsPrefers', false);
-const modeUserPrefers = persisted<boolean | undefined>('modeUserPrefers', undefined);
-const modeCurrent = persisted<boolean>('modeCurrent', false);
-
-/** Derived store with either `"light"` or `"dark"` depending on the current mode */
-export const mode = derived(modeCurrent, ($modeCurrent) => ($modeCurrent ? 'light' : 'dark'));
+/** Persistent store with either `"light"`, `"dark"` or `"system"` depending on the current mode */
+export const mode = persisted<'light' | 'dark' | 'system'>('mode', 'system');
 
 /**
  * Getters
  */
 
-/** Get the OS preference */
-export function getModeOsPrefers(): boolean {
-	const prefersLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
-	modeOsPrefers.set(prefersLightMode);
-	return prefersLightMode;
+/** Get the current mode */
+function getCurrentMode(): 'light' | 'dark' | 'system' {
+	return get(mode);
 }
 
-/** Get the User preference */
-function getModeUserPrefers(): boolean | undefined {
-	return get(modeUserPrefers);
-}
-
-/** Get the automatic preference */
-export function getModeAutoPrefers(): boolean {
-	const os = getModeOsPrefers();
-	const user = getModeUserPrefers();
-	return user !== undefined ? user : os;
+/** Get the operating system preference */
+export function getSystemMode(): 'light' | 'dark' {
+	return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 }
 
 /**
  * Setters
  */
 
-/** Set the user preference */
-function setModeUserPrefers(value: boolean | undefined): void {
-	modeUserPrefers.set(value);
-}
-
-/** Set the current mode */
-export function setModeCurrent(value: boolean): void {
+/** Set class & color scheme for the `html` element */
+function setHtmlClassColorScheme(nextMode: 'light' | 'dark' | 'system'): void {
 	const htmlEl = document.documentElement;
-	const classDark = 'dark';
-	if (value === true) {
-		htmlEl.classList.remove(classDark);
-		htmlEl.style.colorScheme = 'light';
-	} else {
-		htmlEl.classList.add(classDark);
-		htmlEl.style.colorScheme = 'dark';
-	}
-	modeCurrent.set(value);
-}
+	const systemMode = getSystemMode();
 
-/**
- * Lightswitch Utility
- */
-
-/** Set the visible light/dark mode on page load */
-export function setInitialClassState() {
-	const htmlEl = document.documentElement;
-
-	const condLocalStorageUserPrefs = localStorage.getItem('modeUserPrefers') === 'false';
-	const condLocalStorageUserPrefsExist = !('modeUserPrefers' in localStorage);
-	const condMatchMedia = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-	if (condLocalStorageUserPrefs || (condLocalStorageUserPrefsExist && condMatchMedia)) {
-		htmlEl.classList.add('dark');
-		htmlEl.style.colorScheme = 'dark';
-	} else {
+	if (nextMode === 'light' || (nextMode === 'system' && systemMode === 'light')) {
 		htmlEl.classList.remove('dark');
 		htmlEl.style.colorScheme = 'light';
 	}
+
+	if (nextMode === 'dark' || (nextMode === 'system' && systemMode === 'dark')) {
+		htmlEl.classList.add('dark');
+		htmlEl.style.colorScheme = 'dark';
+	}
 }
 
-/**
- * Auto Mode Watcher
- */
+/** Set the current mode */
+export function setCurrentMode(nextMode: 'light' | 'dark' | 'system'): void {
+	mode.set(nextMode);
+	setHtmlClassColorScheme(nextMode);
+}
 
-/** Automatically set the visible light/dark updates on change */
-export function autoModeWatcher(): void {
-	const mql = window.matchMedia('(prefers-color-scheme: dark)');
-	function setMode(value: boolean) {
-		const htmlEl = document.documentElement;
-		const classDark = 'dark';
-		if (value === true) {
-			htmlEl.classList.remove(classDark);
-			htmlEl.style.colorScheme = 'light';
-		} else {
-			htmlEl.classList.add(classDark);
-			htmlEl.style.colorScheme = 'dark';
-		}
-	}
-	setMode(mql.matches);
-	mql.onchange = () => {
-		setMode(mql.matches);
-	};
+/** Set the visible light/dark mode on page load */
+export function setInitialMode(): void {
+	const currentMode = getCurrentMode();
+	setCurrentMode(currentMode);
 }
 
 /**
  * Toggle between light and dark mode
  */
 export function toggleMode(): void {
-	modeCurrent.update((curr) => {
-		const next = !curr;
-		setModeUserPrefers(next);
-		setModeCurrent(next);
-		return next;
-	});
+	const currentMode = getCurrentMode();
+	const systemMode = getSystemMode();
+
+	const nextMode =
+		currentMode === 'system'
+			? systemMode === 'light'
+				? 'dark'
+				: 'light'
+			: currentMode === 'light'
+			? 'dark'
+			: 'light';
+
+	setCurrentMode(nextMode);
 }
 
 /**
  * Set the mode to light or dark
  */
 export function setMode(mode: 'light' | 'dark'): void {
-	modeCurrent.update((curr) => {
-		const next = mode === 'light';
-		if (curr === next) return curr;
-		setModeUserPrefers(next);
-		setModeCurrent(next);
-		return next;
-	});
+	setCurrentMode(mode);
 }
 
 /**
- * Reset the mode to OS preference
+ * Reset the mode to system preference
  */
 export function resetMode(): void {
-	modeCurrent.update(() => {
-		setModeUserPrefers(undefined);
-		const next = getModeOsPrefers();
-		setModeCurrent(next);
-		return next;
-	});
+	setCurrentMode('system');
 }
