@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getSystemPrefersMode, setInitialClassState, setCurrentMode } from './mode.js';
+	import { getSystemPrefersMode, setInitialClassState, setActiveMode } from './mode.js';
 
 	onMount(() => {
 		if (!('mode' in localStorage)) {
-			setCurrentMode(getSystemPrefersMode());
+			setActiveMode(getSystemPrefersMode());
 		}
 	});
 </script>

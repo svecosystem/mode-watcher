@@ -1,6 +1,7 @@
 // Modified version of the light switch by: https://skeleton.dev
 
 import { persisted } from 'svelte-persisted-store';
+import { readonly } from 'svelte/store';
 
 /**
  * Stores
@@ -8,7 +9,10 @@ import { persisted } from 'svelte-persisted-store';
 
 const systemPrefersMode = persisted<'dark' | 'light'>('systemPrefersMode', 'dark');
 const userPrefersMode = persisted<'dark' | 'light' | undefined>('userPrefersMode', undefined);
-export const mode = persisted<'dark' | 'light'>('mode', 'dark');
+const activeMode = persisted<'dark' | 'light'>('mode', 'dark');
+
+/** Readonly store with either `"light"` or `"dark"` depending on the active mode */
+export const mode = readonly(activeMode);
 
 /**
  * Getters
@@ -32,8 +36,8 @@ function setUserPrefersMode(value: 'dark' | 'light' | undefined): void {
 	userPrefersMode.set(value);
 }
 
-/** Set the current mode */
-export function setCurrentMode(value: 'dark' | 'light'): void {
+/** Set the active mode */
+export function setActiveMode(value: 'dark' | 'light'): void {
 	const htmlEl = document.documentElement;
 
 	if (value === 'light') {
@@ -44,7 +48,7 @@ export function setCurrentMode(value: 'dark' | 'light'): void {
 		htmlEl.style.colorScheme = 'dark';
 	}
 
-	mode.set(value);
+	activeMode.set(value);
 }
 
 /**
@@ -81,30 +85,30 @@ export function setInitialClassState() {
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
-	mode.update((curr) => {
+	activeMode.update((curr) => {
 		const next = curr === 'dark' ? 'light' : 'dark';
 		setUserPrefersMode(next);
-		setCurrentMode(next);
+		setActiveMode(next);
 		return next;
 	});
 }
 
 /** Set the mode to light or dark */
-export function setMode(next: 'dark' | 'light'): void {
-	mode.update((curr) => {
-		if (curr === next) return curr;
-		setUserPrefersMode(next);
-		setCurrentMode(next);
-		return next;
+export function setMode(mode: 'dark' | 'light'): void {
+	activeMode.update((curr) => {
+		if (curr === mode) return curr;
+		setUserPrefersMode(mode);
+		setActiveMode(mode);
+		return mode;
 	});
 }
 
 /** Reset the mode to operating system preference */
 export function resetMode(): void {
-	mode.update(() => {
+	activeMode.update(() => {
 		setUserPrefersMode(undefined);
 		const next = getSystemPrefersMode();
-		setCurrentMode(next);
+		setActiveMode(next);
 		return next;
 	});
 }
