@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.0.4
+
+### Patch Changes
+
+- 487c5e3: Change persistent stores to use `dark` | `light` strings instead of booleans
+
 ## 0.0.3
 
 ### Patch Changes
