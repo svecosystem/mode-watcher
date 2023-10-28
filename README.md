@@ -10,7 +10,7 @@ npm install mode-watcher
 
 ## Usage
 
-Inside your SvelteKit app, import the `ModeWatcher` component and use it in your root layout:
+Add the `ModeWatcher` component to your root `+layout.svelte` file.
 
 ```svelte
 <script lang="ts">
@@ -21,7 +21,7 @@ Inside your SvelteKit app, import the `ModeWatcher` component and use it in your
 <slot />
 ```
 
-The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `dark` class to the `html` element.
+The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `dark` class, along with the corresponding `color-scheme` style attribute to the `html` element.
 
 ## API
 
