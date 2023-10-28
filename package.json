@@ -59,7 +59,6 @@
 	"types": "./dist/index.d.ts",
 	"type": "module",
 	"dependencies": {
-		"matchers": "link:@testing-library/jest-dom/matchers",
 		"svelte-persisted-store": "^0.7.0"
 	}
 }
