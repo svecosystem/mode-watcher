@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  matchers:
-    specifier: link:@testing-library/jest-dom/matchers
-    version: link:@testing-library/jest-dom/matchers
   svelte-persisted-store:
     specifier: ^0.7.0
     version: 0.7.0(svelte@4.0.5)
