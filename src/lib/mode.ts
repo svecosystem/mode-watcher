@@ -95,8 +95,7 @@ export function toggleMode(): void {
 
 /** Set the mode to light or dark */
 export function setMode(mode: 'dark' | 'light'): void {
-	activeMode.update((curr) => {
-		if (curr === mode) return curr;
+	activeMode.update(() => {
 		setUserPrefersMode(mode);
 		setActiveMode(mode);
 		return mode;
