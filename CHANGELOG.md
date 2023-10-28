@@ -1,5 +1,13 @@
 # mode-watcher
 
+## 0.0.5
+
+### Patch Changes
+
+- 8c93706: Add `track` prop which allows `<ModeWatcher>` to track changes in system preference
+- 9dbbb39: Fixed bug in `setMode` which prevented user preferences from being set
+- 4cb519e: Fix: remove unnecessary dep
+
 ## 0.0.4
 
 ### Patch Changes
