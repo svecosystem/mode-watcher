@@ -1,14 +1,14 @@
 // Modified version of the light switch by: https://skeleton.dev
 
 import { persisted } from 'svelte-persisted-store';
-import { readonly } from 'svelte/store';
+import { get, readonly } from 'svelte/store';
 
 /**
  * Stores
  */
 
 const systemPrefersMode = persisted<'dark' | 'light'>('systemPrefersMode', 'dark');
-const userPrefersMode = persisted<'dark' | 'light' | undefined>('userPrefersMode', undefined);
+const userPrefersMode = persisted<'dark' | 'light' | 'system'>('userPrefersMode', 'system');
 const activeMode = persisted<'dark' | 'light'>('mode', 'dark');
 
 /** Readonly store with either `"light"` or `"dark"` depending on the active mode */
@@ -27,12 +27,17 @@ export function getSystemPrefersMode(): 'dark' | 'light' {
 	return prefersLightMode;
 }
 
+/** Get the user preference */
+export function getUserPrefersMode(): 'dark' | 'light' | 'system' {
+	return get(userPrefersMode);
+}
+
 /**
  * Setters
  */
 
 /** Set the user preference */
-function setUserPrefersMode(value: 'dark' | 'light' | undefined): void {
+function setUserPrefersMode(value: 'dark' | 'light' | 'system'): void {
 	userPrefersMode.set(value);
 }
 
@@ -67,14 +72,17 @@ export function setInitialClassState() {
 
 	let userPref: string | null = null;
 	try {
-		userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'null');
+		userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'system');
 	} catch {
 		// ignore JSON parsing errors
 	}
 
 	const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 
-	if (userPref === 'light' || (userPref === null && systemPref === 'light')) {
+	if (
+		userPref === 'light' ||
+		((userPref === 'system' || userPref === null) && systemPref === 'light')
+	) {
 		htmlEl.classList.remove('dark');
 		htmlEl.style.colorScheme = 'light';
 	} else {
@@ -105,7 +113,7 @@ export function setMode(mode: 'dark' | 'light'): void {
 /** Reset the mode to operating system preference */
 export function resetMode(): void {
 	activeMode.update(() => {
-		setUserPrefersMode(undefined);
+		setUserPrefersMode('system');
 		const next = getSystemPrefersMode();
 		setActiveMode(next);
 		return next;
