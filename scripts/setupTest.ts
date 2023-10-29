@@ -3,9 +3,9 @@
 import { vi } from 'vitest';
 import type { Navigation, Page } from '@sveltejs/kit';
 import { readable } from 'svelte/store';
-import * as environment from '$app/environment';
-import * as navigation from '$app/navigation';
-import * as stores from '$app/stores';
+import type * as environment from '$app/environment';
+import type * as navigation from '$app/navigation';
+import type * as stores from '$app/stores';
 import { configure } from '@testing-library/dom';
 
 configure({
@@ -77,16 +77,40 @@ vi.mock('$app/stores', (): typeof stores => {
 	};
 });
 
+export const mediaQueryState = {
+	matches: false
+};
+
+const listeners: ((event: unknown) => void)[] = [];
+
 Object.defineProperty(window, 'matchMedia', {
 	writable: true,
 	value: vi.fn().mockImplementation((query) => ({
-		matches: false,
+		matches: mediaQueryState.matches,
 		media: query,
 		onchange: null,
-		addListener: vi.fn(), // deprecated
-		removeListener: vi.fn(), // deprecated
-		addEventListener: vi.fn(),
-		removeEventListener: vi.fn(),
-		dispatchEvent: vi.fn()
+		addListener: vi.fn(),
+		removeListener: vi.fn(),
+		addEventListener: vi.fn((type, callback) => {
+			if (type === 'change') {
+				listeners.push(callback);
+			}
+		}),
+		removeEventListener: vi.fn((type, callback) => {
+			const index = listeners.indexOf(callback);
+			if (index !== -1) {
+				listeners.splice(index, 1);
+			}
+		}),
+		dispatchEvent: vi.fn((event) => {
+			if (event.type === 'change') {
+				for (const callback of listeners) {
+					callback({
+						matches: mediaQueryState.matches,
+						media: '(prefers-color-scheme: light)'
+					});
+				}
+			}
+		})
 	}))
 });
