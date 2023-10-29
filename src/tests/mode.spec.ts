@@ -186,6 +186,35 @@ it('stops tracking changes to system preferences when user sets a mode', async (
 	expect(mode.textContent).toBe('dark');
 });
 
+it('does not track changes to system preference when track prop is set to false', async () => {
+	const { container, getByTestId } = render(Mode, { track: false });
+	const rootEl = container.parentElement;
+	const reset = getByTestId('reset');
+	const mode = getByTestId('mode');
+	const classes = getClasses(rootEl);
+	const colorScheme = getColorScheme(rootEl);
+	expect(classes).toContain('dark');
+	expect(colorScheme).toBe('dark');
+	expect(mode.textContent).toBe('dark');
+
+	await userEvent.click(reset);
+	const classes2 = getClasses(rootEl);
+	const colorScheme2 = getColorScheme(rootEl);
+	expect(classes2).not.toContain('dark');
+	expect(colorScheme2).toBe('light');
+	expect(mode.textContent).toBe('light');
+
+	mediaQueryState.matches = false;
+	const changeEvent = new Event('change');
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
+	const classes3 = getClasses(rootEl);
+	const colorScheme3 = getColorScheme(rootEl);
+	expect(classes3).not.toContain('dark');
+	expect(colorScheme3).toBe('light');
+	expect(mode.textContent).toBe('light');
+});
+
 function getClasses(element: HTMLElement | null): string[] {
 	if (element === null) {
 		return [];
