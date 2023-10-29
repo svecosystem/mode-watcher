@@ -2,7 +2,7 @@ import { render } from '@testing-library/svelte';
 import { expect, it } from 'vitest';
 import Mode from './Mode.svelte';
 import userEvent from '@testing-library/user-event';
-import { mediaQueryState } from './setup';
+import { mediaQueryState } from '../../scripts/setupTest';
 import { tick } from 'svelte';
 
 it('renders mode', async () => {
