@@ -23,6 +23,12 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 
 The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `dark` class, along with the corresponding `color-scheme` style attribute to the `html` element.
 
+`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the `track` prop to `false`:
+
+```svelte
+<ModeWatcher track={false}>
+```
+
 ## API
 
 ### toggleMode
