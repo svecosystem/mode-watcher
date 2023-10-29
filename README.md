@@ -26,7 +26,7 @@ The `ModeWatcher` component will automatically detect the user's preferences and
 `ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the `track` prop to `false`:
 
 ```svelte
-<ModeWatcher track={false}>
+<ModeWatcher track={false} />
 ```
 
 ## API
