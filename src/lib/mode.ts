@@ -2,6 +2,7 @@
 
 import { persisted } from 'svelte-persisted-store';
 import { get, readonly } from 'svelte/store';
+import { withoutTransition } from './without-transition';
 
 /**
  * Stores
@@ -43,17 +44,19 @@ function setUserPrefersMode(value: 'dark' | 'light' | 'system'): void {
 
 /** Set the active mode */
 export function setActiveMode(value: 'dark' | 'light'): void {
-	const htmlEl = document.documentElement;
+	withoutTransition(() => {
+		const htmlEl = document.documentElement;
 
-	if (value === 'light') {
-		htmlEl.classList.remove('dark');
-		htmlEl.style.colorScheme = 'light';
-	} else {
-		htmlEl.classList.add('dark');
-		htmlEl.style.colorScheme = 'dark';
-	}
+		if (value === 'light') {
+			htmlEl.classList.remove('dark');
+			htmlEl.style.colorScheme = 'light';
+		} else {
+			htmlEl.classList.add('dark');
+			htmlEl.style.colorScheme = 'dark';
+		}
 
-	activeMode.set(value);
+		activeMode.set(value);
+	});
 }
 
 /**
@@ -68,27 +71,31 @@ export function setActiveMode(value: 'dark' | 'light'): void {
  * This function needs to be able to be stringified and thus it cannot use other functions
  */
 export function setInitialClassState() {
-	const htmlEl = document.documentElement;
+	withoutTransition(() => {
+		const htmlEl = document.documentElement;
 
-	let userPref: string | null = null;
-	try {
-		userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'system');
-	} catch {
-		// ignore JSON parsing errors
-	}
+		let userPref: string | null = null;
+		try {
+			userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'system');
+		} catch {
+			// ignore JSON parsing errors
+		}
 
-	const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+		const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches
+			? 'light'
+			: 'dark';
 
-	if (
-		userPref === 'light' ||
-		((userPref === 'system' || userPref === null) && systemPref === 'light')
-	) {
-		htmlEl.classList.remove('dark');
-		htmlEl.style.colorScheme = 'light';
-	} else {
-		htmlEl.classList.add('dark');
-		htmlEl.style.colorScheme = 'dark';
-	}
+		if (
+			userPref === 'light' ||
+			((userPref === 'system' || userPref === null) && systemPref === 'light')
+		) {
+			htmlEl.classList.remove('dark');
+			htmlEl.style.colorScheme = 'light';
+		} else {
+			htmlEl.classList.add('dark');
+			htmlEl.style.colorScheme = 'dark';
+		}
+	});
 }
 
 /** Toggle between light and dark mode */
