@@ -71,29 +71,27 @@ export function setActiveMode(value: 'dark' | 'light'): void {
  * This function needs to be able to be stringified and thus it cannot use other functions
  */
 export function setInitialClassState() {
-		const htmlEl = document.documentElement;
+	const htmlEl = document.documentElement;
 
-		let userPref: string | null = null;
-		try {
-			userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'system');
-		} catch {
-			// ignore JSON parsing errors
-		}
+	let userPref: string | null = null;
+	try {
+		userPref = JSON.parse(localStorage.getItem('userPrefersMode') || 'system');
+	} catch {
+		// ignore JSON parsing errors
+	}
 
-		const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches
-			? 'light'
-			: 'dark';
+	const systemPref = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
 
-		if (
-			userPref === 'light' ||
-			((userPref === 'system' || userPref === null) && systemPref === 'light')
-		) {
-			htmlEl.classList.remove('dark');
-			htmlEl.style.colorScheme = 'light';
-		} else {
-			htmlEl.classList.add('dark');
-			htmlEl.style.colorScheme = 'dark';
-		}
+	if (
+		userPref === 'light' ||
+		((userPref === 'system' || userPref === null) && systemPref === 'light')
+	) {
+		htmlEl.classList.remove('dark');
+		htmlEl.style.colorScheme = 'light';
+	} else {
+		htmlEl.classList.add('dark');
+		htmlEl.style.colorScheme = 'dark';
+	}
 }
 
 /** Toggle between light and dark mode */
