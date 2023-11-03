@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.0.6
+
+### Patch Changes
+
+- 289d4d6: Fix: prevent transitions during theme change
+
 ## 0.0.5
 
 ### Patch Changes
