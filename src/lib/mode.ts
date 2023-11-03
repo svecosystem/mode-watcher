@@ -71,7 +71,6 @@ export function setActiveMode(value: 'dark' | 'light'): void {
  * This function needs to be able to be stringified and thus it cannot use other functions
  */
 export function setInitialClassState() {
-	withoutTransition(() => {
 		const htmlEl = document.documentElement;
 
 		let userPref: string | null = null;
@@ -95,7 +94,6 @@ export function setInitialClassState() {
 			htmlEl.classList.add('dark');
 			htmlEl.style.colorScheme = 'dark';
 		}
-	});
 }
 
 /** Toggle between light and dark mode */
