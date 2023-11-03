@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.0.7
+
+### Patch Changes
+
+- abc9b03: Fix bug missing withoutTransition in head
+
 ## 0.0.6
 
 ### Patch Changes
