@@ -1,5 +1,6 @@
 import { BROWSER } from 'esm-env';
 import { writable, derived } from 'svelte/store';
+import { withoutTransition } from './without-transition';
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -76,14 +77,16 @@ function createDerivedMode() {
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
 
-			const htmlEl = document.documentElement;
-			if (derivedMode === 'light') {
-				htmlEl.classList.remove('dark');
-				htmlEl.style.colorScheme = 'light';
-			} else {
-				htmlEl.classList.add('dark');
-				htmlEl.style.colorScheme = 'dark';
-			}
+			withoutTransition(() => {
+				const htmlEl = document.documentElement;
+				if (derivedMode === 'light') {
+					htmlEl.classList.remove('dark');
+					htmlEl.style.colorScheme = 'light';
+				} else {
+					htmlEl.classList.add('dark');
+					htmlEl.style.colorScheme = 'dark';
+				}
+			});
 
 			return derivedMode;
 		}
