@@ -95,7 +95,7 @@ function createDerivedMode() {
 }
 
 /**
- * Writable store that represents the user's preferred mode (`"dark"`, `"light"`, `"system"` or `undefined`)
+ * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
  */
 export const userPrefersMode = createUserPrefersMode();
 
