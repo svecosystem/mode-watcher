@@ -1,6 +1,14 @@
 import { writable, derived } from 'svelte/store';
 import { withoutTransition } from './without-transition';
 
+// saves having to branch for server vs client
+const noopStorage = {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	getItem: (_key: string) => null,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	setItem: (_key: string, _value: string) => {}
+};
+
 /**
  * The key used to store the mode in local storage.
  */
@@ -19,14 +27,6 @@ export const systemPrefersMode = createSystemMode();
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
 export const derivedMode = createDerivedMode();
-
-// saves having to branch for server vs client
-const noopStorage = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	getItem: (_key: string) => null,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	setItem: (_key: string, _value: string) => {}
-};
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
