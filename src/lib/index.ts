@@ -1,3 +1,21 @@
-import { setMode, toggleMode, resetMode, mode } from './mode.js';
+import {
+	localStorageKey,
+	userPrefersMode,
+	systemPrefersMode,
+	mode,
+	setMode,
+	toggleMode,
+	resetMode
+} from './mode';
+
+export {
+	setMode,
+	toggleMode,
+	resetMode,
+	localStorageKey,
+	userPrefersMode,
+	systemPrefersMode,
+	mode
+};
+
 export { default as ModeWatcher } from './mode-watcher.svelte';
-export { setMode, toggleMode, resetMode, mode };
