@@ -1,6 +1,24 @@
-import { BROWSER } from 'esm-env';
 import { writable, derived } from 'svelte/store';
 import { withoutTransition } from './without-transition';
+
+/**
+ * The key used to store the mode in local storage.
+ */
+export const localStorageKey = 'mode';
+/**
+ * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
+ */
+export const userPrefersMode = createUserPrefersMode();
+
+/**
+ * Readable store that represents the system's preferred mode (`"dark"`, `"light"` or `undefined`)
+ */
+export const systemPrefersMode = createSystemMode();
+
+/**
+ * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
+ */
+export const derivedMode = createDerivedMode();
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -10,17 +28,16 @@ const noopStorage = {
 	setItem: (_key: string, _value: string) => {}
 };
 
-export const localStorageKey = 'mode';
-
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
+	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
 	const defaultValue = 'system';
 
-	const storage = BROWSER ? localStorage : noopStorage;
+	const storage = browser ? localStorage : noopStorage;
 	let value = (storage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || defaultValue;
 
 	const { subscribe, set: _set } = writable(value, () => {
-		if (BROWSER) {
+		if (browser) {
 			const handler = (e: StorageEvent) => {
 				if (e.key === localStorageKey) {
 					_set((value = (e.newValue as 'dark' | 'light' | 'system') || defaultValue));
@@ -43,12 +60,16 @@ function createUserPrefersMode() {
 }
 
 function createSystemMode() {
+	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
 	const defaultValue = undefined;
+	let track = true;
 
 	const { subscribe, set } = writable<'dark' | 'light' | undefined>(defaultValue, () => {
-		if (BROWSER) {
+		if (browser) {
 			const handler = (e: MediaQueryListEvent) => {
-				set(e.matches ? 'light' : 'dark');
+				if (track) {
+					set(e.matches ? 'light' : 'dark');
+				}
 			};
 			const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
 			mediaQueryState.addEventListener('change', handler);
@@ -57,23 +78,34 @@ function createSystemMode() {
 	});
 
 	function query() {
-		if (BROWSER) {
+		if (browser) {
 			const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
 			set(mediaQueryState.matches ? 'light' : 'dark');
 		}
 	}
 
+	/**
+	 * Sets the tracking state to the given value.
+	 * @param active - The new tracking state.
+	 */
+	function tracking(active: boolean) {
+		track = active;
+	}
+
 	return {
 		subscribe,
-		query
+		query,
+		tracking
 	};
 }
 
 function createDerivedMode() {
+	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
+
 	const { subscribe } = derived(
 		[userPrefersMode, systemPrefersMode],
 		([$userPrefersMode, $systemPrefersMode]) => {
-			if (!BROWSER) return undefined;
+			if (!browser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
 
@@ -96,18 +128,3 @@ function createDerivedMode() {
 		subscribe
 	};
 }
-
-/**
- * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
- */
-export const userPrefersMode = createUserPrefersMode();
-
-/**
- * Readable store that represents the system's preferred mode (`"dark"`, `"light"` or `undefined`)
- */
-export const systemPrefersMode = createSystemMode();
-
-/**
- * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
- */
-export const derivedMode = createDerivedMode();

@@ -2,6 +2,8 @@
 	import { onMount } from 'svelte';
 	import { systemPrefersMode, setMode, localStorageKey } from './mode';
 
+	export let track = true;
+
 	function setInitialMode() {
 		const htmlEl = document.documentElement;
 
@@ -22,7 +24,7 @@
 	const stringified = setInitialMode.toString();
 
 	onMount(() => {
-		// TODO: pass in `track` prop here maybe?
+		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
 		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || 'system');
 	});

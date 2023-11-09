@@ -61,8 +61,5 @@
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",
-	"type": "module",
-	"dependencies": {
-		"esm-env": "^1.0.0"
-	}
+	"type": "module"
 }
