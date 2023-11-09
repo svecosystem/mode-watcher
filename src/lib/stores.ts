@@ -17,12 +17,10 @@ export const localStorageKey = 'mode';
  * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
  */
 export const userPrefersMode = createUserPrefersMode();
-
 /**
  * Readable store that represents the system's preferred mode (`"dark"`, `"light"` or `undefined`)
  */
 export const systemPrefersMode = createSystemMode();
-
 /**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
