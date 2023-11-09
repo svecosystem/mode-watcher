@@ -10,7 +10,7 @@ const noopStorage = {
 };
 
 /**
- * The key used to store the mode in local storage.
+ * The key used to store the mode in localStorage.
  */
 export const localStorageKey = 'mode';
 /**
@@ -75,6 +75,9 @@ function createSystemMode() {
 		}
 	});
 
+	/**
+	 * Query system preferences and update the store.
+	 */
 	function query() {
 		if (browser) {
 			const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
@@ -83,8 +86,7 @@ function createSystemMode() {
 	}
 
 	/**
-	 * Sets the tracking state to the given value.
-	 * @param active - The new tracking state.
+	 * Enable or disable tracking of system preference changes.
 	 */
 	function tracking(active: boolean) {
 		track = active;
