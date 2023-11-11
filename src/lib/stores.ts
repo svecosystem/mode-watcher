@@ -9,6 +9,9 @@ const noopStorage = {
 	setItem: (_key: string, _value: string) => {}
 };
 
+// whether we are running on server vs client
+const isBrowser = typeof document !== 'undefined';
+
 /**
  * The key used to store the mode in localStorage.
  */
@@ -28,14 +31,13 @@ export const derivedMode = createDerivedMode();
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
-	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
 	const defaultValue = 'system';
 
-	const storage = browser ? localStorage : noopStorage;
+	const storage = isBrowser ? localStorage : noopStorage;
 	let value = (storage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || defaultValue;
 
 	const { subscribe, set: _set } = writable(value, () => {
-		if (browser) {
+		if (isBrowser) {
 			const handler = (e: StorageEvent) => {
 				if (e.key === localStorageKey) {
 					_set((value = (e.newValue as 'dark' | 'light' | 'system') || defaultValue));
@@ -58,12 +60,11 @@ function createUserPrefersMode() {
 }
 
 function createSystemMode() {
-	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
 	const defaultValue = undefined;
 	let track = true;
 
 	const { subscribe, set } = writable<'dark' | 'light' | undefined>(defaultValue, () => {
-		if (browser) {
+		if (isBrowser) {
 			const handler = (e: MediaQueryListEvent) => {
 				if (track) {
 					set(e.matches ? 'light' : 'dark');
@@ -79,7 +80,7 @@ function createSystemMode() {
 	 * Query system preferences and update the store.
 	 */
 	function query() {
-		if (browser) {
+		if (isBrowser) {
 			const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
 			set(mediaQueryState.matches ? 'light' : 'dark');
 		}
@@ -100,12 +101,10 @@ function createSystemMode() {
 }
 
 function createDerivedMode() {
-	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
-
 	const { subscribe } = derived(
 		[userPrefersMode, systemPrefersMode],
 		([$userPrefersMode, $systemPrefersMode]) => {
-			if (!browser) return undefined;
+			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
 
