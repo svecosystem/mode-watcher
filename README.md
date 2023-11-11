@@ -21,7 +21,7 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 <slot />
 ```
 
-The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `dark` class, along with the corresponding `color-scheme` style attribute to the `html` element.
+The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `"dark"` class, along with the corresponding `color-scheme` style attribute to the `html` element.
 
 `ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the `track` prop to `false`:
 
@@ -45,7 +45,7 @@ A function that toggles the current mode.
 
 ### setMode
 
-A function that sets the current mode. It accepts a string with the value `light` or `dark`.
+A function that sets the current mode. It accepts a string with the value `"light"`, `"dark"` or `"system"`.
 
 ```svelte
 <script lang="ts">
@@ -70,7 +70,7 @@ A function that resets the mode to system preferences.
 
 ### mode
 
-A readable store that contains the current mode. It can be `light` or `dark`.
+A readable store that contains the current mode. It can be `"light"` or `"dark"` or `undefined` if evaluated on the server.
 
 ```svelte
 <script lang="ts">
@@ -87,3 +87,11 @@ A readable store that contains the current mode. It can be `light` or `dark`.
 
 <button on:click={handleModeChange}>{$mode}</button>
 ```
+
+### userPrefersMode
+
+A writeable store that represents the user's mode preference. It can be `"light"`, `"dark"` or `"system"`.
+
+### systemPrefersMode
+
+A readable store that represents the operating system's mode preference. It can be `"light"`, `"dark"` or `undefined` if evaluated on the server. Will automatically track changes to the operating system's mode preference unless this is disabled with the `tracking()` method which takes a boolean. Normally this is disabled by setting the `track` prop to false in the `<ModeWatcher>` component.
