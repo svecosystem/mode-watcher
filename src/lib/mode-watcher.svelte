@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { systemPrefersMode, setMode, localStorageKey } from './mode';
+	import { systemPrefersMode, setMode, localStorageKey, mode } from './mode';
 
 	export let track = true;
 
@@ -24,9 +24,14 @@
 	const stringified = setInitialMode.toString();
 
 	onMount(() => {
+		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
 		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || 'system');
+
+		return () => {
+			unsubscriber();
+		};
 	});
 </script>
 

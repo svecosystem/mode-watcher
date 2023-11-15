@@ -1,6 +1,7 @@
 import { render } from '@testing-library/svelte';
 import { expect, it } from 'vitest';
 import Mode from './Mode.svelte';
+import StealthMode from './StealthMode.svelte';
 import userEvent from '@testing-library/user-event';
 import { mediaQueryState } from '../../scripts/setupTest';
 import { tick } from 'svelte';
@@ -231,6 +232,27 @@ it('does not track changes to system preference when track prop is set to false'
 	expect(classes3).toContain('dark');
 	expect(colorScheme3).toBe('dark');
 	expect(mode.textContent).toBe('dark');
+});
+
+it('also works when $mode is not used in the current page', async () => {
+	const { container, getByTestId } = render(StealthMode);
+	const rootEl = container.parentElement;
+
+	const classes = getClasses(rootEl);
+	const colorScheme = getColorScheme(rootEl);
+	expect(classes).toContain('dark');
+	expect(colorScheme).toBe('dark');
+	const toggle = getByTestId('toggle');
+	await userEvent.click(toggle);
+	const classes2 = getClasses(rootEl);
+	const colorScheme2 = getColorScheme(rootEl);
+	expect(classes2).not.toContain('dark');
+	expect(colorScheme2).toBe('light');
+	await userEvent.click(toggle);
+	const classes3 = getClasses(rootEl);
+	const colorScheme3 = getColorScheme(rootEl);
+	expect(classes3).toContain('dark');
+	expect(colorScheme3).toBe('dark');
 });
 
 function getClasses(element: HTMLElement | null): string[] {
