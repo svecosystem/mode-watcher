@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.1.1
+
+### Patch Changes
+
+- 8c71d5a: Fix bug where mode would not change unless the `mode` store was subscribed to
+
 ## 0.1.0
 
 ### Minor Changes
