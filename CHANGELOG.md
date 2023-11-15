@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.1.0
+
+### Minor Changes
+
+- ec7750d: Rewrite mode-watcher with custom stores
+
 ## 0.0.7
 
 ### Patch Changes
