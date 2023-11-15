@@ -1,42 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import {
-		getSystemPrefersMode,
-		getUserPrefersMode,
-		setActiveMode,
-		setInitialClassState
-	} from './mode';
+	import { systemPrefersMode, setMode, localStorageKey } from './mode';
 
-	// track `prefers-color-scheme` if no user preference is set
 	export let track = true;
 
+	function setInitialMode() {
+		const htmlEl = document.documentElement;
+
+		const mode = localStorage.getItem('mode') || 'system';
+		const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+		if (mode === 'light' || (mode === 'system' && system === 'light')) {
+			htmlEl.classList.remove('dark');
+			htmlEl.style.colorScheme = 'light';
+		} else {
+			htmlEl.classList.add('dark');
+			htmlEl.style.colorScheme = 'dark';
+		}
+
+		localStorage.setItem('mode', mode);
+	}
+
+	const stringified = setInitialMode.toString();
+
 	onMount(() => {
-		if (!('mode' in localStorage)) {
-			setActiveMode(getSystemPrefersMode());
-		}
-
-		if (!track) {
-			return;
-		}
-
-		const mql = window.matchMedia('(prefers-color-scheme: light)');
-
-		const listener = () => {
-			if (getUserPrefersMode() === 'system') {
-				setActiveMode(getSystemPrefersMode());
-			}
-		};
-
-		mql.addEventListener('change', listener);
-
-		return () => {
-			mql.removeEventListener('change', listener);
-		};
+		systemPrefersMode.tracking(track);
+		systemPrefersMode.query();
+		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || 'system');
 	});
 </script>
 
 <svelte:head>
-	<!-- This causes the new eslint-plugin-svelte: https://github.com/sveltejs/eslint-plugin-svelte/issues/492 -->
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<\u{73}cript nonce="%sveltekit.nonce%">(${setInitialClassState.toString()})();</script>`}
+	{@html `<script nonce="%sveltekit.nonce%">(` + stringified + `)();</script>`}
 </svelte:head>

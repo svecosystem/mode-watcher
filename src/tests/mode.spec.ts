@@ -142,53 +142,7 @@ it('tracks changes to system preferences', async () => {
 it('stops tracking changes to system preferences when user sets a mode', async () => {
 	const { container, getByTestId } = render(Mode);
 	const rootEl = container.parentElement;
-	const dark = getByTestId('dark');
-	const mode = getByTestId('mode');
-	const classes = getClasses(rootEl);
-	const colorScheme = getColorScheme(rootEl);
-	expect(classes).toContain('dark');
-	expect(colorScheme).toBe('dark');
-	expect(mode.textContent).toBe('dark');
-
-	mediaQueryState.matches = true;
-	const changeEvent = new Event('change');
-	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
-	await tick();
-	const classes2 = getClasses(rootEl);
-	const colorScheme2 = getColorScheme(rootEl);
-	expect(classes2).not.toContain('dark');
-	expect(colorScheme2).toBe('light');
-	expect(mode.textContent).toBe('light');
-
-	await userEvent.click(dark);
-	const classes3 = getClasses(rootEl);
-	const colorScheme3 = getColorScheme(rootEl);
-	expect(classes3).toContain('dark');
-	expect(colorScheme3).toBe('dark');
-	expect(mode.textContent).toBe('dark');
-
-	mediaQueryState.matches = false;
-	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
-	await tick();
-	const classes4 = getClasses(rootEl);
-	const colorScheme4 = getColorScheme(rootEl);
-	expect(classes4).toContain('dark');
-	expect(colorScheme4).toBe('dark');
-	expect(mode.textContent).toBe('dark');
-
-	mediaQueryState.matches = true;
-	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
-	await tick();
-	const classes5 = getClasses(rootEl);
-	const colorScheme5 = getColorScheme(rootEl);
-	expect(classes5).toContain('dark');
-	expect(colorScheme5).toBe('dark');
-	expect(mode.textContent).toBe('dark');
-});
-
-it('does not track changes to system preference when track prop is set to false', async () => {
-	const { container, getByTestId } = render(Mode, { track: false });
-	const rootEl = container.parentElement;
+	const light = getByTestId('light');
 	const reset = getByTestId('reset');
 	const mode = getByTestId('mode');
 	const classes = getClasses(rootEl);
@@ -197,7 +151,10 @@ it('does not track changes to system preference when track prop is set to false'
 	expect(colorScheme).toBe('dark');
 	expect(mode.textContent).toBe('dark');
 
-	await userEvent.click(reset);
+	mediaQueryState.matches = true;
+	const changeEvent = new Event('change');
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	expect(classes2).not.toContain('dark');
@@ -205,14 +162,75 @@ it('does not track changes to system preference when track prop is set to false'
 	expect(mode.textContent).toBe('light');
 
 	mediaQueryState.matches = false;
-	const changeEvent = new Event('change');
 	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
 	await tick();
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
-	expect(classes3).not.toContain('dark');
-	expect(colorScheme3).toBe('light');
+	expect(classes3).toContain('dark');
+	expect(colorScheme3).toBe('dark');
+	expect(mode.textContent).toBe('dark');
+
+	await userEvent.click(light);
+	const classes4 = getClasses(rootEl);
+	const colorScheme4 = getColorScheme(rootEl);
+	expect(classes4).not.toContain('dark');
+	expect(colorScheme4).toBe('light');
 	expect(mode.textContent).toBe('light');
+
+	mediaQueryState.matches = true;
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
+	const classes5 = getClasses(rootEl);
+	const colorScheme5 = getColorScheme(rootEl);
+	expect(classes5).not.toContain('dark');
+	expect(colorScheme5).toBe('light');
+	expect(mode.textContent).toBe('light');
+
+	mediaQueryState.matches = false;
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
+	const classes6 = getClasses(rootEl);
+	const colorScheme6 = getColorScheme(rootEl);
+	expect(classes6).not.toContain('dark');
+	expect(colorScheme6).toBe('light');
+	expect(mode.textContent).toBe('light');
+
+	await userEvent.click(reset);
+	const classes7 = getClasses(rootEl);
+	const colorScheme7 = getColorScheme(rootEl);
+	expect(classes7).toContain('dark');
+	expect(colorScheme7).toBe('dark');
+	expect(mode.textContent).toBe('dark');
+});
+
+it('does not track changes to system preference when track prop is set to false', async () => {
+	const { container, getByTestId } = render(Mode, { track: false });
+	const rootEl = container.parentElement;
+	const mode = getByTestId('mode');
+	const classes = getClasses(rootEl);
+	const colorScheme = getColorScheme(rootEl);
+	expect(classes).toContain('dark');
+	expect(colorScheme).toBe('dark');
+	expect(mode.textContent).toBe('dark');
+
+	mediaQueryState.matches = true;
+	const changeEvent = new Event('change');
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
+	const classes2 = getClasses(rootEl);
+	const colorScheme2 = getColorScheme(rootEl);
+	expect(classes2).toContain('dark');
+	expect(colorScheme2).toBe('dark');
+	expect(mode.textContent).toBe('dark');
+
+	mediaQueryState.matches = false;
+	window.matchMedia('(prefers-color-scheme: light)').dispatchEvent(changeEvent);
+	await tick();
+	const classes3 = getClasses(rootEl);
+	const colorScheme3 = getColorScheme(rootEl);
+	expect(classes3).toContain('dark');
+	expect(colorScheme3).toBe('dark');
+	expect(mode.textContent).toBe('dark');
 });
 
 function getClasses(element: HTMLElement | null): string[] {
