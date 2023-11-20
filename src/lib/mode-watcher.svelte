@@ -4,25 +4,6 @@
 
 	export let track = true;
 
-	function setInitialMode() {
-		const htmlEl = document.documentElement;
-
-		const mode = localStorage.getItem('mode') || 'system';
-		const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-
-		if (mode === 'light' || (mode === 'system' && system === 'light')) {
-			htmlEl.classList.remove('dark');
-			htmlEl.style.colorScheme = 'light';
-		} else {
-			htmlEl.classList.add('dark');
-			htmlEl.style.colorScheme = 'dark';
-		}
-
-		localStorage.setItem('mode', mode);
-	}
-
-	const stringified = setInitialMode.toString();
-
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
@@ -33,6 +14,20 @@
 			unsubscriber();
 		};
 	});
+
+	function setInitialMode() {
+		const e = document.documentElement,
+			m = localStorage.getItem('mode') || 'system',
+			l =
+				m === 'light' ||
+				(m === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+
+		e.classList[l ? 'remove' : 'add']('dark');
+		e.style.colorScheme = l ? 'light' : 'dark';
+		localStorage.setItem('mode', m);
+	}
+
+	const stringified = setInitialMode.toString();
 </script>
 
 <svelte:head>
