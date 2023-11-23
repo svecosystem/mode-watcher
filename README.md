@@ -95,3 +95,7 @@ A writeable store that represents the user's mode preference. It can be `"light"
 ### systemPrefersMode
 
 A readable store that represents the operating system's mode preference. It can be `"light"`, `"dark"` or `undefined` if evaluated on the server. Will automatically track changes to the operating system's mode preference unless this is disabled with the `tracking()` method which takes a boolean. Normally this is disabled by setting the `track` prop to false in the `<ModeWatcher>` component.
+
+## Demo / Reproduction Template
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/huntabyte/mode-watcher)
