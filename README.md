@@ -29,6 +29,14 @@ The `ModeWatcher` component will automatically detect the user's preferences and
 <ModeWatcher track={false} />
 ```
 
+`ModeWatcher` can also be configured with a default mode instead of automatically detecting the user's preference.
+
+To set a default mode, use the `defaultMode` prop:
+
+```svelte
+<ModeWatcher defaultMode={"dark"}>
+```
+
 ## API
 
 ### toggleMode
