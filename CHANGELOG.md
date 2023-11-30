@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.1.2
+
+### Patch Changes
+
+- f30aa9f: add defaultMode prop
+
 ## 0.1.1
 
 ### Patch Changes
