@@ -3,36 +3,32 @@
 	import { systemPrefersMode, setMode, localStorageKey, mode } from './mode';
 
 	export let track = true;
-
-	function setInitialMode() {
-		const htmlEl = document.documentElement;
-
-		const mode = localStorage.getItem('mode') || 'system';
-		const system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
-
-		if (mode === 'light' || (mode === 'system' && system === 'light')) {
-			htmlEl.classList.remove('dark');
-			htmlEl.style.colorScheme = 'light';
-		} else {
-			htmlEl.classList.add('dark');
-			htmlEl.style.colorScheme = 'dark';
-		}
-
-		localStorage.setItem('mode', mode);
-	}
-
-	const stringified = setInitialMode.toString();
+	export let defaultMode: 'light' | 'dark' | 'system' = 'system';
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || 'system');
+		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || defaultMode);
 
 		return () => {
 			unsubscriber();
 		};
 	});
+
+	function setInitialMode() {
+		const elem = document.documentElement,
+			mode = localStorage.getItem('mode') || '<DEFAULT_MODE>',
+			light =
+				mode === 'light' ||
+				(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+
+		elem.classList[light ? 'remove' : 'add']('dark');
+		elem.style.colorScheme = light ? 'light' : 'dark';
+		localStorage.setItem('mode', mode);
+	}
+
+	const stringified = setInitialMode.toString().replace('<DEFAULT_MODE>', defaultMode);
 </script>
 
 <svelte:head>
