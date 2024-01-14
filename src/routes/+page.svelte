@@ -20,7 +20,6 @@
 				return themeColorElement.outerHTML;
 			}
 		}
-		return undefined;
 	});
 </script>
 
