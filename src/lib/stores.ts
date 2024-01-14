@@ -110,12 +110,21 @@ function createDerivedMode() {
 
 			withoutTransition(() => {
 				const htmlEl = document.documentElement;
+				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
 					htmlEl.classList.remove('dark');
 					htmlEl.style.colorScheme = 'light';
+					if (themeColorEl) {
+						// TODO: how do I get the themeColor prop?
+						// themeColorEl.setAttribute('content', themeColors.light);
+					}
 				} else {
 					htmlEl.classList.add('dark');
 					htmlEl.style.colorScheme = 'dark';
+					if (themeColorEl) {
+						// TODO: how do I get the themeColor prop?
+						// themeColorEl.setAttribute('content', themeColors.dark);
+					}
 				}
 			});
 

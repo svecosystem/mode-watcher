@@ -4,6 +4,7 @@
 
 	export let track = true;
 	export let defaultMode: 'light' | 'dark' | 'system' = 'system';
+	export let themeColors: { dark: string; light: string } | undefined = undefined;
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
@@ -16,22 +17,34 @@
 		};
 	});
 
-	function setInitialMode() {
+	function setInitialMode(
+		defaultMode: 'light' | 'dark' | 'system',
+		themeColors?: { dark: string; light: string }
+	) {
 		const elem = document.documentElement,
-			mode = localStorage.getItem('mode') || '<DEFAULT_MODE>',
+			mode = localStorage.getItem('mode') || defaultMode,
 			light =
 				mode === 'light' ||
 				(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
 
 		elem.classList[light ? 'remove' : 'add']('dark');
 		elem.style.colorScheme = light ? 'light' : 'dark';
+
+		if (themeColors) {
+			const te = document.querySelector('meta[name="theme-color"]');
+			if (te) {
+				te.setAttribute('content', mode === 'light' ? themeColors.light : themeColors.dark);
+			}
+		}
+
 		localStorage.setItem('mode', mode);
 	}
 
-	const stringified = setInitialMode.toString().replace('<DEFAULT_MODE>', defaultMode);
+	const args = `"${defaultMode}"${themeColors ? `, ${JSON.stringify(themeColors)}` : ''}`;
+	const stringified = setInitialMode.toString();
 </script>
 
 <svelte:head>
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<script nonce="%sveltekit.nonce%">(` + stringified + `)();</script>`}
+	{@html `<script nonce="%sveltekit.nonce%">(` + stringified + `)(` + args + `);</script>`}
 </svelte:head>
