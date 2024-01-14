@@ -115,14 +115,14 @@ function createDerivedMode() {
 					htmlEl.classList.remove('dark');
 					htmlEl.style.colorScheme = 'light';
 					if (themeColorEl) {
-						// TODO: how do I get the themeColor prop?
+						// TODO: how do I get the themeColors prop?
 						// themeColorEl.setAttribute('content', themeColors.light);
 					}
 				} else {
 					htmlEl.classList.add('dark');
 					htmlEl.style.colorScheme = 'dark';
 					if (themeColorEl) {
-						// TODO: how do I get the themeColor prop?
+						// TODO: how do I get the themeColors prop?
 						// themeColorEl.setAttribute('content', themeColors.dark);
 					}
 				}
