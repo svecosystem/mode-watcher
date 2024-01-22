@@ -6,7 +6,7 @@ import {
 	setMode,
 	toggleMode,
 	resetMode
-} from './mode';
+} from './mode.js';
 
 export {
 	setMode,

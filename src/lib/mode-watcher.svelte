@@ -7,11 +7,12 @@
 		mode,
 		themeColors as themeColorsStore
 	} from './mode.js';
+	import type { Mode, ThemeColors } from './types.js';
 
 	export let track = true;
-	export let defaultMode: 'light' | 'dark' | 'system' = 'system';
+	export let defaultMode: Mode = 'system';
 	// TODO: how can I pass this prop to stores in stores.ts BEFORE they are initialized??
-	export let themeColors: { dark: string; light: string } | undefined = undefined;
+	export let themeColors: ThemeColors = undefined;
 
 	themeColorsStore.set(themeColors);
 
@@ -26,23 +27,23 @@
 		};
 	});
 
-	function setInitialMode(
-		defaultMode: 'light' | 'dark' | 'system',
-		themeColors?: { dark: string; light: string }
-	) {
-		const elem = document.documentElement,
-			mode = localStorage.getItem('mode') || defaultMode,
-			light =
-				mode === 'light' ||
-				(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+	function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
+		const rootEl = document.documentElement;
+		const mode = localStorage.getItem('mode') || defaultMode;
+		const light =
+			mode === 'light' ||
+			(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
 
-		elem.classList[light ? 'remove' : 'add']('dark');
-		elem.style.colorScheme = light ? 'light' : 'dark';
+		rootEl.classList[light ? 'remove' : 'add']('dark');
+		rootEl.style.colorScheme = light ? 'light' : 'dark';
 
 		if (themeColors) {
-			const te = document.querySelector('meta[name="theme-color"]');
-			if (te) {
-				te.setAttribute('content', mode === 'light' ? themeColors.light : themeColors.dark);
+			const themeMetaEl = document.querySelector('meta[name="theme-color"]');
+			if (themeMetaEl) {
+				themeMetaEl.setAttribute(
+					'content',
+					mode === 'light' ? themeColors.light : themeColors.dark
+				);
 			}
 		}
 

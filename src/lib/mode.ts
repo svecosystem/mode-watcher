@@ -6,6 +6,7 @@ import {
 	derivedMode,
 	themeColors
 } from './stores.js';
+import type { Mode } from './types.js';
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
@@ -13,7 +14,7 @@ export function toggleMode(): void {
 }
 
 /** Set the mode to light or dark */
-export function setMode(mode: 'dark' | 'light' | 'system'): void {
+export function setMode(mode: Mode): void {
 	userPrefersMode.set(mode);
 }
 
