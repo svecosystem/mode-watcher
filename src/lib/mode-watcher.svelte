@@ -1,11 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { systemPrefersMode, setMode, localStorageKey, mode } from './mode';
+	import {
+		systemPrefersMode,
+		setMode,
+		localStorageKey,
+		mode,
+		themeColors as themeColorsStore
+	} from './mode.js';
 
 	export let track = true;
 	export let defaultMode: 'light' | 'dark' | 'system' = 'system';
 	// TODO: how can I pass this prop to stores in stores.ts BEFORE they are initialized??
 	export let themeColors: { dark: string; light: string } | undefined = undefined;
+
+	themeColorsStore.set(themeColors);
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});

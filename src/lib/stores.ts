@@ -1,5 +1,6 @@
 import { writable, derived } from 'svelte/store';
-import { withoutTransition } from './without-transition';
+import { withoutTransition } from './without-transition.js';
+import type { ThemeColors } from './types.js';
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -24,6 +25,10 @@ export const userPrefersMode = createUserPrefersMode();
  * Readable store that represents the system's preferred mode (`"dark"`, `"light"` or `undefined`)
  */
 export const systemPrefersMode = createSystemMode();
+/**
+ * Theme colors for light and dark modes.
+ */
+export const themeColors = writable<ThemeColors>(undefined);
 /**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
@@ -102,8 +107,8 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode],
-		([$userPrefersMode, $systemPrefersMode]) => {
+		[userPrefersMode, systemPrefersMode, themeColors],
+		([$userPrefersMode, $systemPrefersMode, $themeColors]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
@@ -114,16 +119,14 @@ function createDerivedMode() {
 				if (derivedMode === 'light') {
 					htmlEl.classList.remove('dark');
 					htmlEl.style.colorScheme = 'light';
-					if (themeColorEl) {
-						// TODO: how do I get the themeColors prop?
-						// themeColorEl.setAttribute('content', themeColors.light);
+					if (themeColorEl && $themeColors) {
+						themeColorEl.setAttribute('content', $themeColors.light);
 					}
 				} else {
 					htmlEl.classList.add('dark');
 					htmlEl.style.colorScheme = 'dark';
-					if (themeColorEl) {
-						// TODO: how do I get the themeColors prop?
-						// themeColorEl.setAttribute('content', themeColors.dark);
+					if (themeColorEl && $themeColors) {
+						themeColorEl.setAttribute('content', $themeColors.dark);
 					}
 				}
 			});

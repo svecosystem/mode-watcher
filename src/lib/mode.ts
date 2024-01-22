@@ -1,5 +1,11 @@
 import { get } from 'svelte/store';
-import { localStorageKey, userPrefersMode, systemPrefersMode, derivedMode } from './stores';
+import {
+	localStorageKey,
+	userPrefersMode,
+	systemPrefersMode,
+	derivedMode,
+	themeColors
+} from './stores.js';
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
@@ -16,4 +22,4 @@ export function resetMode(): void {
 	userPrefersMode.set('system');
 }
 
-export { localStorageKey, userPrefersMode, systemPrefersMode, derivedMode as mode };
+export { localStorageKey, userPrefersMode, systemPrefersMode, derivedMode as mode, themeColors };
