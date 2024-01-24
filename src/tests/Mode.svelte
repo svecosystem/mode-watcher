@@ -4,7 +4,11 @@
 	export let track = true;
 </script>
 
-<ModeWatcher {track} />
+<svelte:head>
+	<meta name="theme-color" content="black" />
+</svelte:head>
+
+<ModeWatcher {track} themeColors={{ dark: 'black', light: 'white' }} />
 <span data-testid="mode">{$mode}</span>
 <button on:click={toggleMode} data-testid="toggle"> toggle </button>
 <button on:click={() => setMode('light')} data-testid="light">light</button>
