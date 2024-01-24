@@ -11,7 +11,6 @@
 
 	export let track = true;
 	export let defaultMode: Mode = 'system';
-	// TODO: how can I pass this prop to stores in stores.ts BEFORE they are initialized??
 	export let themeColors: ThemeColors = undefined;
 
 	themeColorsStore.set(themeColors);
@@ -20,7 +19,7 @@
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		setMode((localStorage.getItem(localStorageKey) as 'dark' | 'light' | 'system') || defaultMode);
+		setMode((localStorage.getItem(localStorageKey) as Mode) || defaultMode);
 
 		return () => {
 			unsubscriber();
@@ -29,7 +28,7 @@
 
 	function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
 		const rootEl = document.documentElement;
-		const mode = localStorage.getItem('mode') || defaultMode;
+		const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
 		const light =
 			mode === 'light' ||
 			(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
