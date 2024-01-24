@@ -37,6 +37,20 @@ To set a default mode, use the `defaultMode` prop:
 <ModeWatcher defaultMode={"dark"}>
 ```
 
+`ModeWatcher` can manage the `theme-color` meta tag for you.
+
+To enable this, set the `themeColor` prop to your preferred colors:
+
+```svelte
+<ModeWatcher themeColor={{ dark: "black", light: "white" }}>
+```
+
+Note that for this to work, you must have added the `theme-color` meta tag to your `head` element in `app.html`:
+
+```html
+<meta name="theme-color" content="black" />
+```
+
 ## API
 
 ### toggleMode
