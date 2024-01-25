@@ -45,24 +45,6 @@ To enable this, set the `themeColor` prop to your preferred colors:
 <ModeWatcher themeColor={{ dark: "black", light: "white" }}>
 ```
 
-Note that for this to work, you must have added the `theme-color` meta tag to your `head` element in `app.html`:
-
-```diff
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-+		<meta name="theme-color" content="black" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div>%sveltekit.body%</div>
-	</body>
-</html>
-```
-
 ## API
 
 ### toggleMode
