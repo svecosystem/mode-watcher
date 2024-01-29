@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.2.0
+
+### Minor Changes
+
+- Allow `mode-watcher` to manage the theme-color meta tag ([#48](https://github.com/svecosystem/mode-watcher/pull/48))
+
 ## 0.1.2
 
 ### Patch Changes
