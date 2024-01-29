@@ -3,5 +3,5 @@
 	import ModeWatcher from '$lib/mode-watcher.svelte';
 </script>
 
-<ModeWatcher />
+<ModeWatcher themeColors={{ dark: 'black', light: 'white' }} />
 <slot />
