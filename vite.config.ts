@@ -14,8 +14,8 @@ export default defineConfig({
 		setupFiles: ['./scripts/setupTest.ts'],
 		// Exclude files in v8
 		coverage: {
-			exclude: ['setupTest.ts']
+			exclude: ['setupTest.ts'],
 		},
-		alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }]
-	}
+		alias: [{ find: /^svelte$/, replacement: 'svelte/internal' }],
+	},
 });

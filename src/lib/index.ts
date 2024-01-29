@@ -5,7 +5,7 @@ import {
 	mode,
 	setMode,
 	toggleMode,
-	resetMode
+	resetMode,
 } from './mode.js';
 
 export {
@@ -15,7 +15,7 @@ export {
 	localStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
-	mode
+	mode,
 };
 
 export { default as ModeWatcher } from './mode-watcher.svelte';

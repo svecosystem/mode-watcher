@@ -5,9 +5,11 @@
 		setMode,
 		localStorageKey,
 		mode,
-		themeColors as themeColorsStore
+		themeColors as themeColorsStore,
+		setInitialMode,
 	} from './mode.js';
 	import type { Mode, ThemeColors } from './types.js';
+	import { isValidMode } from './stores.js';
 
 	export let track = true;
 	export let defaultMode: Mode = 'system';
@@ -19,38 +21,15 @@
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		setMode((localStorage.getItem(localStorageKey) as Mode) || defaultMode);
+		const localStorageMode = localStorage.getItem(localStorageKey);
+		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
 
 		return () => {
 			unsubscriber();
 		};
 	});
 
-	function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
-		const rootEl = document.documentElement;
-		const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
-		const light =
-			mode === 'light' ||
-			(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
-
-		rootEl.classList[light ? 'remove' : 'add']('dark');
-		rootEl.style.colorScheme = light ? 'light' : 'dark';
-
-		if (themeColors) {
-			const themeMetaEl = document.querySelector('meta[name="theme-color"]');
-			if (themeMetaEl) {
-				themeMetaEl.setAttribute(
-					'content',
-					mode === 'light' ? themeColors.light : themeColors.dark
-				);
-			}
-		}
-
-		localStorage.setItem('mode', mode);
-	}
-
 	const args = `"${defaultMode}"${themeColors ? `, ${JSON.stringify(themeColors)}` : ''}`;
-	const stringified = setInitialMode.toString();
 </script>
 
 <svelte:head>
@@ -61,5 +40,9 @@
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<script nonce="%sveltekit.nonce%">(` + stringified + `)(` + args + `);</script>`}
+	{@html `<script nonce="%sveltekit.nonce%">(` +
+		setInitialMode.toString() +
+		`)(` +
+		args +
+		`);</script>`}
 </svelte:head>

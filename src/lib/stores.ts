@@ -7,7 +7,7 @@ const noopStorage = {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	getItem: (_key: string) => null,
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	setItem: (_key: string, _value: string) => {}
+	setItem: (_key: string, _value: string) => {},
 };
 
 // whether we are running on server vs client
@@ -68,7 +68,7 @@ function createUserPrefersMode() {
 
 	return {
 		subscribe,
-		set
+		set,
 	};
 }
 
@@ -108,7 +108,7 @@ function createSystemMode() {
 	return {
 		subscribe,
 		query,
-		tracking
+		tracking,
 	};
 }
 
@@ -143,10 +143,11 @@ function createDerivedMode() {
 	);
 
 	return {
-		subscribe
+		subscribe,
 	};
 }
 
-function isValidMode(value: unknown): value is Mode {
+export function isValidMode(value: unknown): value is Mode {
+	if (typeof value !== 'string') return false;
 	return modes.includes(value as Mode);
 }
