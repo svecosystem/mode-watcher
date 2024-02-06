@@ -23,6 +23,7 @@ export function resetMode(): void {
 	userPrefersMode.set('system');
 }
 
+/** Used to set the mode on initial page load to prevent FOUC */
 export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
@@ -40,7 +41,7 @@ export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
 		}
 	}
 
-	localStorage.setItem('mode', mode);
+	localStorage.setItem('mode-watcher-mode', mode);
 }
 
 export { localStorageKey, userPrefersMode, systemPrefersMode, derivedMode as mode, themeColors };
