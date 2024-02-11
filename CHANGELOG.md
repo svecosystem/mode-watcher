@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.2.1
+
+### Patch Changes
+
+- Fix incorrect localStorage key ([#51](https://github.com/svecosystem/mode-watcher/pull/51))
+
 ## 0.2.0
 
 ### Minor Changes
