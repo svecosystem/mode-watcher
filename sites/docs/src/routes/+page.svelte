@@ -14,7 +14,6 @@
 </script>
 
 <span class="hero-gradient"></span>
-<span class="features-gradient"></span>
 <div class="container relative mx-auto max-w-5xl py-20 sm:py-28 md:py-32">
 	<h1
 		class="text-balance text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
@@ -25,7 +24,7 @@
 		Simple utilities to manage light and dark mode in your SvelteKit app. Maintained by the <a
 			href="https://github.com/svecosystem"
 			target="_blank"
-			class="font-medium text-brand underline underline-offset-4 transition-all hover:text-brand/95 hover:underline-offset-[6px]"
+			class="text-brand hover:text-brand/95 font-medium underline underline-offset-4 transition-all hover:underline-offset-[6px]"
 			>Svecosystem</a
 		> team.
 	</p>
