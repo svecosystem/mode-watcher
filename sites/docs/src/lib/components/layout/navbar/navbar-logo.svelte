@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SvecosystemDark, SvecosystemLight } from "$lib/components/logos";
+	import { ModeWatcherDark, ModeWatcherLight } from "$lib/components/logos";
 </script>
 
 <div class="flex items-center gap-1.5 lg:flex-1">
@@ -7,8 +7,8 @@
 		href="/"
 		class="flex flex-shrink-0 items-end gap-1.5 text-xl font-bold text-gray-900 dark:text-white"
 	>
-		<SvecosystemLight class="block h-5 w-auto dark:hidden" />
-		<SvecosystemDark class="hidden h-5 w-auto dark:block" />
-		<span class="sr-only"> Current Page Here </span>
+		<ModeWatcherLight class="block h-7 w-auto dark:hidden" />
+		<ModeWatcherDark class="hidden h-7 w-auto dark:block" />
+		<span class="sr-only"> Home </span>
 	</a>
 </div>

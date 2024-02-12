@@ -29,7 +29,7 @@ export const navigation: Navigation = {
 		},
 		{
 			title: "Svecosystem",
-			href: "https://svecosystem.com",
+			href: "https://github.com/svecosystem",
 			external: true,
 		},
 		{
