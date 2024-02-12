@@ -32,7 +32,7 @@ Add the `<ModeWatcher />` component to your root `+layout.svelte` file.
 
 <Step>That's it!</Step>
 
-You're ready to use Mode Watcher in your Svelte app.
+You're now ready to use Mode Watcher in your Svelte app.
 
 Here's an example of how to use the `toggleMode` function to toggle the mode:
 
