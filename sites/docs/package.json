@@ -71,7 +71,7 @@
 	"dependencies": {
 		"@melt-ui/svelte": "^0.70.0",
 		"bits-ui": "^0.14.0",
-		"mode-watcher": "workspace:^",
+		"mode-watcher": "workspace:*",
 		"rehype-slug": "^6.0.0",
 		"svelte-interactions": "^0.2.0",
 		"vaul-svelte": "^0.0.7"

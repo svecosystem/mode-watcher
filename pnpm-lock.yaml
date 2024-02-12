@@ -111,7 +111,7 @@ importers:
         specifier: ^0.14.0
         version: 0.14.0(svelte@4.2.10)
       mode-watcher:
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/mode-watcher
       rehype-slug:
         specifier: ^6.0.0
