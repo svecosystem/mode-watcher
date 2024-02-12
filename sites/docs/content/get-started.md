@@ -9,19 +9,20 @@ tagline: Guide
 </script>
 
 <Steps>
+
 <Step>Install the package</Step>
 
-You can install the project via `npm` or `pnpm`.
+Install the `mode-watcher` package from npm.
 
 ```bash
-pnpm add mode-watcher
+npm install mode-watcher
 ```
 
 <Step>Add the ModeWatcher component</Step>
 
 Add the `<ModeWatcher />` component to your root `+layout.svelte` file.
 
-```svelte {2,5}#add
+```svelte {2,5}#add title="src/routes/+layout.svelte"
 <script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
 </script>
@@ -36,7 +37,7 @@ You're now ready to use Mode Watcher in your Svelte app.
 
 Here's an example of how to use the `toggleMode` function to toggle the mode:
 
-```svelte
+```svelte title="src/lib/components/light-switch.svelte"
 <script lang="ts">
 	import { toggleMode } from "mode-watcher";
 </script>
