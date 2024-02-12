@@ -30,6 +30,7 @@ vi.mock('$app/navigation', (): typeof navigation => ({
 	invalidateAll: () => Promise.resolve(),
 	preloadData: () => Promise.resolve(),
 	preloadCode: () => Promise.resolve(),
+	onNavigate: () => {},
 }));
 
 // Mock SvelteKit runtime module $app/stores
