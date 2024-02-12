@@ -1,14 +1,12 @@
 ---
-title: Introduction
-description: What is this?
+title: Get Started
+description: Start using Mode Watcher in your SvelteKit app.
 tagline: Guide
 ---
 
 <script>
 	import { Callout } from '$lib/components'
 </script>
-
-Mode Watcher provides simple utilities to manage light & dark mode in your SvelteKit app.
 
 <Callout type="warning">
 

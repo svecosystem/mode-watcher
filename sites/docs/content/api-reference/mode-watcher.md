@@ -1,14 +1,12 @@
 ---
-title: Introduction
-description: What is this?
-tagline: Guide
+title: <ModeWatcher />
+description: API Reference for the ModeWatcher component.
+tagline: API Reference
 ---
 
 <script>
 	import { Callout } from '$lib/components'
 </script>
-
-Mode Watcher provides simple utilities to manage light & dark mode in your SvelteKit app.
 
 <Callout type="warning">
 

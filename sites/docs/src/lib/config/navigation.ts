@@ -50,18 +50,19 @@ export const navigation: Navigation = {
 					items: [],
 				},
 				{
-					title: "Configuration",
-					href: "/docs/guide/configuration",
+					title: "Get Started",
+					href: "/docs/get-started",
 					items: [],
 				},
+			],
+		},
+		{
+			title: "API Reference",
+			collapsible: true,
+			items: [
 				{
-					title: "Components",
-					href: "/docs/guide/components",
-					items: [],
-				},
-				{
-					title: "Code Blocks",
-					href: "/docs/guide/code-blocks",
+					title: "<ModeWatcher />",
+					href: "/docs/api-reference/mode-watcher",
 					items: [],
 				},
 			],

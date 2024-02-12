@@ -1,5 +1,4 @@
-name: Release
-
+name: Publish Packages
 on:
     push:
         branches:
@@ -9,33 +8,48 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
     release:
-        permissions:
-            contents: write # to create release (changesets/action)
-            pull-requests: write # to create pull request (changesets/action)
-        name: Release
+        name: Build & Publish @latest Release
+        if: github.repository == 'svecosystem/mode-watcher'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repo
               uses: actions/checkout@v3
               with:
-                  # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
                   fetch-depth: 0
-            - uses: pnpm/action-setup@v2.2.4
+
+            - name: Use PNPM v8
+              uses: pnpm/action-setup@v2
               with:
-                  version: 8.6.3
-            - name: Setup Node.js
+                  version: 8
+
+            - name: Use Node v20
               uses: actions/setup-node@v3
               with:
-                  node-version: "16.x"
-                  cache: pnpm
+                  node-version: 20
 
-            - run: pnpm install --frozen-lockfile
+            # PNPM Store cache setup
+            - name: Get pnpm store directory
+              id: pnpm-cache
+              run: |
+                  echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+            - name: Setup pnpm cache
+              uses: actions/cache@v3
+              with:
+                  path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+                  key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+                  restore-keys: |
+                      ${{ runner.os }}-pnpm-store-
 
-            - name: Create Release Pull Request or Publish to npm
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Create Release Pull Request or Publish
               id: changesets
               uses: changesets/action@v1
               with:
-                  publish: pnpm release
+                  commit: "chore(release): version package"
+                  title: "chore(release): version package"
+                  publish: pnpm ci:publish
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

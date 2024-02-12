@@ -16,7 +16,7 @@
 	<meta name="twitter:site" content={siteConfig.url} />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={siteConfig.description} />
-	<meta name="twitter:image" content="https://shadcn-svelte.com/og.png" />
+	<meta name="twitter:image" content={siteConfig.ogImage.url} />
 	<meta name="twitter:image:alt" content={siteConfig.name} />
 	<meta name="twitter:creator" content={siteConfig.author} />
 	<meta property="og:title" content={title} />

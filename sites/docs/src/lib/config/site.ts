@@ -4,7 +4,7 @@ export const siteConfig = {
 	description: "SSR-friendly light and dark mode for SvelteKit.",
 	links: {
 		x: "https://x.com/huntabyte",
-		github: "https://github.com/svecosystem",
+		github: "https://github.com/svecosystem/mode-watcher",
 	},
 	author: "Huntabyte",
 	keywords:
