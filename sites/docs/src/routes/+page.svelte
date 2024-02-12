@@ -14,7 +14,6 @@
 </script>
 
 <span class="hero-gradient"></span>
-<span class="features-gradient"></span>
 <div class="container relative mx-auto max-w-5xl py-20 sm:py-28 md:py-32">
 	<h1
 		class="text-balance text-center text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
