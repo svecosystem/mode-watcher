@@ -2,6 +2,14 @@
 
 Simple utilities to manage light & dark mode in your SvelteKit app.
 
+<!-- automd:badges license name="mode-watcher" color="yellow" github="svecosystem/mode-watcher" -->
+
+[![npm version](https://flat.badgen.net/npm/v/mode-watcher?color=yellow)](https://npmjs.com/package/mode-watcher)
+[![npm downloads](https://flat.badgen.net/npm/dm/mode-watcher?color=yellow)](https://npmjs.com/package/mode-watcher)
+[![license](https://flat.badgen.net/github/license/svecosystem/mode-watcher?color=yellow)](https://github.com/svecosystem/mode-watcher/blob/main/LICENSE)
+
+<!-- /automd -->
+
 ## Installation
 
 ```bash
@@ -115,3 +123,26 @@ A readable store that represents the operating system's mode preference. It can 
 ## Demo / Reproduction Template
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/svecosystem/mode-watcher-reproduction)
+
+## Sponsors
+
+This project is supported by the following beautiful people/organizations:
+
+<p align="center">
+  <a href="https://github.com/sponsors/huntabyte">
+    <img src='https://cdn.jsdelivr.net/gh/huntabyte/static/sponsors.svg' alt="Logos from Sponsors" />
+  </a>
+</p>
+
+## License
+
+<!-- automd:contributors license=MIT author="huntabyte" github="svecosystem/mode-watcher" -->
+
+Published under the [MIT](https://github.com/svecosystem/mode-watcher/blob/main/LICENSE) license.
+Made by [@huntabyte](https://github.com/huntabyte) and [community](https://github.com/svecosystem/mode-watcher/graphs/contributors) 💛
+<br><br>
+<a href="https://github.com/svecosystem/mode-watcher/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=svecosystem/mode-watcher" />
+</a>
+
+<!-- /automd -->
