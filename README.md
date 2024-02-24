@@ -124,6 +124,16 @@ A readable store that represents the operating system's mode preference. It can 
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/svecosystem/mode-watcher-reproduction)
 
+## Sponsors
+
+This project is supported by the following beautiful people/organizations:
+
+<p align="center">
+  <a href="https://github.com/sponsors/huntabyte">
+    <img src='https://cdn.jsdelivr.net/gh/huntabyte/static/sponsors.svg' alt="Logos from Sponsors" />
+  </a>
+</p>
+
 ## License
 
 <!-- automd:contributors license=MIT author="huntabyte" github="svecosystem/mode-watcher" -->
