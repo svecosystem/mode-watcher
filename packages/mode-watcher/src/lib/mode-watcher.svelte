@@ -8,8 +8,10 @@
 		themeColors as themeColorsStore,
 		setInitialMode,
 	} from './mode.js';
-	import type { Mode, ThemeColors } from './types.js';
+	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
 	import { isValidMode } from './stores.js';
+
+	type $$Props = ModeWatcherProps;
 
 	export let track = true;
 	export let defaultMode: Mode = 'system';
