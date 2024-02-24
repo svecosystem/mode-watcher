@@ -7,8 +7,8 @@
 		href="/"
 		class="flex flex-shrink-0 items-end gap-1.5 text-xl font-bold text-gray-900 dark:text-white"
 	>
-		<ModeWatcherLight class="block h-[26px] w-auto dark:hidden" />
-		<ModeWatcherDark class="hidden h-[26px] w-auto dark:block" />
+		<ModeWatcherLight class="block h-7 w-auto dark:hidden" />
+		<ModeWatcherDark class="hidden h-7 w-auto dark:block" />
 		<span class="sr-only"> Home </span>
 	</a>
 </div>

@@ -65,6 +65,36 @@ export const navigation: Navigation = {
 					href: "/docs/api-reference/mode-watcher",
 					items: [],
 				},
+				{
+					title: "setMode",
+					href: "/docs/api-reference/set-mode",
+					items: [],
+				},
+				{
+					title: "toggleMode",
+					href: "/docs/api-reference/toggle-mode",
+					items: [],
+				},
+				{
+					title: "mode",
+					href: "/docs/api-reference/mode",
+					items: [],
+				},
+				{
+					title: "systemPrefersMode",
+					href: "/docs/api-reference/system-prefers-mode",
+					items: [],
+				},
+				{
+					title: "userPrefersMode",
+					href: "/docs/api-reference/user-prefers-mode",
+					items: [],
+				},
+				{
+					title: "localStorageKey",
+					href: "/docs/api-reference/local-storage-key",
+					items: [],
+				},
 			],
 		},
 	],
