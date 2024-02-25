@@ -139,7 +139,7 @@ This project is supported by the following beautiful people/organizations:
 <!-- automd:contributors license=MIT author="huntabyte" github="svecosystem/mode-watcher" -->
 
 Published under the [MIT](https://github.com/svecosystem/mode-watcher/blob/main/LICENSE) license.
-Made by [@huntabyte](https://github.com/huntabyte) and [community](https://github.com/svecosystem/mode-watcher/graphs/contributors) 💛
+Made by [@huntabyte](https://github.com/huntabyte), [@ollema](https://github.com/ollema), and [community](https://github.com/svecosystem/mode-watcher/graphs/contributors) 💛
 <br><br>
 <a href="https://github.com/svecosystem/mode-watcher/graphs/contributors">
 <img src="https://contrib.rocks/image?repo=svecosystem/mode-watcher" />
