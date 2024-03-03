@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.2.2
+
+### Patch Changes
+
+- Update `moduleResolution` to `NodeNext` ([#63](https://github.com/svecosystem/mode-watcher/pull/63))
+
 ## 0.2.1
 
 ### Patch Changes
