@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { toggleMode, setMode, resetMode, userPrefersMode, systemPrefersMode, mode } from '$lib';
+	import {
+		toggleMode,
+		setMode,
+		resetMode,
+		userPrefersMode,
+		systemPrefersMode,
+		mode,
+	} from '$lib/index.js';
 
 	import { derived } from 'svelte/store';
 	import { browser } from '$app/environment';

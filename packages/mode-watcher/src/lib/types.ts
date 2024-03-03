@@ -1,4 +1,4 @@
-import type { modes } from './stores';
+import type { modes } from './stores.js';
 
 export type Mode = (typeof modes)[number];
 export type ThemeColors = { dark: string; light: string } | undefined;
