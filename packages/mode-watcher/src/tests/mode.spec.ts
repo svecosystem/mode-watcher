@@ -2,19 +2,25 @@ import { render } from '@testing-library/svelte';
 import { expect, it } from 'vitest';
 import Mode from './Mode.svelte';
 import StealthMode from './StealthMode.svelte';
-import userEvent from '@testing-library/user-event';
-import { mediaQueryState } from '../../scripts/setupTest';
+import { userEvent } from '@testing-library/user-event';
+import { mediaQueryState } from '../../scripts/setupTest.js';
 import { tick } from 'svelte';
 
+function setup() {
+	const user = userEvent.setup();
+	const returned = render(Mode);
+	return { user, ...returned };
+}
+
 it('renders mode', async () => {
-	const { container } = render(Mode);
+	const { container } = setup();
 	const rootEl = container.parentElement;
 	const classes = getClasses(rootEl);
 	expect(classes).toContain('dark');
 });
 
 it('toggles the mode', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId, user } = setup();
 	const rootEl = container.parentElement;
 
 	const classes = getClasses(rootEl);
@@ -24,14 +30,14 @@ it('toggles the mode', async () => {
 	expect(colorScheme).toBe('dark');
 	expect(themeColor).toBe('black');
 	const toggle = getByTestId('toggle');
-	await userEvent.click(toggle);
+	await user.click(toggle);
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	const themeColor2 = getThemeColor(rootEl);
 	expect(classes2).not.toContain('dark');
 	expect(colorScheme2).toBe('light');
 	expect(themeColor2).toBe('white');
-	await userEvent.click(toggle);
+	await user.click(toggle);
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
 	const themeColor3 = getThemeColor(rootEl);
@@ -41,7 +47,7 @@ it('toggles the mode', async () => {
 });
 
 it('allows the user to set the mode', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId, user } = setup();
 	const rootEl = container.parentElement;
 	const classes = getClasses(rootEl);
 	const colorScheme = getColorScheme(rootEl);
@@ -50,7 +56,7 @@ it('allows the user to set the mode', async () => {
 	expect(colorScheme).toBe('dark');
 	expect(themeColor).toBe('black');
 	const light = getByTestId('light');
-	await userEvent.click(light);
+	await user.click(light);
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	const themeColor2 = getThemeColor(rootEl);
@@ -59,7 +65,7 @@ it('allows the user to set the mode', async () => {
 	expect(themeColor2).toBe('white');
 
 	const dark = getByTestId('dark');
-	await userEvent.click(dark);
+	await user.click(dark);
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
 	const themeColor3 = getThemeColor(rootEl);
@@ -69,7 +75,7 @@ it('allows the user to set the mode', async () => {
 });
 
 it('keeps the mode store in sync with current mode', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId, user } = setup();
 	const rootEl = container.parentElement;
 	const light = getByTestId('light');
 	const dark = getByTestId('dark');
@@ -82,7 +88,7 @@ it('keeps the mode store in sync with current mode', async () => {
 	expect(themeColor).toBe('black');
 	expect(mode.textContent).toBe('dark');
 
-	await userEvent.click(light);
+	await user.click(light);
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	const themeColor2 = getThemeColor(rootEl);
@@ -91,7 +97,7 @@ it('keeps the mode store in sync with current mode', async () => {
 	expect(themeColor2).toBe('white');
 	expect(mode.textContent).toBe('light');
 
-	await userEvent.click(dark);
+	await user.click(dark);
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
 	const themeColor3 = getThemeColor(rootEl);
@@ -102,7 +108,7 @@ it('keeps the mode store in sync with current mode', async () => {
 });
 
 it('resets the mode to system preferences', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId, user } = setup();
 	const rootEl = container.parentElement;
 	const light = getByTestId('light');
 	const reset = getByTestId('reset');
@@ -115,7 +121,7 @@ it('resets the mode to system preferences', async () => {
 	expect(themeColor).toBe('black');
 	expect(mode.textContent).toBe('dark');
 
-	await userEvent.click(light);
+	await user.click(light);
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	const themeColor2 = getThemeColor(rootEl);
@@ -124,7 +130,7 @@ it('resets the mode to system preferences', async () => {
 	expect(themeColor2).toBe('white');
 	expect(mode.textContent).toBe('light');
 
-	await userEvent.click(reset);
+	await user.click(reset);
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
 	const themeColor3 = getThemeColor(rootEl);
@@ -135,7 +141,7 @@ it('resets the mode to system preferences', async () => {
 });
 
 it('tracks changes to system preferences', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId } = setup();
 	const rootEl = container.parentElement;
 	const mode = getByTestId('mode');
 	const classes = getClasses(rootEl);
@@ -171,7 +177,7 @@ it('tracks changes to system preferences', async () => {
 });
 
 it('stops tracking changes to system preferences when user sets a mode', async () => {
-	const { container, getByTestId } = render(Mode);
+	const { container, getByTestId, user } = setup();
 	const rootEl = container.parentElement;
 	const light = getByTestId('light');
 	const reset = getByTestId('reset');
@@ -207,7 +213,7 @@ it('stops tracking changes to system preferences when user sets a mode', async (
 	expect(themeColor3).toBe('black');
 	expect(mode.textContent).toBe('dark');
 
-	await userEvent.click(light);
+	await user.click(light);
 	const classes4 = getClasses(rootEl);
 	const colorScheme4 = getColorScheme(rootEl);
 	const themeColor4 = getThemeColor(rootEl);
@@ -238,7 +244,7 @@ it('stops tracking changes to system preferences when user sets a mode', async (
 	expect(themeColor6).toBe('white');
 	expect(mode.textContent).toBe('light');
 
-	await userEvent.click(reset);
+	await user.click(reset);
 	const classes7 = getClasses(rootEl);
 	const colorScheme7 = getColorScheme(rootEl);
 	const themeColor7 = getThemeColor(rootEl);
@@ -285,6 +291,7 @@ it('does not track changes to system preference when track prop is set to false'
 });
 
 it('also works when $mode is not used in the current page', async () => {
+	const user = userEvent.setup();
 	const { container, getByTestId } = render(StealthMode);
 	const rootEl = container.parentElement;
 
@@ -295,14 +302,14 @@ it('also works when $mode is not used in the current page', async () => {
 	expect(colorScheme).toBe('dark');
 	expect(themeColor).toBe('black');
 	const toggle = getByTestId('toggle');
-	await userEvent.click(toggle);
+	await user.click(toggle);
 	const classes2 = getClasses(rootEl);
 	const colorScheme2 = getColorScheme(rootEl);
 	const themeColor2 = getThemeColor(rootEl);
 	expect(classes2).not.toContain('dark');
 	expect(colorScheme2).toBe('light');
 	expect(themeColor2).toBe('white');
-	await userEvent.click(toggle);
+	await user.click(toggle);
 	const classes3 = getClasses(rootEl);
 	const colorScheme3 = getColorScheme(rootEl);
 	const themeColor3 = getThemeColor(rootEl);
