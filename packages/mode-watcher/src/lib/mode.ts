@@ -5,6 +5,7 @@ import {
 	systemPrefersMode,
 	derivedMode,
 	themeColors,
+	disableTransitions,
 } from './stores.js';
 import type { Mode, ThemeColors } from './types.js';
 
@@ -44,4 +45,11 @@ export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
 	localStorage.setItem('mode-watcher-mode', mode);
 }
 
-export { localStorageKey, userPrefersMode, systemPrefersMode, derivedMode as mode, themeColors };
+export {
+	localStorageKey,
+	userPrefersMode,
+	systemPrefersMode,
+	derivedMode as mode,
+	themeColors,
+	disableTransitions,
+};

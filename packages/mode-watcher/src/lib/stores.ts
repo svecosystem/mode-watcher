@@ -37,6 +37,11 @@ export const themeColors = writable<ThemeColors>(undefined);
  */
 export const derivedMode = createDerivedMode();
 
+/**
+ * Whether to disable transitions when changing the mode.
+ */
+export const disableTransitions = writable(true);
+
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
 	const defaultValue = 'system';
@@ -114,13 +119,13 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode, themeColors],
-		([$userPrefersMode, $systemPrefersMode, $themeColors]) => {
+		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions],
+		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
 
-			withoutTransition(() => {
+			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
@@ -136,7 +141,13 @@ function createDerivedMode() {
 						themeColorEl.setAttribute('content', $themeColors.dark);
 					}
 				}
-			});
+			}
+
+			if ($disableTransitions) {
+				withoutTransition(update);
+			} else {
+				update();
+			}
 
 			return derivedMode;
 		}

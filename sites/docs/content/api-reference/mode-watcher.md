@@ -81,5 +81,13 @@ export type ModeWatcherProps = {
 	 * @defaultValue `undefined`
 	 */
 	themeColors?: ThemeColors;
+
+	/**
+	 * Whether to disable transitions when the mode changes.
+	 * 
+	 * @defaultValue `true`
+	 */
+	disableTransitions?: boolean;
+	
 };
 ```
