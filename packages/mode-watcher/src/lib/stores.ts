@@ -32,6 +32,12 @@ export const systemPrefersMode = createSystemMode();
  * Theme colors for light and dark modes.
  */
 export const themeColors = writable<ThemeColors>(undefined);
+
+/**
+ * Whether to disable transitions when changing the mode.
+ */
+export const disableTransitions = writable(true);
+
 /**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
@@ -114,13 +120,13 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode, themeColors],
-		([$userPrefersMode, $systemPrefersMode, $themeColors]) => {
+		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions],
+		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
 
-			withoutTransition(() => {
+			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
@@ -136,7 +142,13 @@ function createDerivedMode() {
 						themeColorEl.setAttribute('content', $themeColors.dark);
 					}
 				}
-			});
+			}
+
+			if ($disableTransitions) {
+				withoutTransition(update);
+			} else {
+				update();
+			}
 
 			return derivedMode;
 		}

@@ -13,7 +13,6 @@
 		"preview": "vite preview",
 		"check": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write ."
 	},
