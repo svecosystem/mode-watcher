@@ -6,7 +6,7 @@
 	"author": "Hunter Johnston <https://github.com/huntabyte>",
 	"main": "index.js",
 	"scripts": {
-		"test": "pnpm -r test",
+		"test": "pnpm -F mode-watcher test",
 		"dev": "pnpm -r --parallel dev",
 		"build": "pnpm -r build",
 		"build:packages": "pnpm -F \"./packages/**\" --parallel build",

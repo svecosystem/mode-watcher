@@ -84,10 +84,9 @@ export type ModeWatcherProps = {
 
 	/**
 	 * Whether to disable transitions when the mode changes.
-	 * 
+	 *
 	 * @defaultValue `true`
 	 */
 	disableTransitions?: boolean;
-	
 };
 ```

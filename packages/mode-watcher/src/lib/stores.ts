@@ -32,15 +32,16 @@ export const systemPrefersMode = createSystemMode();
  * Theme colors for light and dark modes.
  */
 export const themeColors = writable<ThemeColors>(undefined);
-/**
- * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
- */
-export const derivedMode = createDerivedMode();
 
 /**
  * Whether to disable transitions when changing the mode.
  */
 export const disableTransitions = writable(true);
+
+/**
+ * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
+ */
+export const derivedMode = createDerivedMode();
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
