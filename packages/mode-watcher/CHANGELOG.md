@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.3.0
+
+### Minor Changes
+
+- feat: `disableTransitions` prop ([#68](https://github.com/svecosystem/mode-watcher/pull/68))
+
 ## 0.2.2
 
 ### Patch Changes
