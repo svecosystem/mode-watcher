@@ -10,6 +10,9 @@ Simple utilities to manage light & dark mode in your SvelteKit app.
 
 <!-- /automd -->
 
+[![](https://dcbadge.vercel.app/api/server/fdXy3Sk8Gq?style=flat)](https://discord.gg/fdXy3Sk8Gq)
+
+
 ## Installation
 
 ```bash
@@ -146,3 +149,15 @@ Made by [@huntabyte](https://github.com/huntabyte), [@ollema](https://github.com
 </a>
 
 <!-- /automd -->
+
+
+## Community
+
+Join the Discord server to ask questions, find collaborators, or just say hi!
+
+<a href="https://discord.gg/fdXy3Sk8Gq" alt="Svecosystem Discord community">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://invidget.switchblade.xyz/fdXy3Sk8Gq">
+  <img alt="Svecosystem Discord community" src="https://invidget.switchblade.xyz/fdXy3Sk8Gq?theme=light">
+</picture>
+</a>
