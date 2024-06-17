@@ -1,5 +1,12 @@
 # mode-watcher-docs
 
+## 0.0.3
+
+### Patch Changes
+
+- Updated dependencies [[`25e5fad771b3a1ebc51d781550cc19a0e0aa7e7c`](https://github.com/svecosystem/mode-watcher/commit/25e5fad771b3a1ebc51d781550cc19a0e0aa7e7c)]:
+  - mode-watcher@0.3.1
+
 ## 0.0.2
 
 ### Patch Changes
