@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.3.1
+
+### Patch Changes
+
+- chore: add svelte 5 to peer deps ([#77](https://github.com/svecosystem/mode-watcher/pull/77))
+
 ## 0.3.0
 
 ### Minor Changes
