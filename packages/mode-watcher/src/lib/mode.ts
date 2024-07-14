@@ -1,11 +1,14 @@
 import { get } from 'svelte/store';
 import {
-	localStorageKey,
+	modeLocalStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
 	derivedMode,
 	themeColors,
+	theme as themeStore,
 	disableTransitions,
+	derivedTheme,
+	themeLocalStorageKey
 } from './stores.js';
 import type { Mode, ThemeColors } from './types.js';
 
@@ -24,15 +27,23 @@ export function resetMode(): void {
 	userPrefersMode.set('system');
 }
 
+/** Set the theme to a custom value */
+export function setTheme(theme: string): void {
+	themeStore.set(theme)
+}
+
+
 /** Used to set the mode on initial page load to prevent FOUC */
 export function setInitialMode(
 	defaultMode: Mode,
 	themeColors?: ThemeColors,
 	darkClassNames: string[] = ['dark'],
-	lightClassNames: string[] = []
+	lightClassNames: string[] = [],
+	defaultTheme: string = '',
 ) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
+	const theme = localStorage.getItem('mode-watcher-theme') || defaultTheme
 	const light =
 		mode === 'light' ||
 		(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
@@ -52,11 +63,18 @@ export function setInitialMode(
 		}
 	}
 
+	if (theme) {
+		rootEl.setAttribute('data-theme', theme)
+		localStorage.setItem('mode-watcher-theme', theme)
+	}
+
 	localStorage.setItem('mode-watcher-mode', mode);
 }
 
 export {
-	localStorageKey,
+	modeLocalStorageKey as localStorageKey,
+	themeLocalStorageKey,
+	derivedTheme as theme,
 	userPrefersMode,
 	systemPrefersMode,
 	derivedMode as mode,

@@ -95,6 +95,21 @@ export const navigation: Navigation = {
 					href: "/docs/api-reference/local-storage-key",
 					items: [],
 				},
+				{
+					title: 'setTheme',
+					href: '/docs/api-reference/set-theme',
+					items: []
+				},
+				{
+					title: 'theme',
+					href: '/docs/api-reference/theme',
+					items: []
+				},
+				{
+					title: 'themeLocalStorageKey',
+					href: '/docs/api-reference/theme-local-storage-key',
+					items: []
+				}
 			],
 		},
 	],

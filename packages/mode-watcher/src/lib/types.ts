@@ -20,6 +20,19 @@ export type ModeWatcherProps = {
 	defaultMode?: Mode;
 
 	/**
+	 * The default theme to use, which will be applied to the root `html` element
+	 * and can be managed with the `setTheme` function.
+	 *
+	 * @example
+	 * ```html
+	 * <html data-theme="your-custom-theme"></html>
+	 * ```
+	 *
+	 * @defaultValue `undefined`
+	 */
+	defaultTheme?: string;
+
+	/**
 	 * The theme colors to use for each mode.
 	 */
 	themeColors?: ThemeColors;

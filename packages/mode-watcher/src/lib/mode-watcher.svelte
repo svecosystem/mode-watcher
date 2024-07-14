@@ -25,6 +25,7 @@
 	export let disableTransitions = true;
 	export let darkClassNames: string[] = ['dark'];
 	export let lightClassNames: string[] = [];
+	export let defaultTheme: string | undefined = 'money';
 	export let nonce: string = '';
 
 	themeColorsStore.set(themeColors);
@@ -51,7 +52,7 @@
 
 	const args = `"${defaultMode}"${
 		themeColors ? `, ${JSON.stringify(themeColors)}` : ', undefined'
-	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}`;
+	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}, "${defaultTheme}"`;
 
 	$: trueNonce = typeof window === 'undefined' ? nonce : '';
 </script>
