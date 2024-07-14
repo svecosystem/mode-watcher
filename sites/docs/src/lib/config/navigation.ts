@@ -96,20 +96,20 @@ export const navigation: Navigation = {
 					items: [],
 				},
 				{
-					title: 'setTheme',
-					href: '/docs/api-reference/set-theme',
-					items: []
+					title: "setTheme",
+					href: "/docs/api-reference/set-theme",
+					items: [],
 				},
 				{
-					title: 'theme',
-					href: '/docs/api-reference/theme',
-					items: []
+					title: "theme",
+					href: "/docs/api-reference/theme",
+					items: [],
 				},
 				{
-					title: 'themeLocalStorageKey',
-					href: '/docs/api-reference/theme-local-storage-key',
-					items: []
-				}
+					title: "themeLocalStorageKey",
+					href: "/docs/api-reference/theme-local-storage-key",
+					items: [],
+				},
 			],
 		},
 	],

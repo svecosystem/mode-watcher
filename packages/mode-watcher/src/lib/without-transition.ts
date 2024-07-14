@@ -6,13 +6,13 @@ let timeoutEnable: number;
 // Perform a task without any css transitions
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function withoutTransition(action: () => any) {
-	if (typeof document === 'undefined') return;
+	if (typeof document === "undefined") return;
 	// Clear fallback timeouts
 	clearTimeout(timeoutAction);
 	clearTimeout(timeoutEnable);
 
 	// Create style element to disable transitions
-	const style = document.createElement('style');
+	const style = document.createElement("style");
 	const css = document.createTextNode(`* {
      -webkit-transition: none !important;
      -moz-transition: none !important;
@@ -27,7 +27,7 @@ export function withoutTransition(action: () => any) {
 	const enable = () => document.head.removeChild(style);
 
 	// Best method, getComputedStyle forces browser to repaint
-	if (typeof window.getComputedStyle !== 'undefined') {
+	if (typeof window.getComputedStyle !== "undefined") {
 		disable();
 		action();
 		window.getComputedStyle(style).opacity;
@@ -36,7 +36,7 @@ export function withoutTransition(action: () => any) {
 	}
 
 	// Better method, requestAnimationFrame processes function before next repaint
-	if (typeof window.requestAnimationFrame !== 'undefined') {
+	if (typeof window.requestAnimationFrame !== "undefined") {
 		disable();
 		action();
 		window.requestAnimationFrame(enable);

@@ -8,8 +8,8 @@ import {
 	toggleMode,
 	resetMode,
 	setTheme,
-	theme
-} from './mode.js';
+	theme,
+} from "./mode.js";
 
 export {
 	setMode,
@@ -21,7 +21,7 @@ export {
 	mode,
 	theme,
 	setTheme,
-	themeStorageKey
+	themeStorageKey,
 };
 
-export { default as ModeWatcher } from './mode-watcher.svelte';
+export { default as ModeWatcher } from "./mode-watcher.svelte";

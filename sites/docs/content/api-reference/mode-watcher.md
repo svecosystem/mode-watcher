@@ -81,7 +81,7 @@ You can use the `nonce` prop to allow-list mode-watcher if you are using a Conte
 
 The `ModeWatcher` component accepts the following props:
 
-```ts
+````ts
 export type Mode = "system" | "dark" | "light";
 export type ThemeColors = { dark: string; light: string };
 export type ModeWatcherProps = {
@@ -149,5 +149,4 @@ export type ModeWatcherProps = {
 	 */
 	nonce?: string;
 };
-
-```
+````

@@ -1,7 +1,7 @@
-import { writable, derived, get } from 'svelte/store';
-import { withoutTransition } from './without-transition.js';
-import type { Mode, ThemeColors } from './types.js';
-import { sanitizeClassNames } from './utils.js';
+import { writable, derived, get } from "svelte/store";
+import { withoutTransition } from "./without-transition.js";
+import type { Mode, ThemeColors } from "./types.js";
+import { sanitizeClassNames } from "./utils.js";
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -12,21 +12,20 @@ const noopStorage = {
 };
 
 // whether we are running on server vs client
-const isBrowser = typeof document !== 'undefined';
+const isBrowser = typeof document !== "undefined";
 
 /**  the modes that are supported, used for validation & type derivation */
-export const modes = ['dark', 'light', 'system'] as const;
+export const modes = ["dark", "light", "system"] as const;
 
 /**
  * The key used to store the `mode` in localStorage.
  */
-export const modeStorageKey = writable<string>('mode-watcher-mode')
+export const modeStorageKey = writable<string>("mode-watcher-mode");
 
 /**
  * The key used to store the `theme` in localStorage.
  */
-export const themeStorageKey = writable<string>('mode-watcher-theme')
-
+export const themeStorageKey = writable<string>("mode-watcher-theme");
 
 /**
  * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
@@ -44,7 +43,7 @@ export const themeColors = writable<ThemeColors>(undefined);
 /**
  * A custom theme to apply and persist to the root `html` element.
  */
-export const theme = createCustomTheme()
+export const theme = createCustomTheme();
 
 /**
  * Whether to disable transitions when changing the mode.
@@ -69,11 +68,11 @@ export const derivedMode = createDerivedMode();
 /**
  * Derived store that represents the current custom theme
  */
-export const derivedTheme = createDerivedTheme()
+export const derivedTheme = createDerivedTheme();
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
-	const defaultValue = 'system';
+	const defaultValue = "system";
 
 	const storage = isBrowser ? localStorage : noopStorage;
 	const initialValue = storage.getItem(getModeStorageKey());
@@ -95,8 +94,8 @@ function createUserPrefersMode() {
 				_set((value = defaultValue));
 			}
 		};
-		addEventListener('storage', handler);
-		return () => removeEventListener('storage', handler);
+		addEventListener("storage", handler);
+		return () => removeEventListener("storage", handler);
 	});
 
 	function set(v: Mode) {
@@ -112,11 +111,11 @@ function createUserPrefersMode() {
 
 function createCustomTheme() {
 	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(getThemeStorageKey())
-	let value = initialValue === null || initialValue === undefined ? '' : initialValue
+	const initialValue = storage.getItem(getThemeStorageKey());
+	let value = initialValue === null || initialValue === undefined ? "" : initialValue;
 
 	function getThemeStorageKey() {
-		return get(themeStorageKey)
+		return get(themeStorageKey);
 	}
 
 	const { subscribe, set: _set } = writable(value, () => {
@@ -125,13 +124,13 @@ function createCustomTheme() {
 			if (e.key !== getThemeStorageKey()) return;
 			const newValue = e.newValue;
 			if (newValue === null) {
-				_set((value = ''))
+				_set((value = ""));
 			} else {
-				_set((value = newValue))
+				_set((value = newValue));
 			}
 		};
-		addEventListener('storage', handler);
-		return () => removeEventListener('storage', handler);
+		addEventListener("storage", handler);
+		return () => removeEventListener("storage", handler);
 	});
 
 	function set(v: string) {
@@ -149,17 +148,17 @@ function createSystemMode() {
 	const defaultValue = undefined;
 	let track = true;
 
-	const { subscribe, set } = writable<'dark' | 'light' | undefined>(defaultValue, () => {
+	const { subscribe, set } = writable<"dark" | "light" | undefined>(defaultValue, () => {
 		if (!isBrowser) return;
 
 		const handler = (e: MediaQueryListEvent) => {
 			if (!track) return;
-			set(e.matches ? 'light' : 'dark');
+			set(e.matches ? "light" : "dark");
 		};
 
-		const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
-		mediaQueryState.addEventListener('change', handler);
-		return () => mediaQueryState.removeEventListener('change', handler);
+		const mediaQueryState = window.matchMedia("(prefers-color-scheme: light)");
+		mediaQueryState.addEventListener("change", handler);
+		return () => mediaQueryState.removeEventListener("change", handler);
 	});
 
 	/**
@@ -167,8 +166,8 @@ function createSystemMode() {
 	 */
 	function query() {
 		if (!isBrowser) return;
-		const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
-		set(mediaQueryState.matches ? 'light' : 'dark');
+		const mediaQueryState = window.matchMedia("(prefers-color-scheme: light)");
+		set(mediaQueryState.matches ? "light" : "dark");
 	}
 
 	/**
@@ -205,26 +204,31 @@ function createDerivedMode() {
 		]) => {
 			if (!isBrowser) return undefined;
 
-			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
+			const derivedMode =
+				$userPrefersMode === "system" ? $systemPrefersMode : $userPrefersMode;
 			const sanitizedDarkClassNames = sanitizeClassNames($darkClassNames);
 			const sanitizedLightClassNames = sanitizeClassNames($lightClassNames);
 
 			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
-				if (derivedMode === 'light') {
-					if (sanitizedDarkClassNames.length) htmlEl.classList.remove(...sanitizedDarkClassNames);
-					if (sanitizedLightClassNames.length) htmlEl.classList.add(...sanitizedLightClassNames);
-					htmlEl.style.colorScheme = 'light';
+				if (derivedMode === "light") {
+					if (sanitizedDarkClassNames.length)
+						htmlEl.classList.remove(...sanitizedDarkClassNames);
+					if (sanitizedLightClassNames.length)
+						htmlEl.classList.add(...sanitizedLightClassNames);
+					htmlEl.style.colorScheme = "light";
 					if (themeColorEl && $themeColors) {
-						themeColorEl.setAttribute('content', $themeColors.light);
+						themeColorEl.setAttribute("content", $themeColors.light);
 					}
 				} else {
-					if (sanitizedLightClassNames.length) htmlEl.classList.remove(...sanitizedLightClassNames);
-					if (sanitizedDarkClassNames.length) htmlEl.classList.add(...sanitizedDarkClassNames);
-					htmlEl.style.colorScheme = 'dark';
+					if (sanitizedLightClassNames.length)
+						htmlEl.classList.remove(...sanitizedLightClassNames);
+					if (sanitizedDarkClassNames.length)
+						htmlEl.classList.add(...sanitizedDarkClassNames);
+					htmlEl.style.colorScheme = "dark";
 					if (themeColorEl && $themeColors) {
-						themeColorEl.setAttribute('content', $themeColors.dark);
+						themeColorEl.setAttribute("content", $themeColors.dark);
 					}
 				}
 			}
@@ -244,32 +248,22 @@ function createDerivedMode() {
 	};
 }
 
-
 function createDerivedTheme() {
-	const { subscribe } = derived(
-		[
-			theme,
-			disableTransitions
-		],
-		([
-			$theme,
-			$disableTransitions
-		]) => {
-			if (!isBrowser) return undefined;
+	const { subscribe } = derived([theme, disableTransitions], ([$theme, $disableTransitions]) => {
+		if (!isBrowser) return undefined;
 
-			function update() {
-				const htmlEl = document.documentElement;
-				htmlEl.setAttribute('data-theme', $theme)
-			}
-
-			if ($disableTransitions) {
-				withoutTransition(update);
-			} else {
-				update();
-			}
-			return $theme
+		function update() {
+			const htmlEl = document.documentElement;
+			htmlEl.setAttribute("data-theme", $theme);
 		}
-	);
+
+		if ($disableTransitions) {
+			withoutTransition(update);
+		} else {
+			update();
+		}
+		return $theme;
+	});
 
 	return {
 		subscribe,
@@ -277,6 +271,6 @@ function createDerivedTheme() {
 }
 
 export function isValidMode(value: unknown): value is Mode {
-	if (typeof value !== 'string') return false;
+	if (typeof value !== "string") return false;
 	return modes.includes(value as Mode);
 }

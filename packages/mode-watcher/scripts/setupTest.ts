@@ -1,27 +1,34 @@
 // setupTest.ts
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { vi } from 'vitest';
-import type { Navigation, Page } from '@sveltejs/kit';
-import { readable } from 'svelte/store';
-import type * as environment from '$app/environment';
-import type * as navigation from '$app/navigation';
-import type * as stores from '$app/stores';
-import { configure } from '@testing-library/dom';
+import "@testing-library/svelte/vitest";
+import "@testing-library/jest-dom/vitest";
+import "vitest-localstorage-mock";
+import * as matchers from "@testing-library/jest-dom/matchers";
+import { vi, expect } from "vitest";
+import type { Navigation, Page } from "@sveltejs/kit";
+import { readable } from "svelte/store";
+import type * as environment from "$app/environment";
+import type * as navigation from "$app/navigation";
+import type * as stores from "$app/stores";
+import { configure } from "@testing-library/dom";
+
+// @ts-expect-error - this works
+expect.extend(matchers);
 
 configure({
 	asyncUtilTimeout: 1500,
 });
 
 // Mock SvelteKit runtime module $app/environment
-vi.mock('$app/environment', (): typeof environment => ({
+vi.mock("$app/environment", (): typeof environment => ({
 	browser: false,
 	dev: true,
 	building: false,
-	version: 'any',
+	version: "any",
 }));
 
 // Mock SvelteKit runtime module $app/navigation
-vi.mock('$app/navigation', (): typeof navigation => ({
+vi.mock("$app/navigation", (): typeof navigation => ({
 	afterNavigate: () => {},
 	beforeNavigate: () => {},
 	disableScrollHandling: () => {},
@@ -31,7 +38,7 @@ vi.mock('$app/navigation', (): typeof navigation => ({
 	preloadData: () =>
 		Promise.resolve({
 			data: {},
-			type: 'loaded',
+			type: "loaded",
 			status: 200,
 		}),
 	preloadCode: () => Promise.resolve(),
@@ -41,11 +48,11 @@ vi.mock('$app/navigation', (): typeof navigation => ({
 }));
 
 // Mock SvelteKit runtime module $app/stores
-vi.mock('$app/stores', (): typeof stores => {
+vi.mock("$app/stores", (): typeof stores => {
 	const getStores: typeof stores.getStores = () => {
 		const navigating = readable<Navigation | null>(null);
 		const page = readable<Page>({
-			url: new URL('http://localhost'),
+			url: new URL("http://localhost"),
 			params: {},
 			route: {
 				id: null,
@@ -92,7 +99,7 @@ export const mediaQueryState = {
 
 const listeners: ((event: unknown) => void)[] = [];
 
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
 	writable: true,
 	value: vi.fn().mockImplementation((query) => ({
 		matches: mediaQueryState.matches,
@@ -101,7 +108,7 @@ Object.defineProperty(window, 'matchMedia', {
 		addListener: vi.fn(),
 		removeListener: vi.fn(),
 		addEventListener: vi.fn((type, callback) => {
-			if (type === 'change') {
+			if (type === "change") {
 				listeners.push(callback);
 			}
 		}),
@@ -112,11 +119,11 @@ Object.defineProperty(window, 'matchMedia', {
 			}
 		}),
 		dispatchEvent: vi.fn((event) => {
-			if (event.type === 'change') {
+			if (event.type === "change") {
 				for (const callback of listeners) {
 					callback({
 						matches: mediaQueryState.matches,
-						media: '(prefers-color-scheme: light)',
+						media: "(prefers-color-scheme: light)",
 					});
 				}
 			}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 	import {
 		systemPrefersMode,
 		setMode,
@@ -9,29 +9,29 @@
 		setInitialMode,
 		defineConfig,
 		setTheme,
-	} from './mode.js';
+	} from "./mode.js";
 
-	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
+	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
 	import {
 		darkClassNames as darkClassNamesStore,
 		isValidMode,
 		lightClassNames as lightClassNamesStore,
 		themeStorageKey as themeStorageKeyStore,
 		modeStorageKey as modeStorageKeyStore,
-	} from './stores.js';
+	} from "./stores.js";
 
 	type $$Props = ModeWatcherProps;
 
 	export let track = true;
-	export let defaultMode: Mode = 'system';
+	export let defaultMode: Mode = "system";
 	export let themeColors: ThemeColors = undefined;
 	export let disableTransitions = true;
-	export let darkClassNames: string[] = ['dark'];
+	export let darkClassNames: string[] = ["dark"];
 	export let lightClassNames: string[] = [];
-	export let defaultTheme: string = '';
-	export let nonce: string = '';
-	export let themeStorageKey: string = 'mode-watcher-theme';
-	export let modeStorageKey: string = 'mode-watcher-mode';
+	export let defaultTheme: string = "";
+	export let nonce: string = "";
+	export let themeStorageKey: string = "mode-watcher-theme";
+	export let modeStorageKey: string = "mode-watcher-mode";
 
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
@@ -64,7 +64,7 @@
 		themeStorageKey,
 	});
 
-	$: trueNonce = typeof window === 'undefined' ? nonce : '';
+	$: trueNonce = typeof window === "undefined" ? nonce : "";
 </script>
 
 <svelte:head>
