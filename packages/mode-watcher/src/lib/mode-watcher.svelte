@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import {
-		systemPrefersMode,
-		setMode,
-		mode,
-		themeColors as themeColorsStore,
-		disableTransitions as disableTransitionsStore,
-		setInitialMode,
 		defineConfig,
+		disableTransitions as disableTransitionsStore,
+		mode,
+		setInitialMode,
+		setMode,
 		setTheme,
+		systemPrefersMode,
+		themeColors as themeColorsStore,
 	} from "./mode.js";
 
 	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
@@ -16,8 +16,8 @@
 		darkClassNames as darkClassNamesStore,
 		isValidMode,
 		lightClassNames as lightClassNamesStore,
-		themeStorageKey as themeStorageKeyStore,
 		modeStorageKey as modeStorageKeyStore,
+		themeStorageKey as themeStorageKeyStore,
 	} from "./stores.js";
 
 	type $$Props = ModeWatcherProps;
@@ -47,7 +47,7 @@
 		const localStorageMode = localStorage.getItem($modeStorageKeyStore);
 		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
 		const localStorageTheme = localStorage.getItem($themeStorageKeyStore);
-		setTheme(localStorageTheme ? localStorageTheme : defaultTheme);
+		setTheme(localStorageTheme || defaultTheme);
 
 		return () => {
 			unsubscriber();
@@ -76,14 +76,14 @@
 	{/if}
 
 	{#if trueNonce}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
 		{@html `<script nonce=${trueNonce}>(` +
 			setInitialMode.toString() +
 			`)(` +
 			JSON.stringify(initConfig) +
 			`);</script>`}
 	{:else}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
 		{@html `<script>(` +
 			setInitialMode.toString() +
 			`)(` +

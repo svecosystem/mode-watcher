@@ -1,13 +1,11 @@
-import { writable, derived, get } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 import { withoutTransition } from "./without-transition.js";
 import type { Mode, ThemeColors } from "./types.js";
 import { sanitizeClassNames } from "./utils.js";
 
 // saves having to branch for server vs client
 const noopStorage = {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	getItem: (_key: string) => null,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	setItem: (_key: string, _value: string) => {},
 };
 

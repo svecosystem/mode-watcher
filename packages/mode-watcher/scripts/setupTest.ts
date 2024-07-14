@@ -1,16 +1,15 @@
 // setupTest.ts
-/* eslint-disable @typescript-eslint/no-empty-function */
 import "@testing-library/svelte/vitest";
 import "@testing-library/jest-dom/vitest";
 import "vitest-localstorage-mock";
 import * as matchers from "@testing-library/jest-dom/matchers";
-import { vi, expect } from "vitest";
+import { expect, vi } from "vitest";
 import type { Navigation, Page } from "@sveltejs/kit";
 import { readable } from "svelte/store";
+import { configure } from "@testing-library/dom";
 import type * as environment from "$app/environment";
 import type * as navigation from "$app/navigation";
 import type * as stores from "$app/stores";
-import { configure } from "@testing-library/dom";
 
 // @ts-expect-error - this works
 expect.extend(matchers);

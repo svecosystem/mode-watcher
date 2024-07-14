@@ -1,31 +1,29 @@
 <script lang="ts">
+	import { derived } from "svelte/store";
 	import {
-		toggleMode,
-		setMode,
-		resetMode,
-		userPrefersMode,
-		systemPrefersMode,
 		mode,
+		resetMode,
+		setMode,
+		systemPrefersMode,
+		toggleMode,
+		userPrefersMode,
 	} from "$lib/index.js";
 
-	import { derived } from "svelte/store";
 	import { browser } from "$app/environment";
 
 	const htmlElement = derived(mode, () => {
-		if (browser) {
-			const htmlElement = document.documentElement;
-			if (htmlElement) {
-				return htmlElement.outerHTML.replace(htmlElement.innerHTML + "</html>", "");
-			}
+		if (!browser) return;
+		const htmlElement = document.documentElement;
+		if (htmlElement) {
+			return htmlElement.outerHTML.replace(`${htmlElement.innerHTML}</html>`, "");
 		}
 	});
 
 	const themeColorElement = derived(mode, () => {
-		if (browser) {
-			const themeColorElement = document.querySelector('meta[name="theme-color"]');
-			if (themeColorElement) {
-				return themeColorElement.outerHTML;
-			}
+		if (!browser) return;
+		const themeColorElement = document.querySelector('meta[name="theme-color"]');
+		if (themeColorElement) {
+			return themeColorElement.outerHTML;
 		}
 	});
 </script>

@@ -1,14 +1,14 @@
 import {
-	modeStorageKey,
-	userPrefersMode,
-	systemPrefersMode,
-	themeStorageKey,
 	mode,
-	setMode,
-	toggleMode,
+	modeStorageKey,
 	resetMode,
+	setMode,
 	setTheme,
+	systemPrefersMode,
 	theme,
+	themeStorageKey,
+	toggleMode,
+	userPrefersMode,
 } from "./mode.js";
 
 export {

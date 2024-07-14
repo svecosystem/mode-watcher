@@ -1,14 +1,14 @@
 <script lang="ts">
 	import {
 		ModeWatcher,
-		toggleMode,
-		setMode,
-		resetMode,
 		mode,
-		theme,
 		modeStorageKey,
-		themeStorageKey,
+		resetMode,
+		setMode,
 		setTheme,
+		theme,
+		themeStorageKey,
+		toggleMode,
 	} from "$lib/index.js";
 	import type { ModeWatcherProps } from "$lib/types.js";
 
