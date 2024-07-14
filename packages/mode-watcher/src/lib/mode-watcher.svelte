@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import {
-		systemPrefersMode,
-		setMode,
+		disableTransitions as disableTransitionsStore,
 		localStorageKey,
 		mode,
-		themeColors as themeColorsStore,
-		disableTransitions as disableTransitionsStore,
 		setInitialMode,
+		setMode,
+		systemPrefersMode,
+		themeColors as themeColorsStore,
 	} from "./mode.js";
 
 	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
@@ -19,7 +19,6 @@
 	export let defaultMode: Mode = "system";
 	export let themeColors: ThemeColors = undefined;
 	export let disableTransitions = true;
-	export let darkModeClass = "dark";
 
 	themeColorsStore.set(themeColors);
 	disableTransitionsStore.set(disableTransitions);
@@ -46,7 +45,7 @@
 		<!-- but that snippet does not run in vitest -->
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
 	{@html `<script nonce="%sveltekit.nonce%">(` +
 		setInitialMode.toString() +
 		`)(` +

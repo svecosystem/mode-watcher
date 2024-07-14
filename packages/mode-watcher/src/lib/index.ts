@@ -1,11 +1,11 @@
 import {
 	localStorageKey,
-	userPrefersMode,
-	systemPrefersMode,
 	mode,
-	setMode,
-	toggleMode,
 	resetMode,
+	setMode,
+	systemPrefersMode,
+	toggleMode,
+	userPrefersMode,
 } from "./mode.js";
 
 export {

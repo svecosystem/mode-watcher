@@ -4,7 +4,7 @@ let timeoutAction: number;
 let timeoutEnable: number;
 
 // Perform a task without any css transitions
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line ts/no-explicit-any
 export function withoutTransition(action: () => any) {
 	if (typeof document === "undefined") return;
 	// Clear fallback timeouts
@@ -30,6 +30,7 @@ export function withoutTransition(action: () => any) {
 	if (typeof window.getComputedStyle !== "undefined") {
 		disable();
 		action();
+		// eslint-disable-next-line ts/no-unused-expressions
 		window.getComputedStyle(style).opacity;
 		enable();
 		return;

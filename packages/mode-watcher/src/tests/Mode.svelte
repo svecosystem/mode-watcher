@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ModeWatcher, toggleMode, setMode, resetMode, mode } from "$lib/index.js";
+	import { ModeWatcher, mode, resetMode, setMode, toggleMode } from "$lib/index.js";
 
 	export let track = true;
 </script>

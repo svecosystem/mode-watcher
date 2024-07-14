@@ -1,21 +1,21 @@
 <script lang="ts">
+	import { derived } from "svelte/store";
 	import {
-		toggleMode,
-		setMode,
-		resetMode,
-		userPrefersMode,
-		systemPrefersMode,
 		mode,
+		resetMode,
+		setMode,
+		systemPrefersMode,
+		toggleMode,
+		userPrefersMode,
 	} from "$lib/index.js";
 
-	import { derived } from "svelte/store";
 	import { browser } from "$app/environment";
 
 	const htmlElement = derived(mode, () => {
 		if (browser) {
 			const htmlElement = document.documentElement;
 			if (htmlElement) {
-				return htmlElement.outerHTML.replace(htmlElement.innerHTML + "</html>", "");
+				return htmlElement.outerHTML.replace(`${htmlElement.innerHTML}</html>`, "");
 			}
 		}
 	});

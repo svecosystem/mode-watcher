@@ -1,11 +1,11 @@
 import { get } from "svelte/store";
 import {
-	localStorageKey,
-	userPrefersMode,
-	systemPrefersMode,
 	derivedMode,
-	themeColors,
 	disableTransitions,
+	localStorageKey,
+	systemPrefersMode,
+	themeColors,
+	userPrefersMode,
 } from "./stores.js";
 import type { Mode, ThemeColors } from "./types.js";
 

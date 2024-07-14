@@ -1,11 +1,11 @@
 <script lang="ts">
 	import {
+		BracketsCurly,
+		Browser,
 		GitHubIcon,
 		HardDrives,
-		PaintRoller,
-		BracketsCurly,
 		Laptop,
-		Browser,
+		PaintRoller,
 		Palette,
 	} from "$lib/icons/index.js";
 	import { Button } from "$lib/components/ui/button/index.js";

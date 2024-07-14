@@ -1,12 +1,11 @@
 // setupTest.ts
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { vi } from "vitest";
 import type { Navigation, Page } from "@sveltejs/kit";
 import { readable } from "svelte/store";
+import { configure } from "@testing-library/dom";
 import type * as environment from "$app/environment";
 import type * as navigation from "$app/navigation";
 import type * as stores from "$app/stores";
-import { configure } from "@testing-library/dom";
 
 configure({
 	asyncUtilTimeout: 1500,

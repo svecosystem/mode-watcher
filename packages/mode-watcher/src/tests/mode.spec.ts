@@ -1,10 +1,10 @@
 import { render } from "@testing-library/svelte";
 import { expect, it } from "vitest";
+import { userEvent } from "@testing-library/user-event";
+import { tick } from "svelte";
+import { mediaQueryState } from "../../scripts/setupTest.js";
 import Mode from "./Mode.svelte";
 import StealthMode from "./StealthMode.svelte";
-import { userEvent } from "@testing-library/user-event";
-import { mediaQueryState } from "../../scripts/setupTest.js";
-import { tick } from "svelte";
 
 function setup() {
 	const user = userEvent.setup();
