@@ -14,6 +14,9 @@ importers:
       '@huntabyte/eslint-config':
         specifier: ^0.3.2
         version: 0.3.2(@vue/compiler-sfc@3.4.31)(eslint-plugin-svelte@2.35.1(eslint@9.7.0)(svelte@4.2.10))(eslint@9.7.0)(svelte-eslint-parser@0.34.1(svelte@4.2.10))(svelte@4.2.10)(typescript@5.3.3)(vitest@1.2.2)
+      '@huntabyte/eslint-plugin':
+        specifier: ^0.1.0
+        version: 0.1.0(eslint@9.7.0)
       '@svitejs/changesets-changelog-github-compact':
         specifier: ^1.1.0
         version: 1.1.0
@@ -7335,16 +7338,16 @@ snapshots:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.7.0)
       '@jridgewell/sourcemap-codec': 1.4.15
-      debug: 4.3.4
+      debug: 4.3.5
       eslint: 9.7.0
       eslint-compat-utils: 0.1.2(eslint@9.7.0)
       esutils: 2.0.3
       known-css-properties: 0.29.0
-      postcss: 8.4.35
-      postcss-load-config: 3.1.4(postcss@8.4.35)
-      postcss-safe-parser: 6.0.0(postcss@8.4.35)
+      postcss: 8.4.39
+      postcss-load-config: 3.1.4(postcss@8.4.39)
+      postcss-safe-parser: 6.0.0(postcss@8.4.39)
       postcss-selector-parser: 6.0.15
-      semver: 7.6.0
+      semver: 7.6.2
       svelte-eslint-parser: 0.34.1(svelte@4.2.10)
     optionalDependencies:
       svelte: 4.2.10
@@ -9411,12 +9414,12 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.35
 
-  postcss-load-config@3.1.4(postcss@8.4.35):
+  postcss-load-config@3.1.4(postcss@8.4.39):
     dependencies:
       lilconfig: 2.1.0
       yaml: 1.10.2
     optionalDependencies:
-      postcss: 8.4.35
+      postcss: 8.4.39
 
   postcss-load-config@4.0.2(postcss@8.4.35):
     dependencies:
@@ -9438,9 +9441,9 @@ snapshots:
       postcss: 8.4.35
       postcss-selector-parser: 6.0.15
 
-  postcss-safe-parser@6.0.0(postcss@8.4.35):
+  postcss-safe-parser@6.0.0(postcss@8.4.39):
     dependencies:
-      postcss: 8.4.35
+      postcss: 8.4.39
 
   postcss-scss@4.0.9(postcss@8.4.39):
     dependencies:
