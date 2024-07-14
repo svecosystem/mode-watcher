@@ -18,13 +18,16 @@ const isBrowser = typeof document !== 'undefined';
 export const modes = ['dark', 'light', 'system'] as const;
 
 /**
- * The key used to store the mode in localStorage.
+ * The key used to store the `mode` in localStorage.
  */
-export const modeLocalStorageKey = 'mode-watcher-mode';
+export const modeStorageKey = writable<string>('mode-watcher-mode')
+
 /**
- * The key used to store the theme in localStorage.
+ * The key used to store the `theme` in localStorage.
  */
-export const themeLocalStorageKey = 'mode-watcher-theme';
+export const themeStorageKey = writable<string>('mode-watcher-theme')
+
+
 /**
  * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
  */

@@ -8,6 +8,7 @@
 		themeColors as themeColorsStore,
 		disableTransitions as disableTransitionsStore,
 		setInitialMode,
+		defineConfig,
 	} from './mode.js';
 
 	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
@@ -25,8 +26,10 @@
 	export let disableTransitions = true;
 	export let darkClassNames: string[] = ['dark'];
 	export let lightClassNames: string[] = [];
-	export let defaultTheme: string | undefined = 'money';
+	export let defaultTheme: string = '';
 	export let nonce: string = '';
+	export let themeStorageKey: string = 'mode-watcher-theme';
+	export let modeStorageKey: string = 'mode-watcher-mode';
 
 	themeColorsStore.set(themeColors);
 	disableTransitionsStore.set(disableTransitions);
@@ -48,6 +51,16 @@
 		return () => {
 			unsubscriber();
 		};
+	});
+
+	const initConfig = defineConfig({
+		defaultMode,
+		themeColors,
+		darkClassNames,
+		lightClassNames,
+		defaultTheme,
+		modeStorageKey,
+		themeStorageKey,
 	});
 
 	const args = `"${defaultMode}"${

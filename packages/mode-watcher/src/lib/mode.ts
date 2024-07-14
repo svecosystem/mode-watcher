@@ -32,14 +32,28 @@ export function setTheme(theme: string): void {
 	themeStore.set(theme)
 }
 
+export function defineConfig(config: SetInitialModeArgs) {
+	return config
+}
 
-/** Used to set the mode on initial page load to prevent FOUC */
-export function setInitialMode(
+type SetInitialModeArgs = {
 	defaultMode: Mode,
 	themeColors?: ThemeColors,
-	darkClassNames: string[] = ['dark'],
-	lightClassNames: string[] = [],
-	defaultTheme: string = '',
+	darkClassNames: string[]
+	lightClassNames: string[];
+	defaultTheme: string;
+	modeStorageKey: string;
+	themeStorageKey: string;
+}
+
+/** Used to set the mode on initial page load to prevent FOUC */
+export function setInitialMode({
+	defaultMode,
+	themeColors,
+	darkClassNames = ['dark'],
+	lightClassNames = [],
+	defaultTheme = '',
+}: SetInitialModeArgs
 ) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
