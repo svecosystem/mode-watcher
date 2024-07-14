@@ -335,35 +335,24 @@ it('allows the user to apply custom classnames to the root html element', async 
 })
 
 function getClasses(element: HTMLElement | null): string[] {
-	if (element === null) {
-		return [];
-	}
-	console.log(element.className)
+	if (element === null) return []
 	const classes = element.className.split(' ').filter((c) => c.length > 0);
 	return classes;
 }
 
 function getColorScheme(element: HTMLElement | null) {
-	if (element === null) {
-		return '';
-	}
+	if (element === null) return ''
 	return element.style.colorScheme;
 }
 
 function getThemeColor(element: HTMLElement | null) {
-	if (element === null) {
-		return '';
-	}
+	if (element === null) return ''
 
 	const themeMetaEl = element.querySelector('meta[name="theme-color"]');
-	if (themeMetaEl === null) {
-		return '';
-	}
+	if (themeMetaEl === null) return ''
 
 	const content = themeMetaEl.getAttribute('content');
-	if (content === null) {
-		return '';
-	}
+	if (content === null) return ''
 
 	return content;
 }

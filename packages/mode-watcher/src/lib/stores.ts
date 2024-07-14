@@ -1,6 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { withoutTransition } from './without-transition.js';
 import type { Mode, ThemeColors } from './types.js';
+import { sanitizeClassNames } from './utils.js'
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -136,20 +137,22 @@ function createDerivedMode() {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
+			const sanitizedDarkClassNames = sanitizeClassNames($darkClassNames);
+			const sanitizedLightClassNames = sanitizeClassNames($lightClassNames);
 
 			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
-					if ($darkClassNames.length) htmlEl.classList.remove(...$darkClassNames);
-					if ($lightClassNames.length) htmlEl.classList.add(...$lightClassNames);
+					if (sanitizedDarkClassNames.length) htmlEl.classList.remove(...sanitizedDarkClassNames);
+					if (sanitizedLightClassNames.length) htmlEl.classList.add(...sanitizedLightClassNames);
 					htmlEl.style.colorScheme = 'light';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.light);
 					}
 				} else {
-					if ($lightClassNames.length) htmlEl.classList.remove(...$lightClassNames);
-					if ($darkClassNames.length) htmlEl.classList.add(...$darkClassNames);
+					if (sanitizedLightClassNames.length) htmlEl.classList.remove(...sanitizedLightClassNames);
+					if (sanitizedDarkClassNames.length) htmlEl.classList.add(...sanitizedDarkClassNames);
 					htmlEl.style.colorScheme = 'dark';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.dark);

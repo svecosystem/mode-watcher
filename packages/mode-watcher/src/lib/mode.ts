@@ -7,6 +7,7 @@ import {
 	themeColors,
 	disableTransitions,
 } from './stores.js';
+import { sanitizeClassNames } from './utils.js';
 import type { Mode, ThemeColors } from './types.js';
 
 /** Toggle between light and dark mode */
@@ -31,21 +32,14 @@ export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors, dar
 	const light =
 		mode === 'light' ||
 		(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
-
+	const sanitizedDarkClassNames = sanitizeClassNames(darkClassNames);
+	const sanitizedLightClassNames = sanitizeClassNames(lightClassNames);
 	if (light) {
-		if (darkClassNames.length) {
-			rootEl.classList.remove(...darkClassNames);
-		}
-		if (lightClassNames.length) {
-			rootEl.classList.add(...lightClassNames);
-		}
+		if (sanitizedDarkClassNames.length) rootEl.classList.remove(...sanitizedDarkClassNames);
+		if (sanitizedLightClassNames.length) rootEl.classList.add(...sanitizedLightClassNames);
 	} else {
-		if (lightClassNames.length) {
-			rootEl.classList.remove(...lightClassNames);
-		}
-		if (darkClassNames.length) {
-			rootEl.classList.add(...darkClassNames);
-		}
+		if (sanitizedLightClassNames.length) rootEl.classList.remove(...sanitizedLightClassNames);
+		if (sanitizedDarkClassNames.length) rootEl.classList.add(...sanitizedDarkClassNames);
 	}
 	rootEl.style.colorScheme = light ? 'light' : 'dark';
 
