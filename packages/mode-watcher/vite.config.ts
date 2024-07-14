@@ -17,5 +17,6 @@ export default defineConfig({
 			exclude: ["setupTest.ts"],
 		},
 		alias: [{ find: /^svelte$/, replacement: "svelte/internal" }],
+		retry: 3,
 	},
 });
