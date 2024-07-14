@@ -1,5 +1,5 @@
 ---
-"mode-watcher": patch
+"mode-watcher": minor
 ---
 
 feat: Add `nonce` prop
