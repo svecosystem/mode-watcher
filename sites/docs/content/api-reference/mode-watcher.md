@@ -41,9 +41,17 @@ To set a default mode, use the `defaultMode` prop:
 <ModeWatcher defaultMode="dark" />
 ```
 
+### Themes
+
+In addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a theme which will be applied to the root `html` element like so:
+
+```html
+<html data-theme="your-custom-theme"></html>
+```
+
 ### Theme Colors
 
-`ModeWatcher` can manage the theme-color meta tag for you.
+`ModeWatcher` can manage the `theme-color` meta tag for you.
 
 To enable this, set the `themeColors` prop to your preferred colors:
 
@@ -76,7 +84,6 @@ The `ModeWatcher` component accepts the following props:
 ```ts
 export type Mode = "system" | "dark" | "light";
 export type ThemeColors = { dark: string; light: string };
-
 export type ModeWatcherProps = {
 	/**
 	 * Whether to automatically track operating system preferences
@@ -94,6 +101,19 @@ export type ModeWatcherProps = {
 	defaultMode?: Mode;
 
 	/**
+	 * The default theme to use, which will be applied to the root `html` element
+	 * and can be managed with the `setTheme` function.
+	 *
+	 * @example
+	 * ```html
+	 * <html data-theme="your-custom-theme"></html>
+	 * ```
+	 *
+	 * @defaultValue `undefined`
+	 */
+	defaultTheme?: string;
+
+	/**
 	 * The theme colors to use for each mode.
 	 *
 	 * @defaultValue `undefined`
@@ -101,7 +121,7 @@ export type ModeWatcherProps = {
 	themeColors?: ThemeColors;
 
 	/**
-	 * Whether to disable transitions when the mode changes.
+	 * Whether to disable transitions when updating the mode.
 	 *
 	 * @defaultValue `true`
 	 */
@@ -120,5 +140,14 @@ export type ModeWatcherProps = {
 	 * @defaultValue `[]`
 	 */
 	lightClassNames?: string[];
+
+	/**
+	 * An optional nonce to use for the injected script tag to allow-list mode-watcher
+	 * if you are using a Content Security Policy.
+	 *
+	 * @defaultValue `undefined`
+	 */
+	nonce?: string;
 };
+
 ```

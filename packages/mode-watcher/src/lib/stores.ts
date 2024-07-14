@@ -14,13 +14,17 @@ const noopStorage = {
 // whether we are running on server vs client
 const isBrowser = typeof document !== 'undefined';
 
-// the modes that are supported, used for validation & type derivation
+/**  the modes that are supported, used for validation & type derivation */
 export const modes = ['dark', 'light', 'system'] as const;
 
 /**
  * The key used to store the mode in localStorage.
  */
-export const localStorageKey = 'mode-watcher-mode';
+export const modeLocalStorageKey = 'mode-watcher-mode';
+/**
+ * The key used to store the theme in localStorage.
+ */
+export const themeLocalStorageKey = 'mode-watcher-theme';
 /**
  * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
  */
@@ -33,6 +37,11 @@ export const systemPrefersMode = createSystemMode();
  * Theme colors for light and dark modes.
  */
 export const themeColors = writable<ThemeColors>(undefined);
+
+/**
+ * A custom theme to apply and persist to the root `html` element.
+ */
+export const theme = createCustomTheme()
 
 /**
  * Whether to disable transitions when changing the mode.
@@ -54,19 +63,24 @@ export const lightClassNames = writable<string[]>([]);
  */
 export const derivedMode = createDerivedMode();
 
+/**
+ * Derived store that represents the current custom theme
+ */
+export const derivedTheme = createDerivedTheme()
+
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
 	const defaultValue = 'system';
 
 	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(localStorageKey);
+	const initialValue = storage.getItem(modeLocalStorageKey);
 
 	let value = isValidMode(initialValue) ? initialValue : defaultValue;
 
 	const { subscribe, set: _set } = writable(value, () => {
 		if (!isBrowser) return;
 		const handler = (e: StorageEvent) => {
-			if (e.key !== localStorageKey) return;
+			if (e.key !== modeLocalStorageKey) return;
 			const newValue = e.newValue;
 			if (isValidMode(newValue)) {
 				_set((value = newValue));
@@ -80,7 +94,38 @@ function createUserPrefersMode() {
 
 	function set(v: Mode) {
 		_set((value = v));
-		storage.setItem(localStorageKey, value);
+		storage.setItem(modeLocalStorageKey, value);
+	}
+
+	return {
+		subscribe,
+		set,
+	};
+}
+
+function createCustomTheme() {
+	const storage = isBrowser ? localStorage : noopStorage;
+	const initialValue = storage.getItem(themeLocalStorageKey)
+	let value = initialValue === null || initialValue === undefined ? '' : initialValue
+
+	const { subscribe, set: _set } = writable(value, () => {
+		if (!isBrowser) return;
+		const handler = (e: StorageEvent) => {
+			if (e.key !== modeLocalStorageKey) return;
+			const newValue = e.newValue;
+			if (newValue === null) {
+				_set((value = ''))
+			} else {
+				_set((value = newValue))
+			}
+		};
+		addEventListener('storage', handler);
+		return () => removeEventListener('storage', handler);
+	});
+
+	function set(v: string) {
+		_set((value = v));
+		storage.setItem(themeLocalStorageKey, value);
 	}
 
 	return {
@@ -180,6 +225,38 @@ function createDerivedMode() {
 			}
 
 			return derivedMode;
+		}
+	);
+
+	return {
+		subscribe,
+	};
+}
+
+
+function createDerivedTheme() {
+	const { subscribe } = derived(
+		[
+			theme,
+			disableTransitions
+		],
+		([
+			$theme,
+			$disableTransitions
+		]) => {
+			if (!isBrowser) return undefined;
+
+			function update() {
+				const htmlEl = document.documentElement;
+				htmlEl.setAttribute('data-theme', $theme)
+			}
+
+			if ($disableTransitions) {
+				withoutTransition(update);
+			} else {
+				update();
+			}
+			return $theme
 		}
 	);
 
