@@ -6,16 +6,16 @@
 		userPrefersMode,
 		systemPrefersMode,
 		mode,
-	} from '$lib/index.js';
+	} from "$lib/index.js";
 
-	import { derived } from 'svelte/store';
-	import { browser } from '$app/environment';
+	import { derived } from "svelte/store";
+	import { browser } from "$app/environment";
 
 	const htmlElement = derived(mode, () => {
 		if (browser) {
 			const htmlElement = document.documentElement;
 			if (htmlElement) {
-				return htmlElement.outerHTML.replace(htmlElement.innerHTML + '</html>', '');
+				return htmlElement.outerHTML.replace(htmlElement.innerHTML + "</html>", "");
 			}
 		}
 	});
@@ -43,8 +43,8 @@
 	{/if}
 
 	<button on:click={toggleMode}> Toggle </button>
-	<button on:click={() => setMode('light')}> Light Mode </button>
-	<button on:click={() => setMode('dark')}> Dark Mode </button>
+	<button on:click={() => setMode("light")}> Light Mode </button>
+	<button on:click={() => setMode("dark")}> Dark Mode </button>
 	<button on:click={resetMode}> Reset </button>
 </div>
 

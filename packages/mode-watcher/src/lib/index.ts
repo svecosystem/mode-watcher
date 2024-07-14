@@ -6,7 +6,7 @@ import {
 	setMode,
 	toggleMode,
 	resetMode,
-} from './mode.js';
+} from "./mode.js";
 
 export {
 	setMode,
@@ -18,4 +18,4 @@ export {
 	mode,
 };
 
-export { default as ModeWatcher } from './mode-watcher.svelte';
+export { default as ModeWatcher } from "./mode-watcher.svelte";

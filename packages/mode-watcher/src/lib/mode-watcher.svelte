@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 	import {
 		systemPrefersMode,
 		setMode,
@@ -8,17 +8,18 @@
 		themeColors as themeColorsStore,
 		disableTransitions as disableTransitionsStore,
 		setInitialMode,
-	} from './mode.js';
+	} from "./mode.js";
 
-	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
-	import { isValidMode } from './stores.js';
+	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
+	import { isValidMode } from "./stores.js";
 
 	type $$Props = ModeWatcherProps;
 
 	export let track = true;
-	export let defaultMode: Mode = 'system';
+	export let defaultMode: Mode = "system";
 	export let themeColors: ThemeColors = undefined;
 	export let disableTransitions = true;
+	export let darkModeClass = "dark";
 
 	themeColorsStore.set(themeColors);
 	disableTransitionsStore.set(disableTransitions);
@@ -35,7 +36,7 @@
 		};
 	});
 
-	const args = `"${defaultMode}"${themeColors ? `, ${JSON.stringify(themeColors)}` : ''}`;
+	const args = `"${defaultMode}"${themeColors ? `, ${JSON.stringify(themeColors)}` : ""}`;
 </script>
 
 <svelte:head>

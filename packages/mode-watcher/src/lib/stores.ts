@@ -1,6 +1,6 @@
-import { writable, derived } from 'svelte/store';
-import { withoutTransition } from './without-transition.js';
-import type { Mode, ThemeColors } from './types.js';
+import { writable, derived } from "svelte/store";
+import { withoutTransition } from "./without-transition.js";
+import type { Mode, ThemeColors } from "./types.js";
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -11,15 +11,15 @@ const noopStorage = {
 };
 
 // whether we are running on server vs client
-const isBrowser = typeof document !== 'undefined';
+const isBrowser = typeof document !== "undefined";
 
 // the modes that are supported, used for validation & type derivation
-export const modes = ['dark', 'light', 'system'] as const;
+export const modes = ["dark", "light", "system"] as const;
 
 /**
  * The key used to store the mode in localStorage.
  */
-export const localStorageKey = 'mode-watcher-mode';
+export const localStorageKey = "mode-watcher-mode";
 /**
  * Writable store that represents the user's preferred mode (`"dark"`, `"light"` or `"system"`)
  */
@@ -45,7 +45,7 @@ export const derivedMode = createDerivedMode();
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
-	const defaultValue = 'system';
+	const defaultValue = "system";
 
 	const storage = isBrowser ? localStorage : noopStorage;
 	const initialValue = storage.getItem(localStorageKey);
@@ -63,8 +63,8 @@ function createUserPrefersMode() {
 				_set((value = defaultValue));
 			}
 		};
-		addEventListener('storage', handler);
-		return () => removeEventListener('storage', handler);
+		addEventListener("storage", handler);
+		return () => removeEventListener("storage", handler);
 	});
 
 	function set(v: Mode) {
@@ -82,17 +82,17 @@ function createSystemMode() {
 	const defaultValue = undefined;
 	let track = true;
 
-	const { subscribe, set } = writable<'dark' | 'light' | undefined>(defaultValue, () => {
+	const { subscribe, set } = writable<"dark" | "light" | undefined>(defaultValue, () => {
 		if (!isBrowser) return;
 
 		const handler = (e: MediaQueryListEvent) => {
 			if (!track) return;
-			set(e.matches ? 'light' : 'dark');
+			set(e.matches ? "light" : "dark");
 		};
 
-		const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
-		mediaQueryState.addEventListener('change', handler);
-		return () => mediaQueryState.removeEventListener('change', handler);
+		const mediaQueryState = window.matchMedia("(prefers-color-scheme: light)");
+		mediaQueryState.addEventListener("change", handler);
+		return () => mediaQueryState.removeEventListener("change", handler);
 	});
 
 	/**
@@ -100,8 +100,8 @@ function createSystemMode() {
 	 */
 	function query() {
 		if (!isBrowser) return;
-		const mediaQueryState = window.matchMedia('(prefers-color-scheme: light)');
-		set(mediaQueryState.matches ? 'light' : 'dark');
+		const mediaQueryState = window.matchMedia("(prefers-color-scheme: light)");
+		set(mediaQueryState.matches ? "light" : "dark");
 	}
 
 	/**
@@ -124,22 +124,23 @@ function createDerivedMode() {
 		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions]) => {
 			if (!isBrowser) return undefined;
 
-			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
+			const derivedMode =
+				$userPrefersMode === "system" ? $systemPrefersMode : $userPrefersMode;
 
 			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
-				if (derivedMode === 'light') {
-					htmlEl.classList.remove('dark');
-					htmlEl.style.colorScheme = 'light';
+				if (derivedMode === "light") {
+					htmlEl.classList.remove("dark");
+					htmlEl.style.colorScheme = "light";
 					if (themeColorEl && $themeColors) {
-						themeColorEl.setAttribute('content', $themeColors.light);
+						themeColorEl.setAttribute("content", $themeColors.light);
 					}
 				} else {
-					htmlEl.classList.add('dark');
-					htmlEl.style.colorScheme = 'dark';
+					htmlEl.classList.add("dark");
+					htmlEl.style.colorScheme = "dark";
 					if (themeColorEl && $themeColors) {
-						themeColorEl.setAttribute('content', $themeColors.dark);
+						themeColorEl.setAttribute("content", $themeColors.dark);
 					}
 				}
 			}
@@ -160,6 +161,6 @@ function createDerivedMode() {
 }
 
 export function isValidMode(value: unknown): value is Mode {
-	if (typeof value !== 'string') return false;
+	if (typeof value !== "string") return false;
 	return modes.includes(value as Mode);
 }
