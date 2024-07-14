@@ -3,12 +3,12 @@
 	import {
 		systemPrefersMode,
 		setMode,
-		localStorageKey,
 		mode,
 		themeColors as themeColorsStore,
 		disableTransitions as disableTransitionsStore,
 		setInitialMode,
 		defineConfig,
+		setTheme,
 	} from './mode.js';
 
 	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
@@ -16,6 +16,8 @@
 		darkClassNames as darkClassNamesStore,
 		isValidMode,
 		lightClassNames as lightClassNamesStore,
+		themeStorageKey as themeStorageKeyStore,
+		modeStorageKey as modeStorageKeyStore,
 	} from './stores.js';
 
 	type $$Props = ModeWatcherProps;
@@ -31,22 +33,21 @@
 	export let themeStorageKey: string = 'mode-watcher-theme';
 	export let modeStorageKey: string = 'mode-watcher-mode';
 
-	themeColorsStore.set(themeColors);
-	disableTransitionsStore.set(disableTransitions);
-	darkClassNamesStore.set(darkClassNames);
-	lightClassNamesStore.set(lightClassNames);
-
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
 	$: darkClassNamesStore.set(darkClassNames);
 	$: lightClassNamesStore.set(lightClassNames);
+	$: modeStorageKeyStore.set(modeStorageKey);
+	$: themeStorageKeyStore.set(themeStorageKey);
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		const localStorageMode = localStorage.getItem(localStorageKey);
+		const localStorageMode = localStorage.getItem($modeStorageKeyStore);
 		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
+		const localStorageTheme = localStorage.getItem($themeStorageKeyStore);
+		setTheme(localStorageTheme ? localStorageTheme : defaultTheme);
 
 		return () => {
 			unsubscriber();
@@ -63,10 +64,6 @@
 		themeStorageKey,
 	});
 
-	const args = `"${defaultMode}"${
-		themeColors ? `, ${JSON.stringify(themeColors)}` : ', undefined'
-	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}, "${defaultTheme}"`;
-
 	$: trueNonce = typeof window === 'undefined' ? nonce : '';
 </script>
 
@@ -80,9 +77,17 @@
 
 	{#if trueNonce}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html `<script nonce=${trueNonce}>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+		{@html `<script nonce=${trueNonce}>(` +
+			setInitialMode.toString() +
+			`)(` +
+			JSON.stringify(initConfig) +
+			`);</script>`}
 	{:else}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html `<script>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+		{@html `<script>(` +
+			setInitialMode.toString() +
+			`)(` +
+			JSON.stringify(initConfig) +
+			`);</script>`}
 	{/if}
 </svelte:head>

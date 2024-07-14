@@ -1,8 +1,8 @@
 import {
-	localStorageKey,
+	modeStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
-	themeLocalStorageKey,
+	themeStorageKey,
 	mode,
 	setMode,
 	toggleMode,
@@ -15,13 +15,13 @@ export {
 	setMode,
 	toggleMode,
 	resetMode,
-	localStorageKey,
+	modeStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
 	mode,
 	theme,
 	setTheme,
-	themeLocalStorageKey
+	themeStorageKey
 };
 
 export { default as ModeWatcher } from './mode-watcher.svelte';

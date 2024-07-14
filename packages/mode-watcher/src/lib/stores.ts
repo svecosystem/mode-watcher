@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 import { withoutTransition } from './without-transition.js';
 import type { Mode, ThemeColors } from './types.js';
 import { sanitizeClassNames } from './utils.js';
@@ -76,14 +76,18 @@ function createUserPrefersMode() {
 	const defaultValue = 'system';
 
 	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(modeLocalStorageKey);
+	const initialValue = storage.getItem(getModeStorageKey());
 
 	let value = isValidMode(initialValue) ? initialValue : defaultValue;
+
+	function getModeStorageKey() {
+		return get(modeStorageKey);
+	}
 
 	const { subscribe, set: _set } = writable(value, () => {
 		if (!isBrowser) return;
 		const handler = (e: StorageEvent) => {
-			if (e.key !== modeLocalStorageKey) return;
+			if (e.key !== getModeStorageKey()) return;
 			const newValue = e.newValue;
 			if (isValidMode(newValue)) {
 				_set((value = newValue));
@@ -97,7 +101,7 @@ function createUserPrefersMode() {
 
 	function set(v: Mode) {
 		_set((value = v));
-		storage.setItem(modeLocalStorageKey, value);
+		storage.setItem(getModeStorageKey(), value);
 	}
 
 	return {
@@ -108,13 +112,17 @@ function createUserPrefersMode() {
 
 function createCustomTheme() {
 	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(themeLocalStorageKey)
+	const initialValue = storage.getItem(getThemeStorageKey())
 	let value = initialValue === null || initialValue === undefined ? '' : initialValue
+
+	function getThemeStorageKey() {
+		return get(themeStorageKey)
+	}
 
 	const { subscribe, set: _set } = writable(value, () => {
 		if (!isBrowser) return;
 		const handler = (e: StorageEvent) => {
-			if (e.key !== modeLocalStorageKey) return;
+			if (e.key !== getThemeStorageKey()) return;
 			const newValue = e.newValue;
 			if (newValue === null) {
 				_set((value = ''))
@@ -128,7 +136,7 @@ function createCustomTheme() {
 
 	function set(v: string) {
 		_set((value = v));
-		storage.setItem(themeLocalStorageKey, value);
+		storage.setItem(getThemeStorageKey(), value);
 	}
 
 	return {

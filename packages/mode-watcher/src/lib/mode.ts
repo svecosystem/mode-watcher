@@ -1,6 +1,6 @@
 import { get } from 'svelte/store';
 import {
-	modeLocalStorageKey,
+	modeStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
 	derivedMode,
@@ -8,7 +8,7 @@ import {
 	theme as themeStore,
 	disableTransitions,
 	derivedTheme,
-	themeLocalStorageKey
+	themeStorageKey
 } from './stores.js';
 import type { Mode, ThemeColors } from './types.js';
 
@@ -86,8 +86,8 @@ export function setInitialMode({
 }
 
 export {
-	modeLocalStorageKey as localStorageKey,
-	themeLocalStorageKey,
+	modeStorageKey,
+	themeStorageKey,
 	derivedTheme as theme,
 	userPrefersMode,
 	systemPrefersMode,
