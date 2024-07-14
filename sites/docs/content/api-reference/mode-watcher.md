@@ -61,6 +61,14 @@ By default, `ModeWatcher` will add the `dark` class to the root `html` element w
 
 Now, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.
 
+### Nonce
+
+You can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC occurs.
+
+```svelte
+<ModeWatcher nonce="my-secure-nonce" />
+```
+
 ## Props
 
 The `ModeWatcher` component accepts the following props:

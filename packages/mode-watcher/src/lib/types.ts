@@ -42,4 +42,12 @@ export type ModeWatcherProps = {
 	 * @defaultValue `[]`
 	 */
 	lightClassNames?: string[];
+
+	/**
+	 * An optional nonce to use for the injected script tag to allow-list mode-watcher
+	 * if you are using a Content Security Policy.
+	 *
+	 * @defaultValue `undefined`
+	 */
+	nonce?: string;
 };
