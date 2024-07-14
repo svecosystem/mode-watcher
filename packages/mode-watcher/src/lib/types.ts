@@ -57,6 +57,20 @@ export type ModeWatcherProps = {
 	lightClassNames?: string[];
 
 	/**
+	 * Optionally provide a custom local storage key to use for storing the mode.
+	 *
+	 * @defaultValue `'mode-watcher-mode'`
+	 */
+	modeStorageKey?: string;
+
+	/**
+	 * Optionally provide a custom local storage key to use for storing the theme.
+	 *
+	 * @defaultValue `'mode-watcher-theme'`
+	 */
+	themeStorageKey?: string;
+
+	/**
 	 * An optional nonce to use for the injected script tag to allow-list mode-watcher
 	 * if you are using a Content Security Policy.
 	 *
