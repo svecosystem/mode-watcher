@@ -25,6 +25,7 @@
 	export let disableTransitions = true;
 	export let darkClassNames: string[] = ['dark'];
 	export let lightClassNames: string[] = [];
+	export let nonce: string = '';
 
 	themeColorsStore.set(themeColors);
 	disableTransitionsStore.set(disableTransitions);
@@ -51,6 +52,8 @@
 	const args = `"${defaultMode}"${
 		themeColors ? `, ${JSON.stringify(themeColors)}` : ', undefined'
 	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}`;
+
+	$: trueNonce = typeof window === 'undefined' ? nonce : '';
 </script>
 
 <svelte:head>
@@ -60,10 +63,12 @@
 		<!-- but that snippet does not run in vitest -->
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<script nonce="%sveltekit.nonce%">(` +
-		setInitialMode.toString() +
-		`)(` +
-		args +
-		`);</script>`}
+
+	{#if trueNonce}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html `<script nonce=${trueNonce}>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+	{:else}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html `<script>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+	{/if}
 </svelte:head>
