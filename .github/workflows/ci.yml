@@ -23,7 +23,7 @@ jobs:
               with:
                   version: 8.6.3
                   run_install: true
-            - run: pnpm run lint
+            - run: pnpm build && pnpm lint
 
     Check:
         runs-on: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
               with:
                   version: 8.6.3
                   run_install: true
-            - run: pnpm run build && pnpm run check
+            - run: pnpm build && pnpm check
 
     Tests:
         runs-on: ubuntu-latest
