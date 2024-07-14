@@ -5,10 +5,11 @@ import StealthMode from './StealthMode.svelte';
 import { userEvent } from '@testing-library/user-event';
 import { mediaQueryState } from '../../scripts/setupTest.js';
 import { tick } from 'svelte';
+import type { ModeWatcherProps } from '$lib/types.js';
 
-function setup() {
+function setup(props: Partial<ModeWatcherProps> = {}) {
 	const user = userEvent.setup();
-	const returned = render(Mode);
+	const returned = render(Mode, { props });
 	return { user, ...returned };
 }
 
@@ -318,35 +319,40 @@ it('also works when $mode is not used in the current page', async () => {
 	expect(themeColor3).toBe('black');
 });
 
+it('allows the user to apply custom classnames to the root html element', async () => {
+	const { container, getByTestId, user } = setup({
+		darkClassNames: ['custom-d-class'],
+		lightClassNames: ['custom-l-class'],
+	});
+	const rootEl = container.parentElement;
+
+	const classes = getClasses(rootEl);
+	expect(classes).toContain('custom-d-class');
+	const toggle = getByTestId('toggle');
+	await user.click(toggle);
+	const classes2 = getClasses(rootEl);
+	expect(classes2).toContain('custom-l-class');
+});
+
 function getClasses(element: HTMLElement | null): string[] {
-	if (element === null) {
-		return [];
-	}
+	if (element === null) return [];
 	const classes = element.className.split(' ').filter((c) => c.length > 0);
 	return classes;
 }
 
 function getColorScheme(element: HTMLElement | null) {
-	if (element === null) {
-		return '';
-	}
+	if (element === null) return '';
 	return element.style.colorScheme;
 }
 
 function getThemeColor(element: HTMLElement | null) {
-	if (element === null) {
-		return '';
-	}
+	if (element === null) return '';
 
 	const themeMetaEl = element.querySelector('meta[name="theme-color"]');
-	if (themeMetaEl === null) {
-		return '';
-	}
+	if (themeMetaEl === null) return '';
 
 	const content = themeMetaEl.getAttribute('content');
-	if (content === null) {
-		return '';
-	}
+	if (content === null) return '';
 
 	return content;
 }

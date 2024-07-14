@@ -11,7 +11,11 @@
 	} from './mode.js';
 
 	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
-	import { isValidMode } from './stores.js';
+	import {
+		darkClassNames as darkClassNamesStore,
+		isValidMode,
+		lightClassNames as lightClassNamesStore,
+	} from './stores.js';
 
 	type $$Props = ModeWatcherProps;
 
@@ -19,9 +23,18 @@
 	export let defaultMode: Mode = 'system';
 	export let themeColors: ThemeColors = undefined;
 	export let disableTransitions = true;
+	export let darkClassNames: string[] = ['dark'];
+	export let lightClassNames: string[] = [];
 
 	themeColorsStore.set(themeColors);
 	disableTransitionsStore.set(disableTransitions);
+	darkClassNamesStore.set(darkClassNames);
+	lightClassNamesStore.set(lightClassNames);
+
+	$: disableTransitionsStore.set(disableTransitions);
+	$: themeColorsStore.set(themeColors);
+	$: darkClassNamesStore.set(darkClassNames);
+	$: lightClassNamesStore.set(lightClassNames);
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
@@ -35,7 +48,9 @@
 		};
 	});
 
-	const args = `"${defaultMode}"${themeColors ? `, ${JSON.stringify(themeColors)}` : ''}`;
+	const args = `"${defaultMode}"${
+		themeColors ? `, ${JSON.stringify(themeColors)}` : ', undefined'
+	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}`;
 </script>
 
 <svelte:head>

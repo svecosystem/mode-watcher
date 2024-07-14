@@ -1,6 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { withoutTransition } from './without-transition.js';
 import type { Mode, ThemeColors } from './types.js';
+import { sanitizeClassNames } from './utils.js';
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -37,6 +38,16 @@ export const themeColors = writable<ThemeColors>(undefined);
  * Whether to disable transitions when changing the mode.
  */
 export const disableTransitions = writable(true);
+
+/**
+ * The classnames to add to the root `html` element when the mode is dark.
+ */
+export const darkClassNames = writable<string[]>([]);
+
+/**
+ * The classnames to add to the root `html` element when the mode is light.
+ */
+export const lightClassNames = writable<string[]>([]);
 
 /**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
@@ -120,23 +131,41 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions],
-		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions]) => {
+		[
+			userPrefersMode,
+			systemPrefersMode,
+			themeColors,
+			disableTransitions,
+			darkClassNames,
+			lightClassNames,
+		],
+		([
+			$userPrefersMode,
+			$systemPrefersMode,
+			$themeColors,
+			$disableTransitions,
+			$darkClassNames,
+			$lightClassNames,
+		]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
+			const sanitizedDarkClassNames = sanitizeClassNames($darkClassNames);
+			const sanitizedLightClassNames = sanitizeClassNames($lightClassNames);
 
 			function update() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
-					htmlEl.classList.remove('dark');
+					if (sanitizedDarkClassNames.length) htmlEl.classList.remove(...sanitizedDarkClassNames);
+					if (sanitizedLightClassNames.length) htmlEl.classList.add(...sanitizedLightClassNames);
 					htmlEl.style.colorScheme = 'light';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.light);
 					}
 				} else {
-					htmlEl.classList.add('dark');
+					if (sanitizedLightClassNames.length) htmlEl.classList.remove(...sanitizedLightClassNames);
+					if (sanitizedDarkClassNames.length) htmlEl.classList.add(...sanitizedDarkClassNames);
 					htmlEl.style.colorScheme = 'dark';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.dark);

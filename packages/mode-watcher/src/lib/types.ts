@@ -28,4 +28,18 @@ export type ModeWatcherProps = {
 	 * Whether to disable transitions when updating the mode.
 	 */
 	disableTransitions?: boolean;
+
+	/**
+	 * The classname to add to the root `html` element when the mode is dark.
+	 *
+	 * @defaultValue `["dark"]`
+	 */
+	darkClassNames?: string[];
+
+	/**
+	 * The classname to add to the root `html` element when the mode is light.
+	 *
+	 * @defaultValue `[]`
+	 */
+	lightClassNames?: string[];
 };

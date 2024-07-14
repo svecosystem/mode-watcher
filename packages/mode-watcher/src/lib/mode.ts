@@ -7,6 +7,7 @@ import {
 	themeColors,
 	disableTransitions,
 } from './stores.js';
+import { sanitizeClassNames } from './utils.js';
 import type { Mode, ThemeColors } from './types.js';
 
 /** Toggle between light and dark mode */
@@ -25,14 +26,26 @@ export function resetMode(): void {
 }
 
 /** Used to set the mode on initial page load to prevent FOUC */
-export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
+export function setInitialMode(
+	defaultMode: Mode,
+	themeColors?: ThemeColors,
+	darkClassNames: string[] = ['dark'],
+	lightClassNames: string[] = []
+) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
 	const light =
 		mode === 'light' ||
 		(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
-
-	rootEl.classList[light ? 'remove' : 'add']('dark');
+	const sanitizedDarkClassNames = sanitizeClassNames(darkClassNames);
+	const sanitizedLightClassNames = sanitizeClassNames(lightClassNames);
+	if (light) {
+		if (sanitizedDarkClassNames.length) rootEl.classList.remove(...sanitizedDarkClassNames);
+		if (sanitizedLightClassNames.length) rootEl.classList.add(...sanitizedLightClassNames);
+	} else {
+		if (sanitizedLightClassNames.length) rootEl.classList.remove(...sanitizedLightClassNames);
+		if (sanitizedDarkClassNames.length) rootEl.classList.add(...sanitizedDarkClassNames);
+	}
 	rootEl.style.colorScheme = light ? 'light' : 'dark';
 
 	if (themeColors) {
