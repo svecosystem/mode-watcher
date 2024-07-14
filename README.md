@@ -12,7 +12,6 @@ Simple utilities to manage light & dark mode in your SvelteKit app.
 
 [![](https://dcbadge.vercel.app/api/server/fdXy3Sk8Gq?style=flat)](https://discord.gg/fdXy3Sk8Gq)
 
-
 ## Installation
 
 ```bash
@@ -25,7 +24,7 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 
 ```svelte
 <script lang="ts">
-	import { ModeWatcher } from 'mode-watcher';
+	import { ModeWatcher } from "mode-watcher";
 </script>
 
 <ModeWatcher />
@@ -64,7 +63,7 @@ A function that toggles the current mode.
 
 ```svelte
 <script lang="ts">
-	import { toggleMode } from 'mode-watcher';
+	import { toggleMode } from "mode-watcher";
 </script>
 
 <button on:click={toggleMode}>Toggle Mode</button>
@@ -76,11 +75,11 @@ A function that sets the current mode. It accepts a string with the value `"ligh
 
 ```svelte
 <script lang="ts">
-	import { setMode } from 'mode-watcher';
+	import { setMode } from "mode-watcher";
 </script>
 
-<button on:click={() => setMode('light')}>Set Light Mode</button>
-<button on:click={() => setMode('dark')}>Set Dark Mode</button>
+<button on:click={() => setMode("light")}>Set Light Mode</button>
+<button on:click={() => setMode("dark")}>Set Dark Mode</button>
 ```
 
 ### resetMode
@@ -89,7 +88,7 @@ A function that resets the mode to system preferences.
 
 ```svelte
 <script lang="ts">
-	import { resetMode } from 'mode-watcher';
+	import { resetMode } from "mode-watcher";
 </script>
 
 <button on:click={() => resetMode()}>System</button>
@@ -101,13 +100,13 @@ A readable store that contains the current mode. It can be `"light"` or `"dark"`
 
 ```svelte
 <script lang="ts">
-	import { setMode, mode } from 'mode-watcher';
+	import { setMode, mode } from "mode-watcher";
 
 	function handleModeChange() {
-		if ($mode === 'light') {
-			setMode('dark');
+		if ($mode === "light") {
+			setMode("dark");
 		} else {
-			setMode('light');
+			setMode("light");
 		}
 	}
 </script>
@@ -149,7 +148,6 @@ Made by [@huntabyte](https://github.com/huntabyte), [@ollema](https://github.com
 </a>
 
 <!-- /automd -->
-
 
 ## Community
 

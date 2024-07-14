@@ -54,6 +54,11 @@ export const navigation: Navigation = {
 					href: "/docs/get-started",
 					items: [],
 				},
+				{
+					title: "Mode vs Theme",
+					href: "/docs/mode-vs-theme",
+					items: [],
+				},
 			],
 		},
 		{
@@ -63,6 +68,11 @@ export const navigation: Navigation = {
 				{
 					title: "<ModeWatcher />",
 					href: "/docs/api-reference/mode-watcher",
+					items: [],
+				},
+				{
+					title: "mode",
+					href: "/docs/api-reference/mode",
 					items: [],
 				},
 				{
@@ -76,11 +86,6 @@ export const navigation: Navigation = {
 					items: [],
 				},
 				{
-					title: "mode",
-					href: "/docs/api-reference/mode",
-					items: [],
-				},
-				{
 					title: "systemPrefersMode",
 					href: "/docs/api-reference/system-prefers-mode",
 					items: [],
@@ -91,25 +96,25 @@ export const navigation: Navigation = {
 					items: [],
 				},
 				{
-					title: "localStorageKey",
-					href: "/docs/api-reference/local-storage-key",
+					title: "setTheme",
+					href: "/docs/api-reference/set-theme",
 					items: [],
 				},
 				{
-					title: 'setTheme',
-					href: '/docs/api-reference/set-theme',
-					items: []
+					title: "theme",
+					href: "/docs/api-reference/theme",
+					items: [],
 				},
 				{
-					title: 'theme',
-					href: '/docs/api-reference/theme',
-					items: []
+					title: "modeStorageKey",
+					href: "/docs/api-reference/mode-storage-key",
+					items: [],
 				},
 				{
-					title: 'themeLocalStorageKey',
-					href: '/docs/api-reference/theme-local-storage-key',
-					items: []
-				}
+					title: "themeStorageKey",
+					href: "/docs/api-reference/theme-storage-key",
+					items: [],
+				},
 			],
 		},
 	],

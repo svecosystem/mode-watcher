@@ -13,10 +13,10 @@ A readable store that contains the current theme, not to be confused with [`mode
 	import { setTheme, theme } from "mode-watcher";
 
 	function cycleTheme() {
-		if ($theme === 'dracula') {
-			setTheme('retro')
+		if ($theme === "dracula") {
+			setTheme("retro");
 		} else {
-			setTheme('dracula')
+			setTheme("dracula");
 		}
 	}
 </script>

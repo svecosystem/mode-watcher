@@ -1,36 +1,34 @@
 <script lang="ts">
+	import { derived } from "svelte/store";
 	import {
-		toggleMode,
-		setMode,
-		resetMode,
-		userPrefersMode,
-		systemPrefersMode,
 		mode,
-	} from '$lib/index.js';
+		resetMode,
+		setMode,
+		systemPrefersMode,
+		toggleMode,
+		userPrefersMode,
+	} from "$lib/index.js";
 
-	import { derived } from 'svelte/store';
-	import { browser } from '$app/environment';
+	import { browser } from "$app/environment";
 
 	const htmlElement = derived(mode, () => {
-		if (browser) {
-			const htmlElement = document.documentElement;
-			if (htmlElement) {
-				return htmlElement.outerHTML.replace(htmlElement.innerHTML + '</html>', '');
-			}
+		if (!browser) return;
+		const htmlElement = document.documentElement;
+		if (htmlElement) {
+			return htmlElement.outerHTML.replace(`${htmlElement.innerHTML}</html>`, "");
 		}
 	});
 
 	const themeColorElement = derived(mode, () => {
-		if (browser) {
-			const themeColorElement = document.querySelector('meta[name="theme-color"]');
-			if (themeColorElement) {
-				return themeColorElement.outerHTML;
-			}
+		if (!browser) return;
+		const themeColorElement = document.querySelector('meta[name="theme-color"]');
+		if (themeColorElement) {
+			return themeColorElement.outerHTML;
 		}
 	});
 </script>
 
-<div class="container py-12 space-y-4">
+<div class="container space-y-4 py-12">
 	<p>User prefers mode: {$userPrefersMode}</p>
 	<p>System prefers mode: {$systemPrefersMode}</p>
 	<p>Current mode: {$mode}</p>
@@ -43,13 +41,13 @@
 	{/if}
 
 	<button on:click={toggleMode}> Toggle </button>
-	<button on:click={() => setMode('light')}> Light Mode </button>
-	<button on:click={() => setMode('dark')}> Dark Mode </button>
+	<button on:click={() => setMode("light")}> Light Mode </button>
+	<button on:click={() => setMode("dark")}> Dark Mode </button>
 	<button on:click={resetMode}> Reset </button>
 </div>
 
 <style lang="postcss">
 	button {
-		@apply bg-primary transition-colors text-background px-2 py-1 rounded-sm duration-500;
+		@apply bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500;
 	}
 </style>

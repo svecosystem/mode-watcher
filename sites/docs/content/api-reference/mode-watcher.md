@@ -69,6 +69,19 @@ By default, `ModeWatcher` will add the `dark` class to the root `html` element w
 
 Now, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.
 
+### Custom Local Storage Keys
+
+By default, `ModeWatcher` will use the following local storage keys to store the mode and theme:
+
+-   `mode-watcher-mode`
+-   `mode-watcher-theme`
+
+You can customize these keys by passing a custom `modeStorageKey` and/or `themeStorageKey` to the `ModeWatcher` component:
+
+```svelte
+<ModeWatcher modeStorageKey="my-mode-key" themeStorageKey="my-theme-key" />
+```
+
 ### Nonce
 
 You can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC occurs.
@@ -81,9 +94,10 @@ You can use the `nonce` prop to allow-list mode-watcher if you are using a Conte
 
 The `ModeWatcher` component accepts the following props:
 
-```ts
+````ts
 export type Mode = "system" | "dark" | "light";
 export type ThemeColors = { dark: string; light: string };
+
 export type ModeWatcherProps = {
 	/**
 	 * Whether to automatically track operating system preferences
@@ -115,15 +129,11 @@ export type ModeWatcherProps = {
 
 	/**
 	 * The theme colors to use for each mode.
-	 *
-	 * @defaultValue `undefined`
 	 */
 	themeColors?: ThemeColors;
 
 	/**
 	 * Whether to disable transitions when updating the mode.
-	 *
-	 * @defaultValue `true`
 	 */
 	disableTransitions?: boolean;
 
@@ -142,6 +152,20 @@ export type ModeWatcherProps = {
 	lightClassNames?: string[];
 
 	/**
+	 * Optionally provide a custom local storage key to use for storing the mode.
+	 *
+	 * @defaultValue `'mode-watcher-mode'`
+	 */
+	modeStorageKey?: string;
+
+	/**
+	 * Optionally provide a custom local storage key to use for storing the theme.
+	 *
+	 * @defaultValue `'mode-watcher-theme'`
+	 */
+	themeStorageKey?: string;
+
+	/**
 	 * An optional nonce to use for the injected script tag to allow-list mode-watcher
 	 * if you are using a Content Security Policy.
 	 *
@@ -149,5 +173,4 @@ export type ModeWatcherProps = {
 	 */
 	nonce?: string;
 };
-
-```
+````

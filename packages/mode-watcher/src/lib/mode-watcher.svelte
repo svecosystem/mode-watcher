@@ -1,60 +1,70 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 	import {
-		systemPrefersMode,
-		setMode,
-		localStorageKey,
-		mode,
-		themeColors as themeColorsStore,
+		defineConfig,
 		disableTransitions as disableTransitionsStore,
+		mode,
 		setInitialMode,
-	} from './mode.js';
+		setMode,
+		setTheme,
+		systemPrefersMode,
+		themeColors as themeColorsStore,
+	} from "./mode.js";
 
-	import type { Mode, ModeWatcherProps, ThemeColors } from './types.js';
+	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
 	import {
 		darkClassNames as darkClassNamesStore,
 		isValidMode,
 		lightClassNames as lightClassNamesStore,
-	} from './stores.js';
+		modeStorageKey as modeStorageKeyStore,
+		themeStorageKey as themeStorageKeyStore,
+	} from "./stores.js";
 
 	type $$Props = ModeWatcherProps;
 
 	export let track = true;
-	export let defaultMode: Mode = 'system';
+	export let defaultMode: Mode = "system";
 	export let themeColors: ThemeColors = undefined;
 	export let disableTransitions = true;
-	export let darkClassNames: string[] = ['dark'];
+	export let darkClassNames: string[] = ["dark"];
 	export let lightClassNames: string[] = [];
-	export let defaultTheme: string | undefined = 'money';
-	export let nonce: string = '';
-
-	themeColorsStore.set(themeColors);
-	disableTransitionsStore.set(disableTransitions);
-	darkClassNamesStore.set(darkClassNames);
-	lightClassNamesStore.set(lightClassNames);
+	export let defaultTheme: string = "";
+	export let nonce: string = "";
+	export let themeStorageKey: string = "mode-watcher-theme";
+	export let modeStorageKey: string = "mode-watcher-mode";
 
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
 	$: darkClassNamesStore.set(darkClassNames);
 	$: lightClassNamesStore.set(lightClassNames);
+	$: modeStorageKeyStore.set(modeStorageKey);
+	$: themeStorageKeyStore.set(themeStorageKey);
 
 	onMount(() => {
 		const unsubscriber = mode.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		const localStorageMode = localStorage.getItem(localStorageKey);
+		const localStorageMode = localStorage.getItem($modeStorageKeyStore);
 		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
+		const localStorageTheme = localStorage.getItem($themeStorageKeyStore);
+		setTheme(localStorageTheme || defaultTheme);
 
 		return () => {
 			unsubscriber();
 		};
 	});
 
-	const args = `"${defaultMode}"${
-		themeColors ? `, ${JSON.stringify(themeColors)}` : ', undefined'
-	}, ${JSON.stringify(darkClassNames)}, ${JSON.stringify(lightClassNames)}, "${defaultTheme}"`;
+	const initConfig = defineConfig({
+		defaultMode,
+		themeColors,
+		darkClassNames,
+		lightClassNames,
+		defaultTheme,
+		modeStorageKey,
+		themeStorageKey,
+	});
 
-	$: trueNonce = typeof window === 'undefined' ? nonce : '';
+	$: trueNonce = typeof window === "undefined" ? nonce : "";
 </script>
 
 <svelte:head>
@@ -66,10 +76,18 @@
 	{/if}
 
 	{#if trueNonce}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html `<script nonce=${trueNonce}>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
+		{@html `<script nonce=${trueNonce}>(` +
+			setInitialMode.toString() +
+			`)(` +
+			JSON.stringify(initConfig) +
+			`);</script>`}
 	{:else}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html `<script>(` + setInitialMode.toString() + `)(` + args + `);</script>`}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
+		{@html `<script>(` +
+			setInitialMode.toString() +
+			`)(` +
+			JSON.stringify(initConfig) +
+			`);</script>`}
 	{/if}
 </svelte:head>
