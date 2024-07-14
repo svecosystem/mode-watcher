@@ -9,7 +9,7 @@
 
 <TwIndicator />
 <Metadata />
-<ModeWatcher darkClassNames={["dddd"]} />
+<ModeWatcher />
 <Navbar />
 <div class="flex min-h-[calc(100vh-4rem)] flex-col">
 	<div class="flex-grow">

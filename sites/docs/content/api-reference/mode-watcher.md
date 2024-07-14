@@ -51,6 +51,16 @@ To enable this, set the `themeColors` prop to your preferred colors:
 <ModeWatcher themeColors={{ dark: "#000", light: "#fff" }} />
 ```
 
+### Custom Class Names
+
+By default, `ModeWatcher` will add the `dark` class to the root `html` element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the `darkClassNames` and/or `lightClassNames` props:
+
+```svelte
+<ModeWatcher darkClassNames={["dddd"]} lightClassNames={["fff"]} />
+```
+
+Now, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.
+
 ## Props
 
 The `ModeWatcher` component accepts the following props:
@@ -88,5 +98,19 @@ export type ModeWatcherProps = {
 	 * @defaultValue `true`
 	 */
 	disableTransitions?: boolean;
+
+	/**
+	 * The classname to add to the root `html` element when the mode is dark.
+	 *
+	 * @defaultValue `["dark"]`
+	 */
+	darkClassNames?: string[]
+
+	/**
+	 * The classname to add to the root `html` element when the mode is light.
+	 *
+	 * @defaultValue `[]`
+	 */
+	lightClassNames?: string[]
 };
 ```
