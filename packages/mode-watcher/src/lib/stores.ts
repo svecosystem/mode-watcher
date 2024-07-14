@@ -39,9 +39,20 @@ export const themeColors = writable<ThemeColors>(undefined);
 export const disableTransitions = writable(true);
 
 /**
+ * The classnames to add to the root `html` element when the mode is dark.
+ */
+export const darkClassNames = writable<string[]>([])
+
+/**
+ * The classnames to add to the root `html` element when the mode is light.
+ */
+export const lightClassNames = writable<string[]>([])
+
+/**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
 export const derivedMode = createDerivedMode();
+
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
@@ -120,8 +131,8 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions],
-		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions]) => {
+		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions, darkClassNames, lightClassNames],
+		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions, $darkClassNames, $lightClassNames]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;
@@ -130,13 +141,15 @@ function createDerivedMode() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === 'light') {
-					htmlEl.classList.remove('dark');
+					if ($darkClassNames.length) htmlEl.classList.remove(...$darkClassNames);
+					if ($lightClassNames.length) htmlEl.classList.add(...$lightClassNames);
 					htmlEl.style.colorScheme = 'light';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.light);
 					}
 				} else {
-					htmlEl.classList.add('dark');
+					if ($lightClassNames.length) htmlEl.classList.remove(...$lightClassNames);
+					if ($darkClassNames.length) htmlEl.classList.add('dark');
 					htmlEl.style.colorScheme = 'dark';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.dark);

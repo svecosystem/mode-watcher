@@ -25,14 +25,28 @@ export function resetMode(): void {
 }
 
 /** Used to set the mode on initial page load to prevent FOUC */
-export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors) {
+export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors, darkClassNames: string[] = ["dark"], lightClassNames: string[] = []) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
 	const light =
 		mode === 'light' ||
 		(mode === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
 
-	rootEl.classList[light ? 'remove' : 'add']('dark');
+	if (light) {
+		if (darkClassNames.length) {
+			rootEl.classList.remove(...darkClassNames);
+		}
+		if (lightClassNames.length) {
+			rootEl.classList.add(...lightClassNames);
+		}
+	} else {
+		if (lightClassNames.length) {
+			rootEl.classList.remove(...lightClassNames);
+		}
+		if (darkClassNames.length) {
+			rootEl.classList.add(...darkClassNames);
+		}
+	}
 	rootEl.style.colorScheme = light ? 'light' : 'dark';
 
 	if (themeColors) {

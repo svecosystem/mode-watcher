@@ -32,14 +32,14 @@ export type ModeWatcherProps = {
 	/**
 	 * The classname to add to the root `html` element when the mode is dark.
 	 *
-	 * @defaultValue `"dark"`
+	 * @defaultValue `["dark"]`
 	 */
-	darkClass?: string;
+	darkClassNames?: string[]
 
 	/**
 	 * The classname to add to the root `html` element when the mode is light.
 	 *
-	 * @defaultValue `""`
+	 * @defaultValue `[]`
 	 */
-	lightClass?: string;
+	lightClassNames?: string[]
 };
