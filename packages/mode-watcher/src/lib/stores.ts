@@ -149,7 +149,7 @@ function createDerivedMode() {
 					}
 				} else {
 					if ($lightClassNames.length) htmlEl.classList.remove(...$lightClassNames);
-					if ($darkClassNames.length) htmlEl.classList.add('dark');
+					if ($darkClassNames.length) htmlEl.classList.add(...$darkClassNames);
 					htmlEl.style.colorScheme = 'dark';
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute('content', $themeColors.dark);
