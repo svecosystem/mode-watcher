@@ -1,7 +1,7 @@
 import { writable, derived } from 'svelte/store';
 import { withoutTransition } from './without-transition.js';
 import type { Mode, ThemeColors } from './types.js';
-import { sanitizeClassNames } from './utils.js'
+import { sanitizeClassNames } from './utils.js';
 
 // saves having to branch for server vs client
 const noopStorage = {
@@ -42,18 +42,17 @@ export const disableTransitions = writable(true);
 /**
  * The classnames to add to the root `html` element when the mode is dark.
  */
-export const darkClassNames = writable<string[]>([])
+export const darkClassNames = writable<string[]>([]);
 
 /**
  * The classnames to add to the root `html` element when the mode is light.
  */
-export const lightClassNames = writable<string[]>([])
+export const lightClassNames = writable<string[]>([]);
 
 /**
  * Derived store that represents the current mode (`"dark"`, `"light"` or `undefined`)
  */
 export const derivedMode = createDerivedMode();
-
 
 // derived from: https://github.com/CaptainCodeman/svelte-web-storage
 function createUserPrefersMode() {
@@ -132,8 +131,22 @@ function createSystemMode() {
 
 function createDerivedMode() {
 	const { subscribe } = derived(
-		[userPrefersMode, systemPrefersMode, themeColors, disableTransitions, darkClassNames, lightClassNames],
-		([$userPrefersMode, $systemPrefersMode, $themeColors, $disableTransitions, $darkClassNames, $lightClassNames]) => {
+		[
+			userPrefersMode,
+			systemPrefersMode,
+			themeColors,
+			disableTransitions,
+			darkClassNames,
+			lightClassNames,
+		],
+		([
+			$userPrefersMode,
+			$systemPrefersMode,
+			$themeColors,
+			$disableTransitions,
+			$darkClassNames,
+			$lightClassNames,
+		]) => {
 			if (!isBrowser) return undefined;
 
 			const derivedMode = $userPrefersMode === 'system' ? $systemPrefersMode : $userPrefersMode;

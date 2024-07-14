@@ -26,7 +26,12 @@ export function resetMode(): void {
 }
 
 /** Used to set the mode on initial page load to prevent FOUC */
-export function setInitialMode(defaultMode: Mode, themeColors?: ThemeColors, darkClassNames: string[] = ["dark"], lightClassNames: string[] = []) {
+export function setInitialMode(
+	defaultMode: Mode,
+	themeColors?: ThemeColors,
+	darkClassNames: string[] = ['dark'],
+	lightClassNames: string[] = []
+) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem('mode-watcher-mode') || defaultMode;
 	const light =
