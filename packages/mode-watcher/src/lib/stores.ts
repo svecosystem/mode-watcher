@@ -249,6 +249,7 @@ function createDerivedMode() {
 function createDerivedTheme() {
 	const { subscribe } = derived([theme, disableTransitions], ([$theme, $disableTransitions]) => {
 		if (!isBrowser) return undefined;
+		console.log("theme", $theme);
 
 		function update() {
 			const htmlEl = document.documentElement;

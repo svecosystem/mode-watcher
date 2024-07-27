@@ -8,6 +8,7 @@
 		setMode,
 		setTheme,
 		systemPrefersMode,
+		theme,
 		themeColors as themeColorsStore,
 	} from "./mode.js";
 
@@ -41,7 +42,8 @@
 	$: themeStorageKeyStore.set(themeStorageKey);
 
 	onMount(() => {
-		const unsubscriber = mode.subscribe(() => {});
+		const modeUnsubscribe = mode.subscribe(() => {});
+		const themeUnsubscribe = theme.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
 		const localStorageMode = localStorage.getItem($modeStorageKeyStore);
@@ -50,7 +52,8 @@
 		setTheme(localStorageTheme || defaultTheme);
 
 		return () => {
-			unsubscriber();
+			modeUnsubscribe();
+			themeUnsubscribe();
 		};
 	});
 
