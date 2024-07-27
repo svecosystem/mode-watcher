@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.4.1
+
+### Patch Changes
+
+-   Fix bug where `data-theme` attribute wasn't syncing with the theme ([#87](https://github.com/svecosystem/mode-watcher/pull/87))
+
 ## 0.4.0
 
 ### Minor Changes
