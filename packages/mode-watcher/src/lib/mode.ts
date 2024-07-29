@@ -89,6 +89,13 @@ export function setInitialMode({
 	localStorage.setItem(modeStorageKey, mode);
 }
 
+/**
+ * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
+ */
+export function generateSetInitialModeExpression(config: SetInitialModeArgs = {}): string {
+	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
+}
+
 export {
 	modeStorageKey,
 	themeStorageKey,
