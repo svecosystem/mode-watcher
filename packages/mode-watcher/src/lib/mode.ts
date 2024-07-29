@@ -37,26 +37,28 @@ export function defineConfig(config: SetInitialModeArgs) {
 }
 
 type SetInitialModeArgs = {
-	defaultMode: Mode;
+	defaultMode?: Mode;
 	themeColors?: ThemeColors;
-	darkClassNames: string[];
-	lightClassNames: string[];
-	defaultTheme: string;
-	modeStorageKey: string;
-	themeStorageKey: string;
+	darkClassNames?: string[];
+	lightClassNames?: string[];
+	defaultTheme?: string;
+	modeStorageKey?: string;
+	themeStorageKey?: string;
 };
 
 /** Used to set the mode on initial page load to prevent FOUC */
 export function setInitialMode({
-	defaultMode,
+	defaultMode = "system",
 	themeColors,
 	darkClassNames = ["dark"],
 	lightClassNames = [],
 	defaultTheme = "",
+	modeStorageKey = "mode-watcher-mode",
+	themeStorageKey = "mode-watcher-theme",
 }: SetInitialModeArgs) {
 	const rootEl = document.documentElement;
-	const mode = localStorage.getItem("mode-watcher-mode") || defaultMode;
-	const theme = localStorage.getItem("mode-watcher-theme") || defaultTheme;
+	const mode = localStorage.getItem(modeStorageKey) || defaultMode;
+	const theme = localStorage.getItem(themeStorageKey) || defaultTheme;
 	const light =
 		mode === "light" ||
 		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
@@ -81,10 +83,10 @@ export function setInitialMode({
 
 	if (theme) {
 		rootEl.setAttribute("data-theme", theme);
-		localStorage.setItem("mode-watcher-theme", theme);
+		localStorage.setItem(themeStorageKey, theme);
 	}
 
-	localStorage.setItem("mode-watcher-mode", mode);
+	localStorage.setItem(modeStorageKey, mode);
 }
 
 export {
