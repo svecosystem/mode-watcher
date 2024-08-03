@@ -1,4 +1,4 @@
-name: Docs Production Deployment
+name: Production Deployment
 on:
     push:
         branches:
@@ -7,25 +7,20 @@ on:
             - sites/docs/**
             - packages/mode-watcher/**
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
 jobs:
-    publish:
+    deploy-production:
         runs-on: ubuntu-latest
         permissions:
             contents: read
             deployments: write
-        name: Publish to Cloudflare Pages
+        name: Deploy Production Site to Cloudflare Pages
         steps:
             - uses: actions/checkout@v4
             - uses: pnpm/action-setup@v4
-              name: Install pnpm
               with:
-                  version: 8
-                  run_install: false
+                  version: 9
 
-            - name: Install Node.js
-              uses: actions/setup-node@v4
+            - uses: actions/setup-node@v4
               with:
                   node-version: 20
                   cache: pnpm
