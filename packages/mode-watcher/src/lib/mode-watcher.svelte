@@ -3,8 +3,8 @@
 	import {
 		defineConfig,
 		disableTransitions as disableTransitionsStore,
+		generateSetInitialModeExpression,
 		mode,
-		setInitialMode,
 		setMode,
 		setTheme,
 		systemPrefersMode,
@@ -33,6 +33,7 @@
 	export let nonce: string = "";
 	export let themeStorageKey: string = "mode-watcher-theme";
 	export let modeStorageKey: string = "mode-watcher-mode";
+	export let disableHeadScriptInjection = false;
 
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
@@ -80,17 +81,11 @@
 
 	{#if trueNonce}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
-		{@html `<script nonce=${trueNonce}>(` +
-			setInitialMode.toString() +
-			`)(` +
-			JSON.stringify(initConfig) +
-			`);</script>`}
-	{:else}
+		{@html `<script nonce=${trueNonce}>` +
+			generateSetInitialModeExpression(initConfig) +
+			`</script>`}
+	{:else if !disableHeadScriptInjection}
 		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
-		{@html `<script>(` +
-			setInitialMode.toString() +
-			`)(` +
-			JSON.stringify(initConfig) +
-			`);</script>`}
+		{@html `<script>` + generateSetInitialModeExpression(initConfig) + `</script>`}
 	{/if}
 </svelte:head>

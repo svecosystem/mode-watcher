@@ -1,4 +1,5 @@
 import {
+	generateSetInitialModeExpression,
 	mode,
 	modeStorageKey,
 	resetMode,
@@ -12,6 +13,7 @@ import {
 } from "./mode.js";
 
 export {
+	generateSetInitialModeExpression,
 	setMode,
 	toggleMode,
 	resetMode,
