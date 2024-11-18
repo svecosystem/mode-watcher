@@ -78,19 +78,10 @@
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
 
-	{#if trueNonce}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
-		{@html `<script nonce=${trueNonce}>(` +
-			setInitialMode.toString() +
-			`)(` +
-			JSON.stringify(initConfig) +
-			`);</script>`}
-	{:else}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags prefer-template -->
-		{@html `<script>(` +
-			setInitialMode.toString() +
-			`)(` +
-			JSON.stringify(initConfig) +
-			`);</script>`}
-	{/if}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ''}>(` +
+		setInitialMode.toString() +
+		`)(` +
+		JSON.stringify(initConfig) +
+		`);</script>`}
 </svelte:head>
