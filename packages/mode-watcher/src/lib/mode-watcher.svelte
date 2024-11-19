@@ -78,7 +78,7 @@
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
 
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags, prefer-template -->
 	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ""}>(` +
 		setInitialMode.toString() +
 		`)(` +
