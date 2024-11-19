@@ -79,7 +79,7 @@
 	{/if}
 
 	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ''}>(` +
+	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ""}>(` +
 		setInitialMode.toString() +
 		`)(` +
 		JSON.stringify(initConfig) +
