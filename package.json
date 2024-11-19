@@ -12,6 +12,7 @@
 		"build:packages": "pnpm -F \"./packages/**\" --parallel build",
 		"ci:publish": "pnpm build:packages && changeset publish",
 		"lint": "prettier --check . && eslint .",
+		"lint:fix": "eslint --fix .",
 		"format": "prettier --write .",
 		"check": "pnpm build:packages && pnpm -r check"
 	},
