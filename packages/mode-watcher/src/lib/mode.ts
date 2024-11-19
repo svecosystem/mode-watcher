@@ -37,24 +37,24 @@ export function defineConfig(config: SetInitialModeArgs) {
 }
 
 type SetInitialModeArgs = {
-	defaultMode: Mode;
+	defaultMode?: Mode;
 	themeColors?: ThemeColors;
-	darkClassNames: string[];
-	lightClassNames: string[];
-	defaultTheme: string;
-	modeStorageKey: string;
-	themeStorageKey: string;
+	darkClassNames?: string[];
+	lightClassNames?: string[];
+	defaultTheme?: string;
+	modeStorageKey?: string;
+	themeStorageKey?: string;
 };
 
 /** Used to set the mode on initial page load to prevent FOUC */
 export function setInitialMode({
-	defaultMode,
+	defaultMode = "system",
 	themeColors,
 	darkClassNames = ["dark"],
 	lightClassNames = [],
 	defaultTheme = "",
-	modeStorageKey,
-	themeStorageKey,
+	modeStorageKey = "mode-watcher-mode",
+	themeStorageKey = "mode-watcher-theme",
 }: SetInitialModeArgs) {
 	const rootEl = document.documentElement;
 	const mode = localStorage.getItem(modeStorageKey) || defaultMode;
@@ -87,6 +87,13 @@ export function setInitialMode({
 	}
 
 	localStorage.setItem(modeStorageKey, mode);
+}
+
+/**
+ * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
+ */
+export function generateSetInitialModeExpression(config: SetInitialModeArgs = {}): string {
+	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
 }
 
 export {

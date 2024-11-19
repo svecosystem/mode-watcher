@@ -4,7 +4,6 @@
 		defineConfig,
 		disableTransitions as disableTransitionsStore,
 		mode,
-		setInitialMode,
 		setMode,
 		setTheme,
 		systemPrefersMode,
@@ -20,6 +19,8 @@
 		modeStorageKey as modeStorageKeyStore,
 		themeStorageKey as themeStorageKeyStore,
 	} from "./stores.js";
+	import ModeWatcherLite from "./mode-watcher-lite.svelte";
+	import ModeWatcherFull from "./mode-watcher-full.svelte";
 
 	type $$Props = ModeWatcherProps;
 
@@ -33,6 +34,7 @@
 	export let nonce: string = "";
 	export let themeStorageKey: string = "mode-watcher-theme";
 	export let modeStorageKey: string = "mode-watcher-mode";
+	export let disableHeadScriptInjection = false;
 
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
@@ -70,18 +72,8 @@
 	$: trueNonce = typeof window === "undefined" ? nonce : "";
 </script>
 
-<svelte:head>
-	{#if themeColors}
-		<!-- default to dark mode for to allow testing -->
-		<!-- this will be overwritten by FOUC prevention snippet below -->
-		<!-- but that snippet does not run in vitest -->
-		<meta name="theme-color" content={themeColors.dark} />
-	{/if}
-
-	<!-- eslint-disable-next-line svelte/no-at-html-tags, prefer-template -->
-	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ""}>(` +
-		setInitialMode.toString() +
-		`)(` +
-		JSON.stringify(initConfig) +
-		`);</script>`}
-</svelte:head>
+{#if disableHeadScriptInjection}
+	<ModeWatcherLite {themeColors} />
+{:else}
+	<ModeWatcherFull {trueNonce} {initConfig} {themeColors} />
+{/if}

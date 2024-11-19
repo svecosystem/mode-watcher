@@ -172,5 +172,13 @@ export type ModeWatcherProps = {
 	 * @defaultValue `undefined`
 	 */
 	nonce?: string;
+
+	/**
+	 * Whether to disable the injected script tag that sets the initial mode.
+	 * Set this if you are manually injecting the script using a hook.
+	 *
+	 * @defaultValue `false`
+	 */
+	disableHeadScriptInjection?: boolean;
 };
 ````
