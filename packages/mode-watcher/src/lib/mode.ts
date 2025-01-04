@@ -44,7 +44,14 @@ type SetInitialModeArgs = {
 	defaultTheme?: string;
 	modeStorageKey?: string;
 	themeStorageKey?: string;
+	to?: HTMLElement | HTMLHtmlElement | null;
 };
+
+declare global {
+	interface Window {
+		__modeWatcherTo?: HTMLElement | HTMLHtmlElement | null;
+	}
+}
 
 /** Used to set the mode on initial page load to prevent FOUC */
 export function setInitialMode({
@@ -56,7 +63,7 @@ export function setInitialMode({
 	modeStorageKey = "mode-watcher-mode",
 	themeStorageKey = "mode-watcher-theme",
 }: SetInitialModeArgs) {
-	const rootEl = document.documentElement;
+	const rootEl = window.__modeWatcherTo ?? document.documentElement;
 	const mode = localStorage.getItem(modeStorageKey) || defaultMode;
 	const theme = localStorage.getItem(themeStorageKey) || defaultTheme;
 	const light =

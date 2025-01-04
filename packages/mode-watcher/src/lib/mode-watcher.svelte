@@ -35,6 +35,7 @@
 	export let themeStorageKey: string = "mode-watcher-theme";
 	export let modeStorageKey: string = "mode-watcher-mode";
 	export let disableHeadScriptInjection = false;
+	export let to: ModeWatcherProps["to"] = document.documentElement;
 
 	$: disableTransitionsStore.set(disableTransitions);
 	$: themeColorsStore.set(themeColors);
@@ -67,6 +68,7 @@
 		defaultTheme,
 		modeStorageKey,
 		themeStorageKey,
+		to,
 	});
 
 	$: trueNonce = typeof window === "undefined" ? nonce : "";

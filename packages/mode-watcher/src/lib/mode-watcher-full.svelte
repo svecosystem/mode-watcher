@@ -5,6 +5,8 @@
 	export let trueNonce: string = "";
 	export let initConfig: Parameters<typeof setInitialMode>[0];
 	export let themeColors: ThemeColors = undefined;
+
+	$: window.__modeWatcherTo = initConfig.to;
 </script>
 
 <svelte:head>
