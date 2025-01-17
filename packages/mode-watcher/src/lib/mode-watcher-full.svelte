@@ -2,9 +2,15 @@
 	import { setInitialMode } from "./mode.js";
 	import type { ThemeColors } from "./types.js";
 
-	export let trueNonce: string = "";
-	export let initConfig: Parameters<typeof setInitialMode>[0];
-	export let themeColors: ThemeColors = undefined;
+	const {
+		trueNonce = "",
+		initConfig,
+		themeColors,
+	}: {
+		trueNonce?: string;
+		initConfig: Parameters<typeof setInitialMode>[0];
+		themeColors?: ThemeColors;
+	} = $props();
 </script>
 
 <svelte:head>

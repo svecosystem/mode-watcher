@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from "svelte/legacy";
+
 	import { onMount } from "svelte";
 	import {
 		defineConfig,
@@ -11,7 +13,7 @@
 		themeColors as themeColorsStore,
 	} from "./mode.js";
 
-	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
+	import type { ModeWatcherProps } from "./types.js";
 	import {
 		darkClassNames as darkClassNamesStore,
 		isValidMode,
@@ -22,26 +24,38 @@
 	import ModeWatcherLite from "./mode-watcher-lite.svelte";
 	import ModeWatcherFull from "./mode-watcher-full.svelte";
 
-	type $$Props = ModeWatcherProps;
+	const {
+		track = true,
+		defaultMode = "system",
+		themeColors,
+		disableTransitions = true,
+		darkClassNames = ["dark"],
+		lightClassNames = [],
+		defaultTheme = "",
+		nonce = "",
+		themeStorageKey = "mode-watcher-theme",
+		modeStorageKey = "mode-watcher-mode",
+		disableHeadScriptInjection = false,
+	}: ModeWatcherProps = $props();
 
-	export let track = true;
-	export let defaultMode: Mode = "system";
-	export let themeColors: ThemeColors = undefined;
-	export let disableTransitions = true;
-	export let darkClassNames: string[] = ["dark"];
-	export let lightClassNames: string[] = [];
-	export let defaultTheme: string = "";
-	export let nonce: string = "";
-	export let themeStorageKey: string = "mode-watcher-theme";
-	export let modeStorageKey: string = "mode-watcher-mode";
-	export let disableHeadScriptInjection = false;
-
-	$: disableTransitionsStore.set(disableTransitions);
-	$: themeColorsStore.set(themeColors);
-	$: darkClassNamesStore.set(darkClassNames);
-	$: lightClassNamesStore.set(lightClassNames);
-	$: modeStorageKeyStore.set(modeStorageKey);
-	$: themeStorageKeyStore.set(themeStorageKey);
+	run(() => {
+		disableTransitionsStore.set(disableTransitions);
+	});
+	run(() => {
+		themeColorsStore.set(themeColors);
+	});
+	run(() => {
+		darkClassNamesStore.set(darkClassNames);
+	});
+	run(() => {
+		lightClassNamesStore.set(lightClassNames);
+	});
+	run(() => {
+		modeStorageKeyStore.set(modeStorageKey);
+	});
+	run(() => {
+		themeStorageKeyStore.set(themeStorageKey);
+	});
 
 	onMount(() => {
 		const modeUnsubscribe = mode.subscribe(() => {});
@@ -69,7 +83,7 @@
 		themeStorageKey,
 	});
 
-	$: trueNonce = typeof window === "undefined" ? nonce : "";
+	const trueNonce = $derived(typeof window === "undefined" ? nonce : "");
 </script>
 
 {#if disableHeadScriptInjection}

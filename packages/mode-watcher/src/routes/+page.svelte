@@ -40,10 +40,10 @@
 		<pre>{$themeColorElement}</pre>
 	{/if}
 
-	<button on:click={toggleMode}> Toggle </button>
-	<button on:click={() => setMode("light")}> Light Mode </button>
-	<button on:click={() => setMode("dark")}> Dark Mode </button>
-	<button on:click={resetMode}> Reset </button>
+	<button onclick={toggleMode}> Toggle </button>
+	<button onclick={() => setMode("light")}> Light Mode </button>
+	<button onclick={() => setMode("dark")}> Dark Mode </button>
+	<button onclick={resetMode}> Reset </button>
 </div>
 
 <style lang="postcss">

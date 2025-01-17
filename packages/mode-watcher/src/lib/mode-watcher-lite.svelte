@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ThemeColors } from "./types.js";
 
-	export let themeColors: ThemeColors = undefined;
+	const { themeColors }: { themeColors?: ThemeColors } = $props();
 </script>
 
 {#if themeColors}
