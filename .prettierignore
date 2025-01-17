@@ -12,12 +12,11 @@ package-lock.json
 yarn.lock
 **/.changeset/
 .prettierrc
-package.json
 .vercel
 .contentlayer
 **/dist
-
+**/.github
 CHANGELOG.md
-
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+sites/docs/src/routes/api/search.json/**/*

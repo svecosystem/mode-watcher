@@ -8,7 +8,8 @@ The key used to store the `theme` in local storage.
 
 ## Usage
 
-If you wanted to clear the history of the user's mode preference, you could use the `themeStorageKey` like so:
+If you wanted to clear the history of the user's mode preference, you could use the
+`themeStorageKey` like so:
 
 ```svelte
 <script lang="ts">

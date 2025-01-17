@@ -31,15 +31,18 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 <slot />
 ```
 
-The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `"dark"` class, along with the corresponding `color-scheme` style attribute to the `html` element.
+The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the
+`"dark"` class, along with the corresponding `color-scheme` style attribute to the `html` element.
 
-`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the `track` prop to `false`:
+`ModeWatcher` will automatically track operating system preferences and apply these if no user
+preference is set. If you wish to disable this behavior, set the `track` prop to `false`:
 
 ```svelte
 <ModeWatcher track={false} />
 ```
 
-`ModeWatcher` can also be configured with a default mode instead of automatically detecting the user's preference.
+`ModeWatcher` can also be configured with a default mode instead of automatically detecting the
+user's preference.
 
 To set a default mode, use the `defaultMode` prop:
 
@@ -71,7 +74,8 @@ A function that toggles the current mode.
 
 ### setMode
 
-A function that sets the current mode. It accepts a string with the value `"light"`, `"dark"` or `"system"`.
+A function that sets the current mode. It accepts a string with the value `"light"`, `"dark"` or
+`"system"`.
 
 ```svelte
 <script lang="ts">
@@ -96,7 +100,8 @@ A function that resets the mode to system preferences.
 
 ### mode
 
-A readable store that contains the current mode. It can be `"light"` or `"dark"` or `undefined` if evaluated on the server.
+A readable store that contains the current mode. It can be `"light"` or `"dark"` or `undefined` if
+evaluated on the server.
 
 ```svelte
 <script lang="ts">
@@ -116,11 +121,16 @@ A readable store that contains the current mode. It can be `"light"` or `"dark"`
 
 ### userPrefersMode
 
-A writeable store that represents the user's mode preference. It can be `"light"`, `"dark"` or `"system"`.
+A writeable store that represents the user's mode preference. It can be `"light"`, `"dark"` or
+`"system"`.
 
 ### systemPrefersMode
 
-A readable store that represents the operating system's mode preference. It can be `"light"`, `"dark"` or `undefined` if evaluated on the server. Will automatically track changes to the operating system's mode preference unless this is disabled with the `tracking()` method which takes a boolean. Normally this is disabled by setting the `track` prop to false in the `<ModeWatcher>` component.
+A readable store that represents the operating system's mode preference. It can be `"light"`,
+`"dark"` or `undefined` if evaluated on the server. Will automatically track changes to the
+operating system's mode preference unless this is disabled with the `tracking()` method which takes
+a boolean. Normally this is disabled by setting the `track` prop to false in the `<ModeWatcher>`
+component.
 
 ## Demo / Reproduction Template
 
@@ -141,11 +151,10 @@ This project is supported by the following beautiful people/organizations:
 <!-- automd:contributors license=MIT author="huntabyte" github="svecosystem/mode-watcher" -->
 
 Published under the [MIT](https://github.com/svecosystem/mode-watcher/blob/main/LICENSE) license.
-Made by [@huntabyte](https://github.com/huntabyte), [@ollema](https://github.com/ollema), and [community](https://github.com/svecosystem/mode-watcher/graphs/contributors) 💛
-<br><br>
+Made by [@huntabyte](https://github.com/huntabyte), [@ollema](https://github.com/ollema), and
+[community](https://github.com/svecosystem/mode-watcher/graphs/contributors) 💛 <br><br>
 <a href="https://github.com/svecosystem/mode-watcher/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=svecosystem/mode-watcher" />
-</a>
+<img src="https://contrib.rocks/image?repo=svecosystem/mode-watcher" /> </a>
 
 <!-- /automd -->
 

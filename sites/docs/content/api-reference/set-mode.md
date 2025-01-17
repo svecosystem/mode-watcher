@@ -4,7 +4,8 @@ description: Programatically set the mode.
 tagline: API Reference
 ---
 
-A function that sets the current mode. It accepts a string with the value `"light"`, `"dark"` or `"system"`.
+A function that sets the current mode. It accepts a string with the value `"light"`, `"dark"` or
+`"system"`.
 
 ## Usage
 

@@ -17,8 +17,6 @@
 		"test": "vitest",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "eslint .",
-		"format": "prettier --write .",
 		"watch": "svelte-kit sync && svelte-package --watch"
 	},
 	"exports": {
@@ -36,30 +34,21 @@
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.49.1",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/kit": "^2.15.3",
 		"@sveltejs/package": "^2.3.7",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@svitejs/changesets-changelog-github-compact": "^1.2.0",
-		"@testing-library/dom": "^10.4.0",
-		"@testing-library/jest-dom": "^6.6.3",
-		"@testing-library/svelte": "^5.2.6",
-		"@testing-library/user-event": "^14.6.0",
 		"@types/node": "^22.10.7",
 		"autoprefixer": "^10.4.20",
-		"jsdom": "^26.0.0",
 		"postcss": "^8.5.1",
 		"postcss-load-config": "^6.0.1",
 		"publint": "^0.3.2",
 		"svelte": "^5.18.0",
 		"svelte-check": "^4.1.4",
 		"tailwindcss": "^3.4.17",
-		"tslib": "^2.8.1",
 		"typescript": "^5.7.3",
-		"vite": "^6.0.7",
-		"vitest": "^3.0.1",
-		"vitest-localstorage-mock": "^0.1.2"
+		"vite": "^6.0.7"
 	},
 	"svelte": "./dist/index.js",
 	"types": "./dist/index.d.ts",

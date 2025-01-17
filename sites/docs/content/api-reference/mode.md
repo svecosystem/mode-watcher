@@ -4,7 +4,8 @@ description: A store for tracking the current mode.
 tagline: API Reference
 ---
 
-A readable store that contains the current mode. It can be `"light"` or `"dark"`, or if evaluated on the server, `undefined`.
+A readable store that contains the current mode. It can be `"light"` or `"dark"`, or if evaluated on
+the server, `undefined`.
 
 ## Usage
 

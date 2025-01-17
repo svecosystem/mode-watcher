@@ -21,11 +21,13 @@ Add the `ModeWatcher` component to your root `+layout.svelte` component.
 <slot />
 ```
 
-The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the "dark" class, along with the corresponding color-scheme style attribute to the html element.
+The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the
+"dark" class, along with the corresponding color-scheme style attribute to the html element.
 
 ### Disable Tracking
 
-`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to false:
+`ModeWatcher` will automatically track operating system preferences and apply these if no user
+preference is set. If you wish to disable this behavior, set the track prop to false:
 
 ```svelte
 <ModeWatcher track={false} />
@@ -33,7 +35,8 @@ The `ModeWatcher` component will automatically detect the user's preferences and
 
 ### Default Mode
 
-`ModeWatcher` can be configured with a default mode instead of automatically detecting the user's preference.
+`ModeWatcher` can be configured with a default mode instead of automatically detecting the user's
+preference.
 
 To set a default mode, use the `defaultMode` prop:
 
@@ -43,7 +46,8 @@ To set a default mode, use the `defaultMode` prop:
 
 ### Themes
 
-In addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a theme which will be applied to the root `html` element like so:
+In addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a
+theme which will be applied to the root `html` element like so:
 
 ```html
 <html data-theme="your-custom-theme"></html>
@@ -61,22 +65,26 @@ To enable this, set the `themeColors` prop to your preferred colors:
 
 ### Custom Class Names
 
-By default, `ModeWatcher` will add the `dark` class to the root `html` element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the `darkClassNames` and/or `lightClassNames` props:
+By default, `ModeWatcher` will add the `dark` class to the root `html` element when the mode is
+dark, and remove it when the mode is light. You can customize this behavior by passing an array of
+classNames to the `darkClassNames` and/or `lightClassNames` props:
 
 ```svelte
 <ModeWatcher darkClassNames={["dddd"]} lightClassNames={["fff"]} />
 ```
 
-Now, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.
+Now, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is
+light, the root `html` element will have the `fff` class.
 
 ### Custom Local Storage Keys
 
 By default, `ModeWatcher` will use the following local storage keys to store the mode and theme:
 
--   `mode-watcher-mode`
--   `mode-watcher-theme`
+- `mode-watcher-mode`
+- `mode-watcher-theme`
 
-You can customize these keys by passing a custom `modeStorageKey` and/or `themeStorageKey` to the `ModeWatcher` component:
+You can customize these keys by passing a custom `modeStorageKey` and/or `themeStorageKey` to the
+`ModeWatcher` component:
 
 ```svelte
 <ModeWatcher modeStorageKey="my-mode-key" themeStorageKey="my-theme-key" />
@@ -84,7 +92,9 @@ You can customize these keys by passing a custom `modeStorageKey` and/or `themeS
 
 ### Nonce
 
-You can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC occurs.
+You can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy.
+This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC
+occurs.
 
 ```svelte
 <ModeWatcher nonce="my-secure-nonce" />

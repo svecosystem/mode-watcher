@@ -202,8 +202,7 @@ function createDerivedMode() {
 		]) => {
 			if (!isBrowser) return undefined;
 
-			const derivedMode =
-				$userPrefersMode === "system" ? $systemPrefersMode : $userPrefersMode;
+			const derivedMode = $userPrefersMode === "system" ? $systemPrefersMode : $userPrefersMode;
 			const sanitizedDarkClassNames = sanitizeClassNames($darkClassNames);
 			const sanitizedLightClassNames = sanitizeClassNames($lightClassNames);
 
@@ -211,19 +210,15 @@ function createDerivedMode() {
 				const htmlEl = document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === "light") {
-					if (sanitizedDarkClassNames.length)
-						htmlEl.classList.remove(...sanitizedDarkClassNames);
-					if (sanitizedLightClassNames.length)
-						htmlEl.classList.add(...sanitizedLightClassNames);
+					if (sanitizedDarkClassNames.length) htmlEl.classList.remove(...sanitizedDarkClassNames);
+					if (sanitizedLightClassNames.length) htmlEl.classList.add(...sanitizedLightClassNames);
 					htmlEl.style.colorScheme = "light";
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute("content", $themeColors.light);
 					}
 				} else {
-					if (sanitizedLightClassNames.length)
-						htmlEl.classList.remove(...sanitizedLightClassNames);
-					if (sanitizedDarkClassNames.length)
-						htmlEl.classList.add(...sanitizedDarkClassNames);
+					if (sanitizedLightClassNames.length) htmlEl.classList.remove(...sanitizedLightClassNames);
+					if (sanitizedDarkClassNames.length) htmlEl.classList.add(...sanitizedDarkClassNames);
 					htmlEl.style.colorScheme = "dark";
 					if (themeColorEl && $themeColors) {
 						themeColorEl.setAttribute("content", $themeColors.dark);

@@ -8,7 +8,8 @@ The key used to store the `mode` in local storage.
 
 ## Usage
 
-If you wanted to clear the history of the user's mode preference, you could use the `modeStorageKey` like so:
+If you wanted to clear the history of the user's mode preference, you could use the `modeStorageKey`
+like so:
 
 ```svelte
 <script lang="ts">

@@ -74,10 +74,7 @@ export function setInitialMode({
 	if (themeColors) {
 		const themeMetaEl = document.querySelector('meta[name="theme-color"]');
 		if (themeMetaEl) {
-			themeMetaEl.setAttribute(
-				"content",
-				mode === "light" ? themeColors.light : themeColors.dark
-			);
+			themeMetaEl.setAttribute("content", mode === "light" ? themeColors.light : themeColors.dark);
 		}
 	}
 
