@@ -4,8 +4,7 @@ let timeoutAction: number;
 let timeoutEnable: number;
 
 // Perform a task without any css transitions
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function withoutTransition(action: () => any) {
+export function withoutTransition(action: () => void) {
 	if (typeof document === "undefined") return;
 	// Clear fallback timeouts
 	clearTimeout(timeoutAction);
