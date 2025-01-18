@@ -1,15 +1,55 @@
-import config, { DEFAULT_IGNORES } from "@huntabyte/eslint-config";
+import eslint from "@eslint/js";
+import prettier from "eslint-config-prettier";
+import svelte from "eslint-plugin-svelte";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
-const ignores = ["**/extended-types", "**/.contentlayer/**/*"];
-
-export default config({ svelte: true, ignores: [...DEFAULT_IGNORES, ...ignores] })
-	.override("antfu/typescript/rules", {
-		rules: {
-			"ts/consistent-type-definitions": "off",
+export default tseslint.config(
+	eslint.configs.recommended,
+	...tseslint.configs.recommended,
+	...svelte.configs["flat/recommended"],
+	prettier,
+	...svelte.configs["flat/prettier"],
+	{
+		languageOptions: {
+			globals: {
+				...globals.browser,
+				...globals.node,
+			},
 		},
-	})
-	.override("antfu/javascript/rules", {
-		rules: {
-			"no-unused-expressions": "off",
+	},
+	{
+		files: ["**/*.svelte"],
+		languageOptions: {
+			parserOptions: {
+				parser: tseslint.parser,
+			},
 		},
-	});
+	},
+	{
+		rules: {
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+				},
+			],
+			"@typescript-eslint/no-unused-expressions": "off",
+			"@typescript-eslint/no-empty-object-type": "off",
+			"prefer-const": "off",
+		},
+	},
+	{
+		ignores: [
+			"build/",
+			".svelte-kit/",
+			"dist/",
+			".svelte-kit/**/*",
+			"sites/docs/.svelte-kit/**/*",
+			".svelte-kit",
+			"packages/mode-watcher/dist/**/*",
+			"packages/mode-watcher/.svelte-kit/**/*",
+		],
+	}
+);

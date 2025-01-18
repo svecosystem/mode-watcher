@@ -5,9 +5,7 @@
 </script>
 
 <footer class="border-border mt-4 border-t text-sm leading-6">
-	<div
-		class="max-w-8xl text-foreground/80 container flex h-16 items-center justify-between gap-3"
-	>
+	<div class="max-w-8xl text-foreground/80 container flex h-16 items-center justify-between gap-3">
 		<div class="flex items-center gap-2 lg:flex-1">
 			<A href={siteConfig.license.url}>
 				{siteConfig.license.name}

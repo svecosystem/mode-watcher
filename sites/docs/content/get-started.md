@@ -45,6 +45,7 @@ Here's an example of how to use the `toggleMode` function to toggle the mode:
 <button on:click={toggleMode}>Toggle Mode</button>
 ```
 
-For additional information and configuration, please refer to the [API reference](/docs/api-reference/mode-watcher).
+For additional information and configuration, please refer to the
+[API reference](/docs/api-reference/mode-watcher).
 
 </Steps>
