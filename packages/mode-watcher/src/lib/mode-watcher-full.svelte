@@ -15,6 +15,7 @@
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
 	<!-- eslint-disable-next-line svelte/no-at-html-tags, prefer-template -->
+	<!-- svelte-ignore hydration_html_changed -->
 	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ""}>(` +
 		setInitialMode.toString() +
 		`)(` +
