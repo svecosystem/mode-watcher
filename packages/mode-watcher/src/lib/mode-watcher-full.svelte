@@ -1,4 +1,5 @@
 <script lang="ts">
+	/* eslint-disable svelte/no-unused-svelte-ignore */
 	import { setInitialMode } from "./mode.js";
 	import type { ThemeColors } from "./types.js";
 
