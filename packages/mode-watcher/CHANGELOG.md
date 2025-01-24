@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 0.5.1
+
+### Patch Changes
+
+- silence hydration mismatch warning ([#108](https://github.com/svecosystem/mode-watcher/pull/108))
+
 ## 0.5.0
 
 ### Minor Changes
