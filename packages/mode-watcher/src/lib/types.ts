@@ -71,6 +71,13 @@ export type ModeWatcherProps = {
 	themeStorageKey?: string;
 
 	/**
+	 * The element to apply the mode to.
+	 *
+	 * @defaultValue `document.documentElement`
+	 */
+	to?: HTMLElement | HTMLHtmlElement | null;
+
+	/**
 	 * An optional nonce to use for the injected script tag to allow-list mode-watcher
 	 * if you are using a Content Security Policy.
 	 *

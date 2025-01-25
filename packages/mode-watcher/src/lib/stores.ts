@@ -208,7 +208,7 @@ function createDerivedMode() {
 			const sanitizedLightClassNames = sanitizeClassNames($lightClassNames);
 
 			function update() {
-				const htmlEl = document.documentElement;
+				const htmlEl = window.__modeWatcherTo ?? document.documentElement;
 				const themeColorEl = document.querySelector('meta[name="theme-color"]');
 				if (derivedMode === "light") {
 					if (sanitizedDarkClassNames.length)
@@ -251,7 +251,7 @@ function createDerivedTheme() {
 		if (!isBrowser) return undefined;
 
 		function update() {
-			const htmlEl = document.documentElement;
+			const htmlEl = window.__modeWatcherTo ?? document.documentElement;
 			htmlEl.setAttribute("data-theme", $theme);
 		}
 
