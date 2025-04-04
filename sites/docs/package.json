@@ -3,19 +3,7 @@
 	"version": "0.0.6",
 	"private": true,
 	"description": "Documentation site for mode-watcher",
-	"scripts": {
-		"dev": "concurrently \"pnpm:dev:content\" \"pnpm:dev:svelte\"",
-		"dev:content": "contentlayer dev",
-		"dev:svelte": "vite dev",
-		"build": "contentlayer build && vite build",
-		"build:content": "contentlayer build",
-		"build:content-cachebust": "contentlayer build --clearCache",
-		"preview": "vite preview",
-		"check": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "eslint .",
-		"format": "prettier --write ."
-	},
+	"scripts": {},
 	"license": "MIT",
 	"author": {
 		"name": "Huntabyte",
@@ -60,11 +48,5 @@
 		"vitest": "^1.2.0"
 	},
 	"type": "module",
-	"dependencies": {
-		"@melt-ui/svelte": "^0.70.0",
-		"bits-ui": "^0.14.0",
-		"mode-watcher": "workspace:*",
-		"rehype-slug": "^6.0.0",
-		"vaul-svelte": "^0.0.7"
-	}
+	"dependencies": {}
 }

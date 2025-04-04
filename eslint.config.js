@@ -1,15 +1,62 @@
-import config, { DEFAULT_IGNORES } from "@huntabyte/eslint-config";
+import { fileURLToPath } from "node:url";
+import prettier from "eslint-config-prettier";
+import js from "@eslint/js";
+import { includeIgnoreFile } from "@eslint/compat";
+import svelte from "eslint-plugin-svelte";
+import globals from "globals";
+import ts from "typescript-eslint";
 
-const ignores = ["**/extended-types", "**/.contentlayer/**/*"];
+const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url));
 
-export default config({ svelte: true, ignores: [...DEFAULT_IGNORES, ...ignores] })
-	.override("antfu/typescript/rules", {
-		rules: {
-			"ts/consistent-type-definitions": "off",
+export default ts.config(
+	includeIgnoreFile(gitignorePath),
+	js.configs.recommended,
+	...ts.configs.recommended,
+	...svelte.configs.recommended,
+	prettier,
+	...svelte.configs.prettier,
+	{
+		languageOptions: {
+			globals: { ...globals.browser, ...globals.node },
 		},
-	})
-	.override("antfu/javascript/rules", {
-		rules: {
-			"no-unused-expressions": "off",
+		rules: { "no-undef": "off" },
+	},
+	{
+		files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
+		ignores: ["eslint.config.js", "svelte.config.js"],
+		languageOptions: {
+			parserOptions: {
+				projectService: true,
+				extraFileExtensions: [".svelte"],
+				parser: ts.parser,
+			},
 		},
-	});
+	},
+	{
+		rules: {
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+				},
+			],
+			"@typescript-eslint/no-unused-expressions": "off",
+		},
+	},
+	{
+		ignores: [
+			"build/",
+			".svelte-kit/",
+			"dist/",
+			".svelte-kit/**/*",
+			"docs/.svelte-kit/**/*",
+			".svelte-kit",
+			"start/.svelte-kit/**/*",
+			"start/node_modules/**/*",
+			"start/build/**/*",
+			"packages/kit/dist/**/*",
+			"packages/kit/.svelte-kit/**/*",
+		],
+	}
+);

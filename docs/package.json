@@ -1,0 +1,32 @@
+{
+	"name": "@mode-watcher/docs",
+	"description": "Documentation site for mode-watcher",
+	"version": "0.0.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"dev": "pnpm \"/dev:/\"",
+		"dev:content": "velite dev --watch",
+		"dev:svelte": "vite dev",
+		"build": "velite && node ./scripts/update-velite-output.js && pnpm build:search && vite build",
+		"build:search": "node ./scripts/build-search-data.js",
+		"preview": "vite preview",
+		"check": "velite && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "pnpm build:content && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+	},
+	"devDependencies": {
+		"@svecodocs/kit": "latest",
+		"@sveltejs/adapter-cloudflare": "^4.8.0",
+		"@sveltejs/kit": "^2.20.3",
+		"@sveltejs/vite-plugin-svelte": "^5.0.3",
+		"@tailwindcss/vite": "^4.1.1",
+		"mdsx": "^0.0.6",
+		"phosphor-svelte": "^3.0.1",
+		"svelte": "^5.25.6",
+		"svelte-check": "^4.1.5",
+		"tailwindcss": "^4.1.1",
+		"typescript": "^5.0.0",
+		"velite": "^0.2.1",
+		"vite": "^6.2.4"
+	}
+}

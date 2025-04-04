@@ -1,0 +1,219 @@
+[
+  {
+    "title": "Getting Started",
+    "description": "A quick guide to get started using Svecodocs",
+    "path": "getting-started",
+    "content": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n</script>\n<p>The following guide will walk you through the process of getting a Svecodocs project up and running.</p>\n<h2>Clone the starter template</h2>\n<p>Clone the Svecodocs starter template:</p>\n<pre><code class=\"language-bash\">pnpx degit svecosystem/svecodocs/starter\n</code></pre>\n<h2>Navigation</h2>\n<p>The starter template comes with a basic navigation structure to get your started. To customize the navigation, adjust the <code>src/lib/navigation.ts</code> file.</p>\n<pre><code class=\"language-ts\">import { createNavigation } from \"@svecodocs/kit\";\n\nexport const navigation = createNavigation({\n\t// Customize the navigation here\n});\n</code></pre>\n<h2>Site config</h2>\n<p>The site config is used to configure site-wide settings, such as the title, description, keywords, ogImage, and other metadata.</p>\n<p>The config is located in the <code>src/lib/site-config.ts</code> file.</p>\n<pre><code class=\"language-ts\">import { defineSiteConfig } from \"@svecodocs/kit\";\n\nexport const siteConfig = defineSiteConfig({\n\ttitle: \"Svecodocs\",\n\tdescription: \"A SvelteKit docs starter template\",\n\tkeywords: [\"sveltekit\", \"docs\", \"starter\", \"template\"],\n\togImage: {\n\t\turl: \"https://docs.sveco.dev/og.png\",\n\t\theight: 630,\n\t\twidth: 1200,\n\t},\n});\n</code></pre>\n<h3>Per-Route Site Config</h3>\n<p>You can override any part of the site config on a per-route basis using the <code>useSiteConfig</code> hook.</p>\n<callout type=\"warning\" title=\"Under Development\">\nThis feature is still being worked on.\n</callout>\n<h2>Theme</h2>\n<p>The starter template comes with the default Svecodocs theme (orange). To customize the theme, adjust the import in the <code>src/app.css</code> file to reflect the color scheme you want to use for your project. Each theme has been designed to work well in both light and dark mode.</p>\n<pre><code class=\"language-css\" metastring=\"{1-2}\">/* @import \"@svecodocs/kit/themes/orange.css\"; */\n@import \"@svecodocs/kit/themes/emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n</code></pre>\n<h2>Logo</h2>\n<p>To customize the logo displayed in the sidebar header, head to the <code>src/routes/(docs)/+layout.svelte</code> file and adjust the contents of the <code>logo</code> snippet. If the logo has a light and dark version, ensure to handle those similarly to the default Svecosystem logo.</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/routes/(docs)/+layout.svelte&#x22;\">{#snippet logo()}\n\t&#x3C;LogoDark class=\"hidden h-7 dark:block\" />\n\t&#x3C;LogoLight class=\"block h-7 dark:hidden\" />\n\t&#x3C;span class=\"sr-only\">The project name here&#x3C;/span>\n{/snippet}\n</code></pre>",
+    "raw": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n</script>\n\nThe following guide will walk you through the process of getting a Svecodocs project up and running.\n\n## Clone the starter template\n\nClone the Svecodocs starter template:\n\n```bash\npnpx degit svecosystem/svecodocs/starter\n```\n\n## Navigation\n\nThe starter template comes with a basic navigation structure to get your started. To customize the navigation, adjust the `src/lib/navigation.ts` file.\n\n```ts\nimport { createNavigation } from \"@svecodocs/kit\";\n\nexport const navigation = createNavigation({\n\t// Customize the navigation here\n});\n```\n\n## Site config\n\nThe site config is used to configure site-wide settings, such as the title, description, keywords, ogImage, and other metadata.\n\nThe config is located in the `src/lib/site-config.ts` file.\n\n```ts\nimport { defineSiteConfig } from \"@svecodocs/kit\";\n\nexport const siteConfig = defineSiteConfig({\n\ttitle: \"Svecodocs\",\n\tdescription: \"A SvelteKit docs starter template\",\n\tkeywords: [\"sveltekit\", \"docs\", \"starter\", \"template\"],\n\togImage: {\n\t\turl: \"https://docs.sveco.dev/og.png\",\n\t\theight: 630,\n\t\twidth: 1200,\n\t},\n});\n```\n\n### Per-Route Site Config\n\nYou can override any part of the site config on a per-route basis using the `useSiteConfig` hook.\n\n<Callout type=\"warning\" title=\"Under Development\">\nThis feature is still being worked on.\n</Callout>\n\n## Theme\n\nThe starter template comes with the default Svecodocs theme (orange). To customize the theme, adjust the import in the `src/app.css` file to reflect the color scheme you want to use for your project. Each theme has been designed to work well in both light and dark mode.\n\n```css {1-2}\n/* @import \"@svecodocs/kit/themes/orange.css\"; */\n@import \"@svecodocs/kit/themes/emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n```\n\n## Logo\n\nTo customize the logo displayed in the sidebar header, head to the `src/routes/(docs)/+layout.svelte` file and adjust the contents of the `logo` snippet. If the logo has a light and dark version, ensure to handle those similarly to the default Svecosystem logo.\n\n```svelte title=\"src/routes/(docs)/+layout.svelte\"\n{#snippet logo()}\n\t<LogoDark class=\"hidden h-7 dark:block\" />\n\t<LogoLight class=\"block h-7 dark:hidden\" />\n\t<span class=\"sr-only\">The project name here</span>\n{/snippet}\n```",
+    "toc": [
+      {
+        "title": "Clone the starter template",
+        "url": "#clone-the-starter-template",
+        "items": []
+      },
+      {
+        "title": "Navigation",
+        "url": "#navigation",
+        "items": []
+      },
+      {
+        "title": "Site config",
+        "url": "#site-config",
+        "items": [
+          {
+            "title": "Per-Route Site Config",
+            "url": "#per-route-site-config",
+            "items": []
+          }
+        ]
+      },
+      {
+        "title": "Theme",
+        "url": "#theme",
+        "items": []
+      },
+      {
+        "title": "Logo",
+        "url": "#logo",
+        "items": []
+      }
+    ],
+    "section": "Overview",
+    "slug": "getting-started",
+    "slugFull": "/getting-started"
+  },
+  {
+    "title": "Introduction",
+    "description": "What exactly is Svecodocs?",
+    "path": "index",
+    "content": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n<p>After spending countless hours building documentation sites for various projects, we decided to build a docs package/starter template that we can use for future projects. This project is a result of that effort.</p>\n<p>Svecodocs is a starting point/utility library for building documentation sites under the <a href=\"https://github.com/svecosystem\">Svecosystem</a> umbrella. The code is open source, but it's built and maintained for our own specific needs, so we won't be accepting any public feature requests.</p>\n<p>You are more than welcome to fork the project and customize it to your own needs.</p>\n<h2>Features</h2>\n<ul>\n<li><strong>Markdown-based docs</strong>. Write docs using Markdown and Svelte components</li>\n<li><strong>Light and dark mode</strong>. Toggle between light and dark mode</li>\n<li><strong>Syntax highlighting</strong>. Code blocks are automatically highlighted</li>\n<li><strong>SEO-friendly</strong>. Meta tags and Open Graph support out of the box</li>\n<li><strong>Pre-built components</strong>. Tabs, callouts, and more to use within the documentation</li>\n<li><strong>Custom unified plugins</strong>. Custom remark and rehype plugins to give more flexibility over the rendered HTML</li>\n<li><strong>shadcn-svelte</strong>. Beautifully designed Svelte components</li>\n<li><strong>Tailwind v4</strong>. Tailwind CSS v4 is used for styling</li>\n</ul>",
+    "raw": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n\nAfter spending countless hours building documentation sites for various projects, we decided to build a docs package/starter template that we can use for future projects. This project is a result of that effort.\n\nSvecodocs is a starting point/utility library for building documentation sites under the [Svecosystem](https://github.com/svecosystem) umbrella. The code is open source, but it's built and maintained for our own specific needs, so we won't be accepting any public feature requests.\n\nYou are more than welcome to fork the project and customize it to your own needs.\n\n## Features\n\n- **Markdown-based docs**. Write docs using Markdown and Svelte components\n- **Light and dark mode**. Toggle between light and dark mode\n- **Syntax highlighting**. Code blocks are automatically highlighted\n- **SEO-friendly**. Meta tags and Open Graph support out of the box\n- **Pre-built components**. Tabs, callouts, and more to use within the documentation\n- **Custom unified plugins**. Custom remark and rehype plugins to give more flexibility over the rendered HTML\n- **shadcn-svelte**. Beautifully designed Svelte components\n- **Tailwind v4**. Tailwind CSS v4 is used for styling",
+    "toc": [
+      {
+        "title": "Features",
+        "url": "#features",
+        "items": []
+      }
+    ],
+    "section": "Overview",
+    "slug": "index",
+    "slugFull": "/index"
+  },
+  {
+    "title": "Button",
+    "description": "A button component to use in examples and documentation.",
+    "path": "components/button",
+    "content": "<script>\n\timport { Button, DemoContainer } from \"@svecodocs/kit\";\n</script>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;document.md&#x22;\">&#x3C;script>\n\timport { Button } from \"@svecodocs/kit\";\n&#x3C;/script>\n\n&#x3C;Button>Default&#x3C;/Button>\n&#x3C;Button variant=\"brand\">Brand&#x3C;/Button>\n&#x3C;Button variant=\"ghost\">Ghost&#x3C;/Button>\n&#x3C;Button variant=\"outline\">Outline&#x3C;/Button>\n&#x3C;Button variant=\"subtle\">Subtle&#x3C;/Button>\n&#x3C;Button variant=\"link\">Link&#x3C;/Button>\n</code></pre>\n<h2>Example</h2>\n<h3>Default Size</h3>\n<democontainer class=\"flex items-center gap-2.5 flex-wrap\">\n\t<button>Default</button>\n\t<button variant=\"brand\">Brand</button>\n\t<button variant=\"destructive\">Destructive</button>\n\t<button variant=\"ghost\">Ghost</button>\n\t<button variant=\"outline\">Outline</button>\n\t<button variant=\"subtle\">Subtle</button>\n\t<button variant=\"link\">Link</button>\n</democontainer>\n<h3>Small Size</h3>\n<democontainer class=\"flex items-center gap-4 flex-wrap\">\n\t<button size=\"sm\">Default</button>\n\t<button variant=\"brand\" size=\"sm\">Brand</button>\n\t<button variant=\"destructive\" size=\"sm\">Destructive</button>\n\t<button variant=\"ghost\" size=\"sm\">Ghost</button>\n\t<button variant=\"outline\" size=\"sm\">Outline</button>\n\t<button variant=\"subtle\" size=\"sm\">Subtle</button>\n\t<button variant=\"link\" size=\"sm\">Link</button>\n</democontainer>",
+    "raw": "<script>\n\timport { Button, DemoContainer } from \"@svecodocs/kit\";\n</script>\n\n## Usage\n\n```svelte title=\"document.md\"\n<script>\n\timport { Button } from \"@svecodocs/kit\";\n</script>\n\n<Button>Default</Button>\n<Button variant=\"brand\">Brand</Button>\n<Button variant=\"ghost\">Ghost</Button>\n<Button variant=\"outline\">Outline</Button>\n<Button variant=\"subtle\">Subtle</Button>\n<Button variant=\"link\">Link</Button>\n```\n\n## Example\n\n### Default Size\n\n<DemoContainer class=\"flex items-center gap-2.5 flex-wrap\">\n\t<Button>Default</Button>\n\t<Button variant=\"brand\">Brand</Button>\n\t<Button variant=\"destructive\">Destructive</Button>\n\t<Button variant=\"ghost\">Ghost</Button>\n\t<Button variant=\"outline\">Outline</Button>\n\t<Button variant=\"subtle\">Subtle</Button>\n\t<Button variant=\"link\">Link</Button>\n</DemoContainer>\n\n### Small Size\n\n<DemoContainer class=\"flex items-center gap-4 flex-wrap\">\n\t<Button size=\"sm\">Default</Button>\n\t<Button variant=\"brand\" size=\"sm\">Brand</Button>\n\t<Button variant=\"destructive\" size=\"sm\">Destructive</Button>\n\t<Button variant=\"ghost\" size=\"sm\">Ghost</Button>\n\t<Button variant=\"outline\" size=\"sm\">Outline</Button>\n\t<Button variant=\"subtle\" size=\"sm\">Subtle</Button>\n\t<Button variant=\"link\" size=\"sm\">Link</Button>\n</DemoContainer>",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      },
+      {
+        "title": "Example",
+        "url": "#example",
+        "items": [
+          {
+            "title": "Default Size",
+            "url": "#default-size",
+            "items": []
+          },
+          {
+            "title": "Small Size",
+            "url": "#small-size",
+            "items": []
+          }
+        ]
+      }
+    ],
+    "section": "Components",
+    "slug": "components/button",
+    "slugFull": "/components/button"
+  },
+  {
+    "title": "Callout",
+    "description": "A callout component to highlight important information.",
+    "path": "components/callout",
+    "content": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n\timport Avocado from \"phosphor-svelte/lib/Avocado\";\n</script>\n<p>Callouts (also known as <em>admonitions</em>) are used to highlight a block of text. There are five types of callouts available: <code>'note'</code>, <code>'warning'</code>, <code>'danger'</code>, <code>'tip'</code>, and <code>'success'</code>.</p>\n<p>You can override the default icon for the callout by passing a component via the <code>icon</code> prop.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;document.md&#x22;\">&#x3C;script>\n\timport { Callout } from \"$lib/components\";\n&#x3C;/script>\n\n&#x3C;Callout type=\"note\" title=\"Note\">\n\t&#x3C;!-- Space here-->\n\tThis is a note, used to highlight important information or provide additional context. You can use\n\tmarkdown in here as well! Just ensure you include a space between the component and the content in\n\tyour Markdown file.\n\t&#x3C;!-- Space here-->\n&#x3C;/Callout>\n</code></pre>\n<h2>Examples</h2>\n<h3>Warning</h3>\n<callout type=\"warning\">\n<p>This is an example of a warning callout.</p>\n</callout>\n<h3>Note</h3>\n<callout type=\"note\">\n<p>This is an example of a note callout.</p>\n</callout>\n<h3>Danger</h3>\n<callout type=\"danger\">\n<p>This is an example of a danger callout.</p>\n</callout>\n<h3>Tip</h3>\n<callout type=\"tip\">\n<p>This is an example of a tip callout.</p>\n</callout>\n<h3>Success</h3>\n<callout type=\"success\">\n<p>This is an example of a success callout.</p>\n</callout>\n<h3>Custom Icon</h3>\n<callout type=\"note\" icon=\"{Avocado}\">\n<p>This is an example of a note callout with a custom icon.</p>\n</callout>\n<h3>Custom Title</h3>\n<callout type=\"warning\" title=\"Tread carefully\">\n<p>This is an example of a warning callout with a custom title.</p>\n</callout>",
+    "raw": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n\timport Avocado from \"phosphor-svelte/lib/Avocado\";\n</script>\n\nCallouts (also known as _admonitions_) are used to highlight a block of text. There are five types of callouts available: `'note'`, `'warning'`, `'danger'`, `'tip'`, and `'success'`.\n\nYou can override the default icon for the callout by passing a component via the `icon` prop.\n\n## Usage\n\n```svelte title=\"document.md\"\n<script>\n\timport { Callout } from \"$lib/components\";\n</script>\n\n<Callout type=\"note\" title=\"Note\">\n\t<!-- Space here-->\n\tThis is a note, used to highlight important information or provide additional context. You can use\n\tmarkdown in here as well! Just ensure you include a space between the component and the content in\n\tyour Markdown file.\n\t<!-- Space here-->\n</Callout>\n```\n\n## Examples\n\n### Warning\n\n<Callout type=\"warning\">\n\nThis is an example of a warning callout.\n\n</Callout>\n\n### Note\n\n<Callout type=\"note\">\n\nThis is an example of a note callout.\n\n</Callout>\n\n### Danger\n\n<Callout type=\"danger\">\n\nThis is an example of a danger callout.\n\n</Callout>\n\n### Tip\n\n<Callout type=\"tip\">\n\nThis is an example of a tip callout.\n\n</Callout>\n\n### Success\n\n<Callout type=\"success\">\n\nThis is an example of a success callout.\n\n</Callout>\n\n### Custom Icon\n\n<Callout type=\"note\" icon={Avocado}>\n\nThis is an example of a note callout with a custom icon.\n\n</Callout>\n\n### Custom Title\n\n<Callout type=\"warning\" title=\"Tread carefully\">\n\nThis is an example of a warning callout with a custom title.\n\n</Callout>",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      },
+      {
+        "title": "Examples",
+        "url": "#examples",
+        "items": [
+          {
+            "title": "Warning",
+            "url": "#warning",
+            "items": []
+          },
+          {
+            "title": "Note",
+            "url": "#note",
+            "items": []
+          },
+          {
+            "title": "Danger",
+            "url": "#danger",
+            "items": []
+          },
+          {
+            "title": "Tip",
+            "url": "#tip",
+            "items": []
+          },
+          {
+            "title": "Success",
+            "url": "#success",
+            "items": []
+          },
+          {
+            "title": "Custom Icon",
+            "url": "#custom-icon",
+            "items": []
+          },
+          {
+            "title": "Custom Title",
+            "url": "#custom-title",
+            "items": []
+          }
+        ]
+      }
+    ],
+    "section": "Components",
+    "slug": "components/callout",
+    "slugFull": "/components/callout"
+  },
+  {
+    "title": "Navigation",
+    "description": "Learn how to customize the navigation in your Svecodocs project.",
+    "path": "configuration/navigation",
+    "content": "<p>Navigation is a key component of every site, documenting the structure of your site and providing a clear path for users to navigate through your content.</p>\n<p>Svecodocs comes with a navigation structure that is designed to be flexible and customizable. Each page in your site should have a corresponding navigation item, and the navigation items should be nested according to their hierarchy.</p>\n<h2>Navigation Structure</h2>\n<h3>Anchors</h3>\n<p>Anchors are links that are displayed at the top of the sidebar and typically used to either highlight important information or provide quick access to linked content.</p>\n<h3>Sections</h3>\n<p>Sections are used to group related navigation items together. They are typically used to organize content into different categories, such as \"Components\", \"Configuration\", and \"Utilities\".</p>",
+    "raw": "Navigation is a key component of every site, documenting the structure of your site and providing a clear path for users to navigate through your content.\n\nSvecodocs comes with a navigation structure that is designed to be flexible and customizable. Each page in your site should have a corresponding navigation item, and the navigation items should be nested according to their hierarchy.\n\n## Navigation Structure\n\n### Anchors\n\nAnchors are links that are displayed at the top of the sidebar and typically used to either highlight important information or provide quick access to linked content.\n\n### Sections\n\nSections are used to group related navigation items together. They are typically used to organize content into different categories, such as \"Components\", \"Configuration\", and \"Utilities\".",
+    "toc": [
+      {
+        "title": "Navigation Structure",
+        "url": "#navigation-structure",
+        "items": [
+          {
+            "title": "Anchors",
+            "url": "#anchors",
+            "items": []
+          },
+          {
+            "title": "Sections",
+            "url": "#sections",
+            "items": []
+          }
+        ]
+      }
+    ],
+    "section": "Configuration",
+    "slug": "configuration/navigation",
+    "slugFull": "/configuration/navigation"
+  },
+  {
+    "title": "Theme",
+    "description": "Learn how to customize the theme in your Svecodocs project.",
+    "path": "configuration/theme",
+    "content": "<p>The theme determines the branded color scheme for your site. A theme for each of the TailwindCSS colors is provided by the <code>@svecodocs/kit</code> package. Each theme has been designed to present well in both light and dark mode.</p>\n<h2>Using a theme</h2>\n<p>To use a theme, import the theme file into your <code>src/app.css</code> file <em>before</em> importing the <code>@svecodocs/kit/globals.css</code> file.</p>\n<pre><code class=\"language-css\">/* @import \"@svecodocs/kit/theme-orange.css\"; */\n@import \"@svecodocs/kit/theme-emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n</code></pre>\n<p>It's not recommended to customize the theme to maintain consistency across the UI components that are provided by Svecodocs and align with the provided themes.</p>\n<h2>Available themes</h2>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<table><thead><tr><th>Theme name</th><th>Import path</th></tr></thead><tbody><tr><td>orange</td><td><code>@svecodocs/kit/theme-orange.css</code></td></tr><tr><td>green</td><td><code>@svecodocs/kit/theme-green.css</code></td></tr><tr><td>blue</td><td><code>@svecodocs/kit/theme-blue.css</code></td></tr><tr><td>purple</td><td><code>@svecodocs/kit/theme-purple.css</code></td></tr><tr><td>pink</td><td><code>@svecodocs/kit/theme-pink.css</code></td></tr><tr><td>lime</td><td><code>@svecodocs/kit/theme-lime.css</code></td></tr><tr><td>yellow</td><td><code>@svecodocs/kit/theme-yellow.css</code></td></tr><tr><td>cyan</td><td><code>@svecodocs/kit/theme-cyan.css</code></td></tr><tr><td>teal</td><td><code>@svecodocs/kit/theme-teal.css</code></td></tr><tr><td>violet</td><td><code>@svecodocs/kit/theme-violet.css</code></td></tr><tr><td>amber</td><td><code>@svecodocs/kit/theme-amber.css</code></td></tr><tr><td>red</td><td><code>@svecodocs/kit/theme-red.css</code></td></tr><tr><td>sky</td><td><code>@svecodocs/kit/theme-sky.css</code></td></tr><tr><td>emerald</td><td><code>@svecodocs/kit/theme-emerald.css</code></td></tr><tr><td>fuchsia</td><td><code>@svecodocs/kit/theme-fuchsia.css</code></td></tr><tr><td>rose</td><td><code>@svecodocs/kit/theme-rose.css</code></td></tr></tbody></table>\n<h2>Tailwind Variables</h2>\n<p>Svecodocs uses TailwindCSS to style the UI components and provides a set of Tailwind variables that can be used to style your examples/custom components.</p>\n<h3>Gray</h3>\n<p>We override the TailwindCSS <code>gray</code> color scale to provide our own grays.</p>\n<h3>Brand</h3>\n<p>You can use the <code>brand</code> color to use the brand color of your project.</p>",
+    "raw": "The theme determines the branded color scheme for your site. A theme for each of the TailwindCSS colors is provided by the `@svecodocs/kit` package. Each theme has been designed to present well in both light and dark mode.\n\n## Using a theme\n\nTo use a theme, import the theme file into your `src/app.css` file _before_ importing the `@svecodocs/kit/globals.css` file.\n\n```css\n/* @import \"@svecodocs/kit/theme-orange.css\"; */\n@import \"@svecodocs/kit/theme-emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n```\n\nIt's not recommended to customize the theme to maintain consistency across the UI components that are provided by Svecodocs and align with the provided themes.\n\n## Available themes\n\n| Theme name | Import path                        |\n| ---------- | ---------------------------------- |\n| orange     | `@svecodocs/kit/theme-orange.css`  |\n| green      | `@svecodocs/kit/theme-green.css`   |\n| blue       | `@svecodocs/kit/theme-blue.css`    |\n| purple     | `@svecodocs/kit/theme-purple.css`  |\n| pink       | `@svecodocs/kit/theme-pink.css`    |\n| lime       | `@svecodocs/kit/theme-lime.css`    |\n| yellow     | `@svecodocs/kit/theme-yellow.css`  |\n| cyan       | `@svecodocs/kit/theme-cyan.css`    |\n| teal       | `@svecodocs/kit/theme-teal.css`    |\n| violet     | `@svecodocs/kit/theme-violet.css`  |\n| amber      | `@svecodocs/kit/theme-amber.css`   |\n| red        | `@svecodocs/kit/theme-red.css`     |\n| sky        | `@svecodocs/kit/theme-sky.css`     |\n| emerald    | `@svecodocs/kit/theme-emerald.css` |\n| fuchsia    | `@svecodocs/kit/theme-fuchsia.css` |\n| rose       | `@svecodocs/kit/theme-rose.css`    |\n\n## Tailwind Variables\n\nSvecodocs uses TailwindCSS to style the UI components and provides a set of Tailwind variables that can be used to style your examples/custom components.\n\n### Gray\n\nWe override the TailwindCSS `gray` color scale to provide our own grays.\n\n### Brand\n\nYou can use the `brand` color to use the brand color of your project.",
+    "toc": [
+      {
+        "title": "Using a theme",
+        "url": "#using-a-theme",
+        "items": []
+      },
+      {
+        "title": "Available themes",
+        "url": "#available-themes",
+        "items": []
+      },
+      {
+        "title": "Tailwind Variables",
+        "url": "#tailwind-variables",
+        "items": [
+          {
+            "title": "Gray",
+            "url": "#gray",
+            "items": []
+          },
+          {
+            "title": "Brand",
+            "url": "#brand",
+            "items": []
+          }
+        ]
+      }
+    ],
+    "section": "Configuration",
+    "slug": "configuration/theme",
+    "slugFull": "/configuration/theme"
+  }
+]
