@@ -25,7 +25,7 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 ```svelte
 <script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
-	let { children } = $props()
+	let { children } = $props();
 </script>
 
 <ModeWatcher />
