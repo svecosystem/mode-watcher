@@ -129,74 +129,6 @@
     "slugFull": "/components/mode-watcher"
   },
   {
-    "title": "resetMode",
-    "description": "Resets the mode to follow the system preference.",
-    "path": "utilities/reset-mode",
-    "content": "<p><code>resetMode</code> is a utility function that clears the user's override and sets the mode back to <code>\"system\"</code>, allowing it to follow the operating system's color scheme.</p>\n<p>This is equivalent to calling <code>setMode(\"system\")</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={resetMode}>System&#x3C;/button>\n</code></pre>",
-    "raw": "`resetMode` is a utility function that clears the user's override and sets the mode back to `\"system\"`, allowing it to follow the operating system's color scheme.\n\nThis is equivalent to calling `setMode(\"system\")`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n</script>\n\n<button onclick={resetMode}>System</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "Utilities",
-    "slug": "utilities/reset-mode",
-    "slugFull": "/utilities/reset-mode"
-  },
-  {
-    "title": "setMode",
-    "description": "Sets the current mode to \"light\", \"dark\", or \"system\".",
-    "path": "utilities/set-mode",
-    "content": "<p><code>setMode</code> is a function that updates the user's preferred mode.</p>\n<p>It accepts one of three string values: <code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>.</p>\n<p>This updates both the visual mode and the persisted preference in <code>localStorage</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setMode(\"light\")}>Set Light Mode&#x3C;/button>\n&#x3C;button onclick={() => setMode(\"dark\")}>Set Dark Mode&#x3C;/button>\n</code></pre>",
-    "raw": "`setMode` is a function that updates the user's preferred mode.\n\nIt accepts one of three string values: `\"light\"`, `\"dark\"`, or `\"system\"`.\n\nThis updates both the visual mode and the persisted preference in `localStorage`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setMode(\"light\")}>Set Light Mode</button>\n<button onclick={() => setMode(\"dark\")}>Set Dark Mode</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "Utilities",
-    "slug": "utilities/set-mode",
-    "slugFull": "/utilities/set-mode"
-  },
-  {
-    "title": "setTheme",
-    "description": "Sets the current custom theme",
-    "path": "utilities/set-theme",
-    "content": "<p><code>setTheme</code> is a function that updates the active custom theme.</p>\n<p>Unlike <a href=\"/docs/utilities/set-mode\">setMode</a>, which toggles light/dark/system modes, <code>setTheme</code> accepts any string (e.g. <code>\"dracula\"</code>, <code>\"retro\"</code>, <code>\"corporate\"</code>), persists it to <code>localStorage</code>, and applies it to the <code>&#x3C;html></code> element via the <code>data-theme</code> attribute.</p>\n<p>This enables support for more granular visual themes, similar to <a href=\"https://daisyui.com\">DaisyUI</a>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setTheme(\"dracula\")}>Dracula Theme&#x3C;/button>\n&#x3C;button onclick={() => setTheme(\"retro\")}>Retro Theme&#x3C;/button>\n</code></pre>",
-    "raw": "`setTheme` is a function that updates the active custom theme.\n\nUnlike [setMode](/docs/utilities/set-mode), which toggles light/dark/system modes, `setTheme` accepts any string (e.g. `\"dracula\"`, `\"retro\"`, `\"corporate\"`), persists it to `localStorage`, and applies it to the `<html>` element via the `data-theme` attribute.\n\nThis enables support for more granular visual themes, similar to [DaisyUI](https://daisyui.com).\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setTheme(\"dracula\")}>Dracula Theme</button>\n<button onclick={() => setTheme(\"retro\")}>Retro Theme</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "Utilities",
-    "slug": "utilities/set-theme",
-    "slugFull": "/utilities/set-theme"
-  },
-  {
-    "title": "toggleMode",
-    "description": "Toggles between \"light\" and \"dark\" modes.",
-    "path": "utilities/toggle-mode",
-    "content": "<p><code>toggleMode</code> is a utility function that switches the current mode between <code>\"light\"</code> and <code>\"dark\"</code>.</p>\n<p>If the mode is currently set to <code>\"system\"</code>, it will first resolve to the system preference, then toggle from there.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>",
-    "raw": "`toggleMode` is a utility function that switches the current mode between `\"light\"` and `\"dark\"`.\n\nIf the mode is currently set to `\"system\"`, it will first resolve to the system preference, then toggle from there.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "Utilities",
-    "slug": "utilities/toggle-mode",
-    "slugFull": "/utilities/toggle-mode"
-  },
-  {
     "title": "modeStorageKey",
     "description": "The local storage key used to persist the user's selected mode.",
     "path": "states/mode-storage-key",
@@ -297,5 +229,73 @@
     "section": "States",
     "slug": "states/user-prefers-mode",
     "slugFull": "/states/user-prefers-mode"
+  },
+  {
+    "title": "resetMode",
+    "description": "Resets the mode to follow the system preference.",
+    "path": "utilities/reset-mode",
+    "content": "<p><code>resetMode</code> is a utility function that clears the user's override and sets the mode back to <code>\"system\"</code>, allowing it to follow the operating system's color scheme.</p>\n<p>This is equivalent to calling <code>setMode(\"system\")</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={resetMode}>System&#x3C;/button>\n</code></pre>",
+    "raw": "`resetMode` is a utility function that clears the user's override and sets the mode back to `\"system\"`, allowing it to follow the operating system's color scheme.\n\nThis is equivalent to calling `setMode(\"system\")`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n</script>\n\n<button onclick={resetMode}>System</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "Utilities",
+    "slug": "utilities/reset-mode",
+    "slugFull": "/utilities/reset-mode"
+  },
+  {
+    "title": "setMode",
+    "description": "Sets the current mode to \"light\", \"dark\", or \"system\".",
+    "path": "utilities/set-mode",
+    "content": "<p><code>setMode</code> is a function that updates the user's preferred mode.</p>\n<p>It accepts one of three string values: <code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>.</p>\n<p>This updates both the visual mode and the persisted preference in <code>localStorage</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setMode(\"light\")}>Set Light Mode&#x3C;/button>\n&#x3C;button onclick={() => setMode(\"dark\")}>Set Dark Mode&#x3C;/button>\n</code></pre>",
+    "raw": "`setMode` is a function that updates the user's preferred mode.\n\nIt accepts one of three string values: `\"light\"`, `\"dark\"`, or `\"system\"`.\n\nThis updates both the visual mode and the persisted preference in `localStorage`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setMode(\"light\")}>Set Light Mode</button>\n<button onclick={() => setMode(\"dark\")}>Set Dark Mode</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "Utilities",
+    "slug": "utilities/set-mode",
+    "slugFull": "/utilities/set-mode"
+  },
+  {
+    "title": "setTheme",
+    "description": "Sets the current custom theme",
+    "path": "utilities/set-theme",
+    "content": "<p><code>setTheme</code> is a function that updates the active custom theme.</p>\n<p>Unlike <a href=\"/docs/utilities/set-mode\">setMode</a>, which toggles light/dark/system modes, <code>setTheme</code> accepts any string (e.g. <code>\"dracula\"</code>, <code>\"retro\"</code>, <code>\"corporate\"</code>), persists it to <code>localStorage</code>, and applies it to the <code>&#x3C;html></code> element via the <code>data-theme</code> attribute.</p>\n<p>This enables support for more granular visual themes, similar to <a href=\"https://daisyui.com\">DaisyUI</a>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setTheme(\"dracula\")}>Dracula Theme&#x3C;/button>\n&#x3C;button onclick={() => setTheme(\"retro\")}>Retro Theme&#x3C;/button>\n</code></pre>",
+    "raw": "`setTheme` is a function that updates the active custom theme.\n\nUnlike [setMode](/docs/utilities/set-mode), which toggles light/dark/system modes, `setTheme` accepts any string (e.g. `\"dracula\"`, `\"retro\"`, `\"corporate\"`), persists it to `localStorage`, and applies it to the `<html>` element via the `data-theme` attribute.\n\nThis enables support for more granular visual themes, similar to [DaisyUI](https://daisyui.com).\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setTheme(\"dracula\")}>Dracula Theme</button>\n<button onclick={() => setTheme(\"retro\")}>Retro Theme</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "Utilities",
+    "slug": "utilities/set-theme",
+    "slugFull": "/utilities/set-theme"
+  },
+  {
+    "title": "toggleMode",
+    "description": "Toggles between \"light\" and \"dark\" modes.",
+    "path": "utilities/toggle-mode",
+    "content": "<p><code>toggleMode</code> is a utility function that switches the current mode between <code>\"light\"</code> and <code>\"dark\"</code>.</p>\n<p>If the mode is currently set to <code>\"system\"</code>, it will first resolve to the system preference, then toggle from there.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>",
+    "raw": "`toggleMode` is a utility function that switches the current mode between `\"light\"` and `\"dark\"`.\n\nIf the mode is currently set to `\"system\"`, it will first resolve to the system preference, then toggle from there.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "Utilities",
+    "slug": "utilities/toggle-mode",
+    "slugFull": "/utilities/toggle-mode"
   }
 ]
