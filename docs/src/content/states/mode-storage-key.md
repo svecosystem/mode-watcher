@@ -1,10 +1,12 @@
 ---
 title: modeStorageKey
-description: The key used to store the mode in local storage.
-section: API Reference
+description: The local storage key used to persist the user's selected mode.
+section: States
 ---
 
-The key used to store the `mode` in local storage.
+`modeStorageKey` is a readable state containing the string key used to persist the user's selected mode (`"light"`, `"dark"`, or `"system"`) in `localStorage`.
+
+This is useful if you need to manually read, write, or clear the stored value.
 
 ## Usage
 

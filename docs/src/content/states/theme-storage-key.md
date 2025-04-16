@@ -1,10 +1,12 @@
 ---
 title: themeStorageKey
-description: The key used to store the theme in local storage.
-section: API Reference
+description: The local storage key used to persist the theme.
+section: States
 ---
 
-The key used to store the `theme` in local storage.
+`themeStorageKey` is a readable state containing the string key used to persist the user's selected theme in `localStorage`.
+
+This is helpful if you need to manually inspect, modify, or clear the stored theme value.
 
 ## Usage
 

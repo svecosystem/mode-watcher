@@ -7,8 +7,20 @@ import { getAllDocs } from "./utils.js";
 
 const allDocs = getAllDocs();
 
-const apiReference = allDocs
-	.filter((doc) => doc.section === "API Reference")
+const components = allDocs
+	.filter((doc) => doc.section === "Components")
+	.map((doc) => ({
+		title: doc.title,
+		href: `/docs/${doc.slug}`,
+	}));
+const states = allDocs
+	.filter((doc) => doc.section === "States")
+	.map((doc) => ({
+		title: doc.title,
+		href: `/docs/${doc.slug}`,
+	}));
+const utilities = allDocs
+	.filter((doc) => doc.section === "Utilities")
 	.map((doc) => ({
 		title: doc.title,
 		href: `/docs/${doc.slug}`,
@@ -39,8 +51,16 @@ export const navigation = defineNavigation({
 	],
 	sections: [
 		{
-			title: "API Reference",
-			items: apiReference,
+			title: "Components",
+			items: components,
+		},
+		{
+			title: "States",
+			items: states,
+		},
+		{
+			title: "Utilities",
+			items: utilities,
 		},
 	],
 });

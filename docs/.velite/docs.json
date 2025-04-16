@@ -61,32 +61,20 @@
     "slugFull": "/mode-vs-theme"
   },
   {
-    "title": "modeStorageKey",
-    "description": "The key used to store the mode in local storage.",
-    "path": "api-reference/mode-storage-key",
-    "content": "<p>The key used to store the <code>mode</code> in local storage.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>modeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's mode preference history.&#x3C;/p>\n&#x3C;button onclick={clearModeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
-    "raw": "The key used to store the `mode` in local storage.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `modeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's mode preference history.</p>\n<button onclick={clearModeFromLocalStorage}>Clear</button>\n```",
+    "title": "ModeWatcher",
+    "description": "API Reference for the ModeWatcher component.",
+    "path": "components/mode-watcher",
+    "content": "<script>\n\timport { Callout, PropField, Collapsible } from '@svecodocs/kit'\n</script>\n<h2>Usage</h2>\n<p>Add the <code>ModeWatcher</code> component to your root <code>+layout.svelte</code> file to automatically apply mode and theme preferences:</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/routes/+layout.svelte&#x22;\">&#x3C;script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n&#x3C;/script>\n\n&#x3C;ModeWatcher />\n{@render children()}\n</code></pre>\n<p><code>ModeWatcher</code> will:</p>\n<ul>\n<li>Detect user mode preferences (<code>light</code>, <code>dark</code>, or <code>system</code>)</li>\n<li>Apply the appropriate class (dark by default) to the <code>&#x3C;html></code> element</li>\n<li>Set the <code>color-scheme</code> attribute accordingly</li>\n<li>Optionally apply a theme via the <code>data-theme</code> attribute</li>\n</ul>\n<h2>Features</h2>\n<h3>Disable Tracking</h3>\n<p><code>ModeWatcher</code> will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to <code>false</code>:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher track={false} />\n</code></pre>\n<h3>Default Mode</h3>\n<p>Use the <code>defaultMode</code> prop to specify a fallback when no user preference is available:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher defaultMode=\"dark\" />\n</code></pre>\n<h3>Themes</h3>\n<p>In addition to the <code>dark</code>, <code>light</code>, and <code>system</code> modes, <code>ModeWatcher</code> can also be configured with a theme which will be applied to the root <code>html</code> element like so:</p>\n<pre><code class=\"language-html\">&#x3C;html data-theme=\"your-custom-theme\">&#x3C;/html>\n</code></pre>\n<h3>Theme Colors</h3>\n<p>Manage the browser's <code>&#x3C;meta name=\"theme-color\"></code> dynamically based on mode:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n</code></pre>\n<h3>Custom Class Names</h3>\n<p>Customize the class names added to <code>&#x3C;html></code> when switching modes:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n</code></pre>\n<p>Now, when the mode is dark, the root <code>html</code> element will have the <code>dddd</code> class, and when the mode is light, the root <code>html</code> element will have the <code>fff</code> class.</p>\n<h3>Custom Local Storage Keys</h3>\n<p>Override the default <code>localStorage</code> keys:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n</code></pre>\n<h3>CSP Nonce Support</h3>\n<p>Provide a nonce if using a strict Content Security Policy.</p>\n<p>This will be applied to the injected <code>&#x3C;script></code> tag used for pre-hydration mode setting:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher nonce=\"my-secure-nonce\" />\n</code></pre>\n<h3>Disable Script Injection</h3>\n<p>Prevent <code>ModeWatcher</code> from injecting the initial head script by setting:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher disableHeadScriptInjection={true} />\n</code></pre>\n<h2>Props</h2>\n<p>The <code>ModeWatcher</code> component accepts the following props:</p>\n<propfield name=\"track\" type=\"boolean\" defaultvalue=\"true\">\n\tWhether to automatically track operating system preferences and update the mode accordingly.\n</propfield>\n<propfield name=\"defaultMode\" type=\"&#x27;system&#x27; | &#x27;light&#x27; | &#x27;dark&#x27;\" defaultvalue=\"&#x27;system&#x27;\">\n\tThe default mode to use instead of the user's preference.\n</propfield>\n<propfield name=\"defaultTheme\" type=\"string\">\n<p>The default theme to use, which will be applied to the root <code>html</code> element and can be managed with the <code>setTheme</code> function.</p>\n</propfield>\n<propfield name=\"themeColors\" type=\"ThemeColors\">\nThe theme colors to use for each mode.\n<collapsible title=\"properties\">\n\t<propfield name=\"dark\" type=\"string\" required>\n\t\tThe color to use for dark mode.\n\t</propfield>\n\t<propfield name=\"light\" type=\"string\" required>\n\t\tThe color to use for light mode.\n\t</propfield>\n</collapsible>\n</propfield>\n<propfield name=\"disableTransitions\" type=\"boolean\" defaultvalue=\"false\">\n\tWhether to disable transitions when updating the mode.\n</propfield>\n<propfield name=\"darkClassNames\" type=\"string[]\" defaultvalue=\"[&#x27;dark&#x27;]\">\n<p>The classes to add to the root <code>html</code> element when the mode is <code>'dark'</code>.</p>\n</propfield>\n<propfield name=\"lightClassNames\" type=\"string[]\" defaultvalue=\"[]\">\n<p>The classes to add to the root <code>html</code> element when the mode is <code>'light'</code>.</p>\n</propfield>\n<propfield name=\"modeStorageKey\" type=\"string\" defaultvalue=\"&#x27;mode-watcher-mode&#x27;\">\n\tOptionally provide a custom local storage key to use for storing the mode.\n</propfield>\n<propfield name=\"themeStorageKey\" type=\"string\" defaultvalue=\"&#x27;mode-watcher-theme&#x27;\">\n\tOptionally provide a custom local storage key to use for storing the theme.\n</propfield>\n<propfield name=\"nonce\" type=\"string\">\n\tAn optional nonce to use for the injected script tag to allow-list mode-watcher if you are using a Content Security Policy.\n</propfield>\n<propfield name=\"disableHeadScriptInjection\" type=\"boolean\" defaultvalue=\"false\">\n\tWhether to disable the injected script tag that sets the initial mode. Set this if you are manually injecting the script using a hook.\n</propfield>",
+    "raw": "<script>\n\timport { Callout, PropField, Collapsible } from '@svecodocs/kit'\n</script>\n\n## Usage\n\nAdd the `ModeWatcher` component to your root `+layout.svelte` file to automatically apply mode and theme preferences:\n\n```svelte title=\"src/routes/+layout.svelte\"\n<script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n</script>\n\n<ModeWatcher />\n{@render children()}\n```\n\n`ModeWatcher` will:\n\n- Detect user mode preferences (`light`, `dark`, or `system`)\n- Apply the appropriate class (dark by default) to the `<html>` element\n- Set the `color-scheme` attribute accordingly\n- Optionally apply a theme via the `data-theme` attribute\n\n## Features\n\n### Disable Tracking\n\n`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to `false`:\n\n```svelte\n<ModeWatcher track={false} />\n```\n\n### Default Mode\n\nUse the `defaultMode` prop to specify a fallback when no user preference is available:\n\n```svelte\n<ModeWatcher defaultMode=\"dark\" />\n```\n\n### Themes\n\nIn addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a theme which will be applied to the root `html` element like so:\n\n```html\n<html data-theme=\"your-custom-theme\"></html>\n```\n\n### Theme Colors\n\nManage the browser's `<meta name=\"theme-color\">` dynamically based on mode:\n\n```svelte\n<ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n```\n\n### Custom Class Names\n\nCustomize the class names added to `<html>` when switching modes:\n\n```svelte\n<ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n```\n\nNow, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.\n\n### Custom Local Storage Keys\n\nOverride the default `localStorage` keys:\n\n```svelte\n<ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n```\n\n### CSP Nonce Support\n\nProvide a nonce if using a strict Content Security Policy.\n\nThis will be applied to the injected `<script>` tag used for pre-hydration mode setting:\n\n```svelte\n<ModeWatcher nonce=\"my-secure-nonce\" />\n```\n\n### Disable Script Injection\n\nPrevent `ModeWatcher` from injecting the initial head script by setting:\n\n```svelte\n<ModeWatcher disableHeadScriptInjection={true} />\n```\n\n## Props\n\nThe `ModeWatcher` component accepts the following props:\n\n<PropField name=\"track\" type=\"boolean\" defaultValue=\"true\">\n\tWhether to automatically track operating system preferences and update the mode accordingly.\n</PropField>\n<PropField name=\"defaultMode\" type=\"'system' | 'light' | 'dark'\" defaultValue=\"'system'\">\n\tThe default mode to use instead of the user's preference.\n</PropField>\n<PropField name=\"defaultTheme\" type=\"string\">\n\nThe default theme to use, which will be applied to the root `html` element and can be managed with the `setTheme` function.\n\n</PropField>\n<PropField name=\"themeColors\" type=\"ThemeColors\">\nThe theme colors to use for each mode.\n<Collapsible title=\"properties\">\n\t<PropField name=\"dark\" type=\"string\" required>\n\t\tThe color to use for dark mode.\n\t</PropField>\n\t<PropField name=\"light\" type=\"string\" required>\n\t\tThe color to use for light mode.\n\t</PropField>\n</Collapsible>\n</PropField>\n<PropField name=\"disableTransitions\" type=\"boolean\" defaultValue=\"false\">\n\tWhether to disable transitions when updating the mode.\n</PropField>\n<PropField name=\"darkClassNames\" type=\"string[]\" defaultValue=\"['dark']\">\n\nThe classes to add to the root `html` element when the mode is `'dark'`.\n\n</PropField>\n<PropField name=\"lightClassNames\" type=\"string[]\" defaultValue=\"[]\">\n\nThe classes to add to the root `html` element when the mode is `'light'`.\n\n</PropField>\n<PropField name=\"modeStorageKey\" type=\"string\" defaultValue=\"'mode-watcher-mode'\">\n\tOptionally provide a custom local storage key to use for storing the mode.\n</PropField>\n\n<PropField name=\"themeStorageKey\" type=\"string\" defaultValue=\"'mode-watcher-theme'\">\n\tOptionally provide a custom local storage key to use for storing the theme.\n</PropField>\n\n<PropField name=\"nonce\" type=\"string\">\n\tAn optional nonce to use for the injected script tag to allow-list mode-watcher if you are using a Content Security Policy.\n</PropField>\n\n<PropField name=\"disableHeadScriptInjection\" type=\"boolean\" defaultValue=\"false\">\n\tWhether to disable the injected script tag that sets the initial mode. Set this if you are manually injecting the script using a hook.\n</PropField>",
     "toc": [
       {
         "title": "Usage",
         "url": "#usage",
         "items": []
-      }
-    ],
-    "section": "API Reference",
-    "slug": "api-reference/mode-storage-key",
-    "slugFull": "/api-reference/mode-storage-key"
-  },
-  {
-    "title": "<ModeWatcher />",
-    "description": "API Reference for the ModeWatcher component.",
-    "path": "api-reference/mode-watcher",
-    "content": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n<h2>Usage</h2>\n<p>Add the <code>ModeWatcher</code> component to your root <code>+layout.svelte</code> component.</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/routes/+layout.svelte&#x22;\">&#x3C;script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n&#x3C;/script>\n\n&#x3C;ModeWatcher />\n{@render children()}\n</code></pre>\n<p>The <code>ModeWatcher</code> component will automatically detect the user's preferences and apply/remove the \"dark\" class, along with the corresponding color-scheme style attribute to the html element.</p>\n<h3>Disable Tracking</h3>\n<p><code>ModeWatcher</code> will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to false:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher track={false} />\n</code></pre>\n<h3>Default Mode</h3>\n<p><code>ModeWatcher</code> can be configured with a default mode instead of automatically detecting the user's preference.</p>\n<p>To set a default mode, use the <code>defaultMode</code> prop:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher defaultMode=\"dark\" />\n</code></pre>\n<h3>Themes</h3>\n<p>In addition to the <code>dark</code>, <code>light</code>, and <code>system</code> modes, <code>ModeWatcher</code> can also be configured with a theme which will be applied to the root <code>html</code> element like so:</p>\n<pre><code class=\"language-html\">&#x3C;html data-theme=\"your-custom-theme\">&#x3C;/html>\n</code></pre>\n<h3>Theme Colors</h3>\n<p><code>ModeWatcher</code> can manage the <code>theme-color</code> meta tag for you.</p>\n<p>To enable this, set the <code>themeColors</code> prop to your preferred colors:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n</code></pre>\n<h3>Custom Class Names</h3>\n<p>By default, <code>ModeWatcher</code> will add the <code>dark</code> class to the root <code>html</code> element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the <code>darkClassNames</code> and/or <code>lightClassNames</code> props:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n</code></pre>\n<p>Now, when the mode is dark, the root <code>html</code> element will have the <code>dddd</code> class, and when the mode is light, the root <code>html</code> element will have the <code>fff</code> class.</p>\n<h3>Custom Local Storage Keys</h3>\n<p>By default, <code>ModeWatcher</code> will use the following local storage keys to store the mode and theme:</p>\n<ul>\n<li><code>mode-watcher-mode</code></li>\n<li><code>mode-watcher-theme</code></li>\n</ul>\n<p>You can customize these keys by passing a custom <code>modeStorageKey</code> and/or <code>themeStorageKey</code> to the <code>ModeWatcher</code> component:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n</code></pre>\n<h3>Nonce</h3>\n<p>You can use the <code>nonce</code> prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the <code>&#x3C;script></code> tag responsible for setting the initial mode before a FOUC occurs.</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher nonce=\"my-secure-nonce\" />\n</code></pre>\n<h2>Props</h2>\n<p>The <code>ModeWatcher</code> component accepts the following props:</p>\n<pre><code class=\"language-ts\">export type Mode = \"system\" | \"dark\" | \"light\";\nexport type ThemeColors = { dark: string; light: string };\n\nexport type ModeWatcherProps = {\n\t/**\n\t * Whether to automatically track operating system preferences\n\t * and update the mode accordingly.\n\t *\n\t * @defaultValue `true`\n\t */\n\ttrack?: boolean;\n\n\t/**\n\t * The default mode to use instead of the user's preference.\n\t *\n\t * @defaultValue `\"system\"`\n\t */\n\tdefaultMode?: Mode;\n\n\t/**\n\t * The default theme to use, which will be applied to the root `html` element\n\t * and can be managed with the `setTheme` function.\n\t *\n\t * @example\n\t * ```html\n\t * &#x3C;html data-theme=\"your-custom-theme\">&#x3C;/html>\n\t * ```\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tdefaultTheme?: string;\n\n\t/**\n\t * The theme colors to use for each mode.\n\t */\n\tthemeColors?: ThemeColors;\n\n\t/**\n\t * Whether to disable transitions when updating the mode.\n\t */\n\tdisableTransitions?: boolean;\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is dark.\n\t *\n\t * @defaultValue `[\"dark\"]`\n\t */\n\tdarkClassNames?: string[];\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is light.\n\t *\n\t * @defaultValue `[]`\n\t */\n\tlightClassNames?: string[];\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the mode.\n\t *\n\t * @defaultValue `'mode-watcher-mode'`\n\t */\n\tmodeStorageKey?: string;\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the theme.\n\t *\n\t * @defaultValue `'mode-watcher-theme'`\n\t */\n\tthemeStorageKey?: string;\n\n\t/**\n\t * An optional nonce to use for the injected script tag to allow-list mode-watcher\n\t * if you are using a Content Security Policy.\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tnonce?: string;\n\n\t/**\n\t * Whether to disable the injected script tag that sets the initial mode.\n\t * Set this if you are manually injecting the script using a hook.\n\t *\n\t * @defaultValue `false`\n\t */\n\tdisableHeadScriptInjection?: boolean;\n};\n</code></pre>",
-    "raw": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n\n## Usage\n\nAdd the `ModeWatcher` component to your root `+layout.svelte` component.\n\n```svelte title=\"src/routes/+layout.svelte\"\n<script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n</script>\n\n<ModeWatcher />\n{@render children()}\n```\n\nThe `ModeWatcher` component will automatically detect the user's preferences and apply/remove the \"dark\" class, along with the corresponding color-scheme style attribute to the html element.\n\n### Disable Tracking\n\n`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to false:\n\n```svelte\n<ModeWatcher track={false} />\n```\n\n### Default Mode\n\n`ModeWatcher` can be configured with a default mode instead of automatically detecting the user's preference.\n\nTo set a default mode, use the `defaultMode` prop:\n\n```svelte\n<ModeWatcher defaultMode=\"dark\" />\n```\n\n### Themes\n\nIn addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a theme which will be applied to the root `html` element like so:\n\n```html\n<html data-theme=\"your-custom-theme\"></html>\n```\n\n### Theme Colors\n\n`ModeWatcher` can manage the `theme-color` meta tag for you.\n\nTo enable this, set the `themeColors` prop to your preferred colors:\n\n```svelte\n<ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n```\n\n### Custom Class Names\n\nBy default, `ModeWatcher` will add the `dark` class to the root `html` element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the `darkClassNames` and/or `lightClassNames` props:\n\n```svelte\n<ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n```\n\nNow, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.\n\n### Custom Local Storage Keys\n\nBy default, `ModeWatcher` will use the following local storage keys to store the mode and theme:\n\n- `mode-watcher-mode`\n- `mode-watcher-theme`\n\nYou can customize these keys by passing a custom `modeStorageKey` and/or `themeStorageKey` to the `ModeWatcher` component:\n\n```svelte\n<ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n```\n\n### Nonce\n\nYou can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC occurs.\n\n```svelte\n<ModeWatcher nonce=\"my-secure-nonce\" />\n```\n\n## Props\n\nThe `ModeWatcher` component accepts the following props:\n\n````ts\nexport type Mode = \"system\" | \"dark\" | \"light\";\nexport type ThemeColors = { dark: string; light: string };\n\nexport type ModeWatcherProps = {\n\t/**\n\t * Whether to automatically track operating system preferences\n\t * and update the mode accordingly.\n\t *\n\t * @defaultValue `true`\n\t */\n\ttrack?: boolean;\n\n\t/**\n\t * The default mode to use instead of the user's preference.\n\t *\n\t * @defaultValue `\"system\"`\n\t */\n\tdefaultMode?: Mode;\n\n\t/**\n\t * The default theme to use, which will be applied to the root `html` element\n\t * and can be managed with the `setTheme` function.\n\t *\n\t * @example\n\t * ```html\n\t * <html data-theme=\"your-custom-theme\"></html>\n\t * ```\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tdefaultTheme?: string;\n\n\t/**\n\t * The theme colors to use for each mode.\n\t */\n\tthemeColors?: ThemeColors;\n\n\t/**\n\t * Whether to disable transitions when updating the mode.\n\t */\n\tdisableTransitions?: boolean;\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is dark.\n\t *\n\t * @defaultValue `[\"dark\"]`\n\t */\n\tdarkClassNames?: string[];\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is light.\n\t *\n\t * @defaultValue `[]`\n\t */\n\tlightClassNames?: string[];\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the mode.\n\t *\n\t * @defaultValue `'mode-watcher-mode'`\n\t */\n\tmodeStorageKey?: string;\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the theme.\n\t *\n\t * @defaultValue `'mode-watcher-theme'`\n\t */\n\tthemeStorageKey?: string;\n\n\t/**\n\t * An optional nonce to use for the injected script tag to allow-list mode-watcher\n\t * if you are using a Content Security Policy.\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tnonce?: string;\n\n\t/**\n\t * Whether to disable the injected script tag that sets the initial mode.\n\t * Set this if you are manually injecting the script using a hook.\n\t *\n\t * @defaultValue `false`\n\t */\n\tdisableHeadScriptInjection?: boolean;\n};\n````",
-    "toc": [
+      },
       {
-        "title": "Usage",
-        "url": "#usage",
+        "title": "Features",
+        "url": "#features",
         "items": [
           {
             "title": "Disable Tracking",
@@ -119,8 +107,13 @@
             "items": []
           },
           {
-            "title": "Nonce",
-            "url": "#nonce",
+            "title": "CSP Nonce Support",
+            "url": "#csp-nonce-support",
+            "items": []
+          },
+          {
+            "title": "Disable Script Injection",
+            "url": "#disable-script-injection",
             "items": []
           }
         ]
@@ -131,33 +124,16 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/mode-watcher",
-    "slugFull": "/api-reference/mode-watcher"
-  },
-  {
-    "title": "mode",
-    "description": "A state for tracking the current mode.",
-    "path": "api-reference/mode",
-    "content": "<p>A readable state that contains the current mode. It can be <code>\"light\"</code> or <code>\"dark\"</code>, or if evaluated on the server, <code>undefined</code>. For user selectable modes, use <a href=\"/docs/api-reference/user-prefers-mode\"><code>userPrefersMode</code></a>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={handleModeChange}>{$mode}&#x3C;/button>\n</code></pre>",
-    "raw": "A readable state that contains the current mode. It can be `\"light\"` or `\"dark\"`, or if evaluated on the server, `undefined`. For user selectable modes, use [`userPrefersMode`](/docs/api-reference/user-prefers-mode).\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n</script>\n\n<button onclick={handleModeChange}>{$mode}</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "API Reference",
-    "slug": "api-reference/mode",
-    "slugFull": "/api-reference/mode"
+    "section": "Components",
+    "slug": "components/mode-watcher",
+    "slugFull": "/components/mode-watcher"
   },
   {
     "title": "resetMode",
-    "description": "Programatically reset the mode to system preference.",
-    "path": "api-reference/reset-mode",
-    "content": "<p>A function that resets the mode to system preferences.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={resetMode}>System&#x3C;/button>\n</code></pre>",
-    "raw": "A function that resets the mode to system preferences.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n</script>\n\n<button onclick={resetMode}>System</button>\n```",
+    "description": "Resets the mode to follow the system preference.",
+    "path": "utilities/reset-mode",
+    "content": "<p><code>resetMode</code> is a utility function that clears the user's override and sets the mode back to <code>\"system\"</code>, allowing it to follow the operating system's color scheme.</p>\n<p>This is equivalent to calling <code>setMode(\"system\")</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={resetMode}>System&#x3C;/button>\n</code></pre>",
+    "raw": "`resetMode` is a utility function that clears the user's override and sets the mode back to `\"system\"`, allowing it to follow the operating system's color scheme.\n\nThis is equivalent to calling `setMode(\"system\")`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n</script>\n\n<button onclick={resetMode}>System</button>\n```",
     "toc": [
       {
         "title": "Usage",
@@ -165,16 +141,16 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/reset-mode",
-    "slugFull": "/api-reference/reset-mode"
+    "section": "Utilities",
+    "slug": "utilities/reset-mode",
+    "slugFull": "/utilities/reset-mode"
   },
   {
     "title": "setMode",
-    "description": "Programatically set the mode.",
-    "path": "api-reference/set-mode",
-    "content": "<p>A function that sets the current mode. It accepts a string with the value <code>\"light\"</code>, <code>\"dark\"</code> or <code>\"system\"</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setMode(\"light\")}>Set Light Mode&#x3C;/button>\n&#x3C;button onclick={() => setMode(\"dark\")}>Set Dark Mode&#x3C;/button>\n</code></pre>",
-    "raw": "A function that sets the current mode. It accepts a string with the value `\"light\"`, `\"dark\"` or `\"system\"`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setMode(\"light\")}>Set Light Mode</button>\n<button onclick={() => setMode(\"dark\")}>Set Dark Mode</button>\n```",
+    "description": "Sets the current mode to \"light\", \"dark\", or \"system\".",
+    "path": "utilities/set-mode",
+    "content": "<p><code>setMode</code> is a function that updates the user's preferred mode.</p>\n<p>It accepts one of three string values: <code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>.</p>\n<p>This updates both the visual mode and the persisted preference in <code>localStorage</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setMode(\"light\")}>Set Light Mode&#x3C;/button>\n&#x3C;button onclick={() => setMode(\"dark\")}>Set Dark Mode&#x3C;/button>\n</code></pre>",
+    "raw": "`setMode` is a function that updates the user's preferred mode.\n\nIt accepts one of three string values: `\"light\"`, `\"dark\"`, or `\"system\"`.\n\nThis updates both the visual mode and the persisted preference in `localStorage`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setMode(\"light\")}>Set Light Mode</button>\n<button onclick={() => setMode(\"dark\")}>Set Dark Mode</button>\n```",
     "toc": [
       {
         "title": "Usage",
@@ -182,16 +158,16 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/set-mode",
-    "slugFull": "/api-reference/set-mode"
+    "section": "Utilities",
+    "slug": "utilities/set-mode",
+    "slugFull": "/utilities/set-mode"
   },
   {
     "title": "setTheme",
-    "description": "Programatically set the custom theme.",
-    "path": "api-reference/set-theme",
-    "content": "<p>A function that sets the current custom theme, not to be confused with <a href=\"/docs/api-reference/set-mode\"><code>setMode</code></a>, which sets the mode (<code>'light'</code>, <code>'dark'</code> or <code>'system'</code>).</p>\n<p>The theme can be set to any arbitrary string value, and is persisted to localStorage and applied to the root <code>html</code> element via the <code>data-theme</code> attribute.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setTheme(\"dracula\")}>Dracula Theme&#x3C;/button>\n&#x3C;button onclick={() => setTheme(\"retro\")}>Retro Theme&#x3C;/button>\n</code></pre>",
-    "raw": "A function that sets the current custom theme, not to be confused with [`setMode`](/docs/api-reference/set-mode), which sets the mode (`'light'`, `'dark'` or `'system'`).\n\nThe theme can be set to any arbitrary string value, and is persisted to localStorage and applied to the root `html` element via the `data-theme` attribute.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setTheme(\"dracula\")}>Dracula Theme</button>\n<button onclick={() => setTheme(\"retro\")}>Retro Theme</button>\n```",
+    "description": "Sets the current custom theme",
+    "path": "utilities/set-theme",
+    "content": "<p><code>setTheme</code> is a function that updates the active custom theme.</p>\n<p>Unlike <a href=\"/docs/utilities/set-mode\">setMode</a>, which toggles light/dark/system modes, <code>setTheme</code> accepts any string (e.g. <code>\"dracula\"</code>, <code>\"retro\"</code>, <code>\"corporate\"</code>), persists it to <code>localStorage</code>, and applies it to the <code>&#x3C;html></code> element via the <code>data-theme</code> attribute.</p>\n<p>This enables support for more granular visual themes, similar to <a href=\"https://daisyui.com\">DaisyUI</a>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setTheme(\"dracula\")}>Dracula Theme&#x3C;/button>\n&#x3C;button onclick={() => setTheme(\"retro\")}>Retro Theme&#x3C;/button>\n</code></pre>",
+    "raw": "`setTheme` is a function that updates the active custom theme.\n\nUnlike [setMode](/docs/utilities/set-mode), which toggles light/dark/system modes, `setTheme` accepts any string (e.g. `\"dracula\"`, `\"retro\"`, `\"corporate\"`), persists it to `localStorage`, and applies it to the `<html>` element via the `data-theme` attribute.\n\nThis enables support for more granular visual themes, similar to [DaisyUI](https://daisyui.com).\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setTheme(\"dracula\")}>Dracula Theme</button>\n<button onclick={() => setTheme(\"retro\")}>Retro Theme</button>\n```",
     "toc": [
       {
         "title": "Usage",
@@ -199,67 +175,16 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/set-theme",
-    "slugFull": "/api-reference/set-theme"
-  },
-  {
-    "title": "systemPrefersMode",
-    "description": "A state for tracking the system's preferred mode.",
-    "path": "api-reference/system-prefers-mode",
-    "content": "<p>A readable state that represents the operating system's mode preference. It can be <code>\"light\"</code> or <code>\"dark\"</code>, or if evaluated on the server, <code>undefined</code>.</p>\n<p>This state will automatically track changes to the operating system's mode preference unless this is disabled by setting the <code>track</code> prop to <code>false</code> in the <a href=\"/docs/api-reference/mode-watcher\">ModeWatcher</a> component.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>The system prefers mode is: {systemPrefersMode.current}&#x3C;/p>\n</code></pre>",
-    "raw": "A readable state that represents the operating system's mode preference. It can be `\"light\"` or `\"dark\"`, or if evaluated on the server, `undefined`.\n\nThis state will automatically track changes to the operating system's mode preference unless this is disabled by setting the `track` prop to `false` in the [ModeWatcher](/docs/api-reference/mode-watcher) component.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>The system prefers mode is: {systemPrefersMode.current}</p>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "API Reference",
-    "slug": "api-reference/system-prefers-mode",
-    "slugFull": "/api-reference/system-prefers-mode"
-  },
-  {
-    "title": "themeStorageKey",
-    "description": "The key used to store the theme in local storage.",
-    "path": "api-reference/theme-storage-key",
-    "content": "<p>The key used to store the <code>theme</code> in local storage.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>themeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's theme preference history.&#x3C;/p>\n&#x3C;button onclick={clearThemeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
-    "raw": "The key used to store the `theme` in local storage.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `themeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's theme preference history.</p>\n<button onclick={clearThemeFromLocalStorage}>Clear</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "API Reference",
-    "slug": "api-reference/theme-storage-key",
-    "slugFull": "/api-reference/theme-storage-key"
-  },
-  {
-    "title": "theme",
-    "description": "A state for tracking the current theme.",
-    "path": "api-reference/theme",
-    "content": "<p>A readable state that contains the current theme, not to be confused with <a href=\"/docs/api-reference/mode\"><code>mode</code></a>, which contains the current mode (<code>'light'</code>, <code>'dark'</code> or <code>'system'</code>). The theme can be any arbitrary string value set by the developer, and can be used in conjunction with <code>mode</code> to create a custom theme switcher, similar to <a href=\"https://daisyui.com\">Daisy UI</a>'s.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={cycleTheme}>{theme.current}&#x3C;/button>\n</code></pre>",
-    "raw": "A readable state that contains the current theme, not to be confused with [`mode`](/docs/api-reference/mode), which contains the current mode (`'light'`, `'dark'` or `'system'`). The theme can be any arbitrary string value set by the developer, and can be used in conjunction with `mode` to create a custom theme switcher, similar to [Daisy UI](https://daisyui.com)'s.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n</script>\n\n<button onclick={cycleTheme}>{theme.current}</button>\n```",
-    "toc": [
-      {
-        "title": "Usage",
-        "url": "#usage",
-        "items": []
-      }
-    ],
-    "section": "API Reference",
-    "slug": "api-reference/theme",
-    "slugFull": "/api-reference/theme"
+    "section": "Utilities",
+    "slug": "utilities/set-theme",
+    "slugFull": "/utilities/set-theme"
   },
   {
     "title": "toggleMode",
-    "description": "Programatically toggle the mode.",
-    "path": "api-reference/toggle-mode",
-    "content": "<p>A function that can be used to programatically toggle the mode.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>",
-    "raw": "A function that can be used to programatically toggle the mode.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```",
+    "description": "Toggles between \"light\" and \"dark\" modes.",
+    "path": "utilities/toggle-mode",
+    "content": "<p><code>toggleMode</code> is a utility function that switches the current mode between <code>\"light\"</code> and <code>\"dark\"</code>.</p>\n<p>If the mode is currently set to <code>\"system\"</code>, it will first resolve to the system preference, then toggle from there.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>",
+    "raw": "`toggleMode` is a utility function that switches the current mode between `\"light\"` and `\"dark\"`.\n\nIf the mode is currently set to `\"system\"`, it will first resolve to the system preference, then toggle from there.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```",
     "toc": [
       {
         "title": "Usage",
@@ -267,16 +192,101 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/toggle-mode",
-    "slugFull": "/api-reference/toggle-mode"
+    "section": "Utilities",
+    "slug": "utilities/toggle-mode",
+    "slugFull": "/utilities/toggle-mode"
+  },
+  {
+    "title": "modeStorageKey",
+    "description": "The local storage key used to persist the user's selected mode.",
+    "path": "states/mode-storage-key",
+    "content": "<p><code>modeStorageKey</code> is a readable state containing the string key used to persist the user's selected mode (<code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>) in <code>localStorage</code>.</p>\n<p>This is useful if you need to manually read, write, or clear the stored value.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>modeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's mode preference history.&#x3C;/p>\n&#x3C;button onclick={clearModeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
+    "raw": "`modeStorageKey` is a readable state containing the string key used to persist the user's selected mode (`\"light\"`, `\"dark\"`, or `\"system\"`) in `localStorage`.\n\nThis is useful if you need to manually read, write, or clear the stored value.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `modeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's mode preference history.</p>\n<button onclick={clearModeFromLocalStorage}>Clear</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "States",
+    "slug": "states/mode-storage-key",
+    "slugFull": "/states/mode-storage-key"
+  },
+  {
+    "title": "mode",
+    "description": "Tracks the current resolved mode (light or dark).",
+    "path": "states/mode",
+    "content": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n<p><code>mode</code> is a readable state representing the resolved mode: either <code>\"light\"</code> or <code>\"dark\"</code>. If accessed on the server, its value is <code>undefined</code>.</p>\n<p>This value updates automatically based on user preferences and system settings.</p>\n<callout variant=\"info\">\n<p>This is the <strong>resolved</strong> mode - not the user’s selected preference. If the user chose <code>\"system\"</code>, this reflects the actual system setting (e.g., <code>\"dark\"</code>), not the string <code>\"system\"</code>. <br> To get the user’s selection (<code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>), use <a href=\"/docs/states/user-prefers-mode\"><code>userPrefersMode</code></a>.</p>\n</callout>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={handleModeChange}>{mode.current}&#x3C;/button>\n</code></pre>",
+    "raw": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n\n`mode` is a readable state representing the resolved mode: either `\"light\"` or `\"dark\"`. If accessed on the server, its value is `undefined`.\n\nThis value updates automatically based on user preferences and system settings.\n\n<Callout variant=\"info\">\n\nThis is the **resolved** mode - not the user’s selected preference. If the user chose `\"system\"`, this reflects the actual system setting (e.g., `\"dark\"`), not the string `\"system\"`. <br/> To get the user’s selection (`\"light\"`, `\"dark\"`, or `\"system\"`), use [`userPrefersMode`](/docs/states/user-prefers-mode).\n\n</Callout>\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n</script>\n\n<button onclick={handleModeChange}>{mode.current}</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "States",
+    "slug": "states/mode",
+    "slugFull": "/states/mode"
+  },
+  {
+    "title": "systemPrefersMode",
+    "description": "Tracks the operating system's preferred color scheme.",
+    "path": "states/system-prefers-mode",
+    "content": "<p><code>systemPrefersMode</code> is a readable state representing the operating system's current color scheme preference.\nIt will be <code>\"light\"</code> or <code>\"dark\"</code> in the browser, or <code>undefined</code> when evaluated on the server.</p>\n<p>This value updates automatically when the system's preference changes - unless tracking is disabled by setting <code>track={false}</code> in the <a href=\"/docs/components/mode-watcher\">ModeWatcher</a> component.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>The system prefers mode is: {systemPrefersMode.current}&#x3C;/p>\n</code></pre>",
+    "raw": "`systemPrefersMode` is a readable state representing the operating system's current color scheme preference.\nIt will be `\"light\"` or `\"dark\"` in the browser, or `undefined` when evaluated on the server.\n\nThis value updates automatically when the system's preference changes - unless tracking is disabled by setting `track={false}` in the [ModeWatcher](/docs/components/mode-watcher) component.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>The system prefers mode is: {systemPrefersMode.current}</p>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "States",
+    "slug": "states/system-prefers-mode",
+    "slugFull": "/states/system-prefers-mode"
+  },
+  {
+    "title": "themeStorageKey",
+    "description": "The local storage key used to persist the theme.",
+    "path": "states/theme-storage-key",
+    "content": "<p><code>themeStorageKey</code> is a readable state containing the string key used to persist the user's selected theme in <code>localStorage</code>.</p>\n<p>This is helpful if you need to manually inspect, modify, or clear the stored theme value.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>themeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's theme preference history.&#x3C;/p>\n&#x3C;button onclick={clearThemeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
+    "raw": "`themeStorageKey` is a readable state containing the string key used to persist the user's selected theme in `localStorage`.\n\nThis is helpful if you need to manually inspect, modify, or clear the stored theme value.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `themeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's theme preference history.</p>\n<button onclick={clearThemeFromLocalStorage}>Clear</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "States",
+    "slug": "states/theme-storage-key",
+    "slugFull": "/states/theme-storage-key"
+  },
+  {
+    "title": "theme",
+    "description": "Tracks the current theme.",
+    "path": "states/theme",
+    "content": "<p><code>theme</code> is a readable state that holds the currently active theme - a custom string defined by you.</p>\n<p>Unlike <a href=\"/docs/states/mode\">mode</a>, which resolves to <code>\"light\"</code> or <code>\"dark\"</code>, <code>theme</code> can be any string (e.g. <code>\"dracula\"</code>, <code>\"retro\"</code>, <code>\"corporate\"</code>) and is often used to support more granular visual styles.</p>\n<p>Use it alongside <code>mode</code> to build a custom theme switcher, similar to <a href=\"https://daisyui.com\">DaisyUI</a>'s approach.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={cycleTheme}>{theme.current}&#x3C;/button>\n</code></pre>",
+    "raw": "`theme` is a readable state that holds the currently active theme - a custom string defined by you.\n\nUnlike [mode](/docs/states/mode), which resolves to `\"light\"` or `\"dark\"`, `theme` can be any string (e.g. `\"dracula\"`, `\"retro\"`, `\"corporate\"`) and is often used to support more granular visual styles.\n\nUse it alongside `mode` to build a custom theme switcher, similar to [DaisyUI](https://daisyui.com)'s approach.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n</script>\n\n<button onclick={cycleTheme}>{theme.current}</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "States",
+    "slug": "states/theme",
+    "slugFull": "/states/theme"
   },
   {
     "title": "userPrefersMode",
-    "description": "A state for tracking the user's preferred mode.",
-    "path": "api-reference/user-prefers-mode",
-    "content": "<p>A writeable store that represents the user's mode preference. It can be <code>\"light\"</code>, <code>\"dark\"</code> or <code>\"system\"</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>Your preferred mode is: {userPrefersMode.current}&#x3C;/p>\n</code></pre>",
-    "raw": "A writeable store that represents the user's mode preference. It can be `\"light\"`, `\"dark\"` or `\"system\"`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>Your preferred mode is: {userPrefersMode.current}</p>\n```",
+    "description": "Tracks the user's selected mode preference (\"light\", \"dark\", or \"system\").",
+    "path": "states/user-prefers-mode",
+    "content": "<p><code>userPrefersMode</code> is a writable state representing the user's explicit preference: <code>\"light\"</code>, <code>\"dark\"</code>, or <code>\"system\"</code>.</p>\n<p>This differs from <a href=\"/docs/states/mode\">mode</a>, which reflects the resolved mode based on system settings when <code>\"system\"</code> is selected.</p>\n<p>Use <code>userPrefersMode</code> when you want to display or persist the user's selected preference, even if it defers to the system.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>Your preferred mode is: {userPrefersMode.current}&#x3C;/p>\n</code></pre>",
+    "raw": "`userPrefersMode` is a writable state representing the user's explicit preference: `\"light\"`, `\"dark\"`, or `\"system\"`.\n\nThis differs from [mode](/docs/states/mode), which reflects the resolved mode based on system settings when `\"system\"` is selected.\n\nUse `userPrefersMode` when you want to display or persist the user's selected preference, even if it defers to the system.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>Your preferred mode is: {userPrefersMode.current}</p>\n```",
     "toc": [
       {
         "title": "Usage",
@@ -284,8 +294,8 @@
         "items": []
       }
     ],
-    "section": "API Reference",
-    "slug": "api-reference/user-prefers-mode",
-    "slugFull": "/api-reference/user-prefers-mode"
+    "section": "States",
+    "slug": "states/user-prefers-mode",
+    "slugFull": "/states/user-prefers-mode"
   }
 ]

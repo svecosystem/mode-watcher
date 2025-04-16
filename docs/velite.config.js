@@ -8,7 +8,7 @@ const baseSchema = s.object({
 	navLabel: s.string().optional(),
 	raw: s.raw(),
 	toc: s.toc(),
-	section: s.enum(["Overview", "API Reference"]),
+	section: s.enum(["Overview", "Components", "States", "Utilities"]),
 });
 
 const docSchema = baseSchema.transform((data) => {
