@@ -1,82 +1,53 @@
 ---
 title: Getting Started
-description: A quick guide to get started using Svecodocs
+description: Start using Mode Watcher in your Svelte application.
 section: Overview
 ---
 
 <script>
-	import { Callout } from "@svecodocs/kit";
+	import { Steps, Step } from "@svecodocs/kit";
 </script>
 
-The following guide will walk you through the process of getting a Svecodocs project up and running.
+## Installation & Setup
 
-## Clone the starter template
+<Steps>
 
-Clone the Svecodocs starter template:
+<Step>Install the package</Step>
+
+Install the `mode-watcher` package from npm.
 
 ```bash
-pnpx degit svecosystem/svecodocs/starter
+npm install mode-watcher
 ```
 
-## Navigation
+<Step>Add the ModeWatcher component</Step>
 
-The starter template comes with a basic navigation structure to get your started. To customize the navigation, adjust the `src/lib/navigation.ts` file.
+Add the `<ModeWatcher />` component to your root `+layout.svelte` file.
 
-```ts
-import { createNavigation } from "@svecodocs/kit";
+```svelte {2,5}#add title="src/routes/+layout.svelte"
+<script lang="ts">
+	import { ModeWatcher } from "mode-watcher";
+	let { children } = $props();
+</script>
 
-export const navigation = createNavigation({
-	// Customize the navigation here
-});
+<ModeWatcher />
+{@render children()}
 ```
 
-## Site config
+<Step>That's it!</Step>
 
-The site config is used to configure site-wide settings, such as the title, description, keywords, ogImage, and other metadata.
+You're now ready to use Mode Watcher in your Svelte app.
 
-The config is located in the `src/lib/site-config.ts` file.
+Here's an example of how to use the `toggleMode` function to toggle the mode:
 
-```ts
-import { defineSiteConfig } from "@svecodocs/kit";
+```svelte title="src/lib/components/light-switch.svelte"
+<script lang="ts">
+	import { toggleMode } from "mode-watcher";
+</script>
 
-export const siteConfig = defineSiteConfig({
-	title: "Svecodocs",
-	description: "A SvelteKit docs starter template",
-	keywords: ["sveltekit", "docs", "starter", "template"],
-	ogImage: {
-		url: "https://docs.sveco.dev/og.png",
-		height: 630,
-		width: 1200,
-	},
-});
+<button onclick={toggleMode}>Toggle Mode</button>
 ```
 
-### Per-Route Site Config
+For additional information and configuration, please refer to the [API reference](/docs/api-reference/mode-watcher).
 
-You can override any part of the site config on a per-route basis using the `useSiteConfig` hook.
-
-<Callout type="warning" title="Under Development">
-This feature is still being worked on.
-</Callout>
-
-## Theme
-
-The starter template comes with the default Svecodocs theme (orange). To customize the theme, adjust the import in the `src/app.css` file to reflect the color scheme you want to use for your project. Each theme has been designed to work well in both light and dark mode.
-
-```css {1-2}
-/* @import "@svecodocs/kit/themes/orange.css"; */
-@import "@svecodocs/kit/themes/emerald.css";
-@import "@svecodocs/kit/globals.css";
-```
-
-## Logo
-
-To customize the logo displayed in the sidebar header, head to the `src/routes/(docs)/+layout.svelte` file and adjust the contents of the `logo` snippet. If the logo has a light and dark version, ensure to handle those similarly to the default Svecosystem logo.
-
-```svelte title="src/routes/(docs)/+layout.svelte"
-{#snippet logo()}
-	<LogoDark class="hidden h-7 dark:block" />
-	<LogoLight class="block h-7 dark:hidden" />
-	<span class="sr-only">The project name here</span>
-{/snippet}
-```
+</Steps>

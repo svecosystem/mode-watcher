@@ -1,40 +1,14 @@
 [
   {
     "title": "Getting Started",
-    "description": "A quick guide to get started using Svecodocs",
+    "description": "Start using Mode Watcher in your Svelte application.",
     "path": "getting-started",
-    "content": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n</script>\n<p>The following guide will walk you through the process of getting a Svecodocs project up and running.</p>\n<h2>Clone the starter template</h2>\n<p>Clone the Svecodocs starter template:</p>\n<pre><code class=\"language-bash\">pnpx degit svecosystem/svecodocs/starter\n</code></pre>\n<h2>Navigation</h2>\n<p>The starter template comes with a basic navigation structure to get your started. To customize the navigation, adjust the <code>src/lib/navigation.ts</code> file.</p>\n<pre><code class=\"language-ts\">import { createNavigation } from \"@svecodocs/kit\";\n\nexport const navigation = createNavigation({\n\t// Customize the navigation here\n});\n</code></pre>\n<h2>Site config</h2>\n<p>The site config is used to configure site-wide settings, such as the title, description, keywords, ogImage, and other metadata.</p>\n<p>The config is located in the <code>src/lib/site-config.ts</code> file.</p>\n<pre><code class=\"language-ts\">import { defineSiteConfig } from \"@svecodocs/kit\";\n\nexport const siteConfig = defineSiteConfig({\n\ttitle: \"Svecodocs\",\n\tdescription: \"A SvelteKit docs starter template\",\n\tkeywords: [\"sveltekit\", \"docs\", \"starter\", \"template\"],\n\togImage: {\n\t\turl: \"https://docs.sveco.dev/og.png\",\n\t\theight: 630,\n\t\twidth: 1200,\n\t},\n});\n</code></pre>\n<h3>Per-Route Site Config</h3>\n<p>You can override any part of the site config on a per-route basis using the <code>useSiteConfig</code> hook.</p>\n<callout type=\"warning\" title=\"Under Development\">\nThis feature is still being worked on.\n</callout>\n<h2>Theme</h2>\n<p>The starter template comes with the default Svecodocs theme (orange). To customize the theme, adjust the import in the <code>src/app.css</code> file to reflect the color scheme you want to use for your project. Each theme has been designed to work well in both light and dark mode.</p>\n<pre><code class=\"language-css\" metastring=\"{1-2}\">/* @import \"@svecodocs/kit/themes/orange.css\"; */\n@import \"@svecodocs/kit/themes/emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n</code></pre>\n<h2>Logo</h2>\n<p>To customize the logo displayed in the sidebar header, head to the <code>src/routes/(docs)/+layout.svelte</code> file and adjust the contents of the <code>logo</code> snippet. If the logo has a light and dark version, ensure to handle those similarly to the default Svecosystem logo.</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/routes/(docs)/+layout.svelte&#x22;\">{#snippet logo()}\n\t&#x3C;LogoDark class=\"hidden h-7 dark:block\" />\n\t&#x3C;LogoLight class=\"block h-7 dark:hidden\" />\n\t&#x3C;span class=\"sr-only\">The project name here&#x3C;/span>\n{/snippet}\n</code></pre>",
-    "raw": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n</script>\n\nThe following guide will walk you through the process of getting a Svecodocs project up and running.\n\n## Clone the starter template\n\nClone the Svecodocs starter template:\n\n```bash\npnpx degit svecosystem/svecodocs/starter\n```\n\n## Navigation\n\nThe starter template comes with a basic navigation structure to get your started. To customize the navigation, adjust the `src/lib/navigation.ts` file.\n\n```ts\nimport { createNavigation } from \"@svecodocs/kit\";\n\nexport const navigation = createNavigation({\n\t// Customize the navigation here\n});\n```\n\n## Site config\n\nThe site config is used to configure site-wide settings, such as the title, description, keywords, ogImage, and other metadata.\n\nThe config is located in the `src/lib/site-config.ts` file.\n\n```ts\nimport { defineSiteConfig } from \"@svecodocs/kit\";\n\nexport const siteConfig = defineSiteConfig({\n\ttitle: \"Svecodocs\",\n\tdescription: \"A SvelteKit docs starter template\",\n\tkeywords: [\"sveltekit\", \"docs\", \"starter\", \"template\"],\n\togImage: {\n\t\turl: \"https://docs.sveco.dev/og.png\",\n\t\theight: 630,\n\t\twidth: 1200,\n\t},\n});\n```\n\n### Per-Route Site Config\n\nYou can override any part of the site config on a per-route basis using the `useSiteConfig` hook.\n\n<Callout type=\"warning\" title=\"Under Development\">\nThis feature is still being worked on.\n</Callout>\n\n## Theme\n\nThe starter template comes with the default Svecodocs theme (orange). To customize the theme, adjust the import in the `src/app.css` file to reflect the color scheme you want to use for your project. Each theme has been designed to work well in both light and dark mode.\n\n```css {1-2}\n/* @import \"@svecodocs/kit/themes/orange.css\"; */\n@import \"@svecodocs/kit/themes/emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n```\n\n## Logo\n\nTo customize the logo displayed in the sidebar header, head to the `src/routes/(docs)/+layout.svelte` file and adjust the contents of the `logo` snippet. If the logo has a light and dark version, ensure to handle those similarly to the default Svecosystem logo.\n\n```svelte title=\"src/routes/(docs)/+layout.svelte\"\n{#snippet logo()}\n\t<LogoDark class=\"hidden h-7 dark:block\" />\n\t<LogoLight class=\"block h-7 dark:hidden\" />\n\t<span class=\"sr-only\">The project name here</span>\n{/snippet}\n```",
+    "content": "<script>\n\timport { Steps, Step } from \"@svecodocs/kit\";\n</script>\n<h2>Installation &#x26; Setup</h2>\n<steps>\n<p><step>Install the package</step></p>\n<p>Install the <code>mode-watcher</code> package from npm.</p>\n<pre><code class=\"language-bash\">npm install mode-watcher\n</code></pre>\n<p><step>Add the ModeWatcher component</step></p>\n<p>Add the <code>&#x3C;ModeWatcher /></code> component to your root <code>+layout.svelte</code> file.</p>\n<pre><code class=\"language-svelte\" metastring=\"{2,5}#add title=&#x22;src/routes/+layout.svelte&#x22;\">&#x3C;script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n&#x3C;/script>\n\n&#x3C;ModeWatcher />\n{@render children()}\n</code></pre>\n<p><step>That's it!</step></p>\n<p>You're now ready to use Mode Watcher in your Svelte app.</p>\n<p>Here's an example of how to use the <code>toggleMode</code> function to toggle the mode:</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/lib/components/light-switch.svelte&#x22;\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>\n<p>For additional information and configuration, please refer to the <a href=\"/docs/api-reference/mode-watcher\">API reference</a>.</p>\n</steps>",
+    "raw": "<script>\n\timport { Steps, Step } from \"@svecodocs/kit\";\n</script>\n\n## Installation & Setup\n\n<Steps>\n\n<Step>Install the package</Step>\n\nInstall the `mode-watcher` package from npm.\n\n```bash\nnpm install mode-watcher\n```\n\n<Step>Add the ModeWatcher component</Step>\n\nAdd the `<ModeWatcher />` component to your root `+layout.svelte` file.\n\n```svelte {2,5}#add title=\"src/routes/+layout.svelte\"\n<script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n</script>\n\n<ModeWatcher />\n{@render children()}\n```\n\n<Step>That's it!</Step>\n\nYou're now ready to use Mode Watcher in your Svelte app.\n\nHere's an example of how to use the `toggleMode` function to toggle the mode:\n\n```svelte title=\"src/lib/components/light-switch.svelte\"\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```\n\nFor additional information and configuration, please refer to the [API reference](/docs/api-reference/mode-watcher).\n\n</Steps>",
     "toc": [
       {
-        "title": "Clone the starter template",
-        "url": "#clone-the-starter-template",
-        "items": []
-      },
-      {
-        "title": "Navigation",
-        "url": "#navigation",
-        "items": []
-      },
-      {
-        "title": "Site config",
-        "url": "#site-config",
-        "items": [
-          {
-            "title": "Per-Route Site Config",
-            "url": "#per-route-site-config",
-            "items": []
-          }
-        ]
-      },
-      {
-        "title": "Theme",
-        "url": "#theme",
-        "items": []
-      },
-      {
-        "title": "Logo",
-        "url": "#logo",
+        "title": "Installation & Setup",
+        "url": "#installation--setup",
         "items": []
       }
     ],
@@ -44,10 +18,10 @@
   },
   {
     "title": "Introduction",
-    "description": "What exactly is Svecodocs?",
+    "description": "What is Mode Watcher?",
     "path": "index",
-    "content": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n<p>After spending countless hours building documentation sites for various projects, we decided to build a docs package/starter template that we can use for future projects. This project is a result of that effort.</p>\n<p>Svecodocs is a starting point/utility library for building documentation sites under the <a href=\"https://github.com/svecosystem\">Svecosystem</a> umbrella. The code is open source, but it's built and maintained for our own specific needs, so we won't be accepting any public feature requests.</p>\n<p>You are more than welcome to fork the project and customize it to your own needs.</p>\n<h2>Features</h2>\n<ul>\n<li><strong>Markdown-based docs</strong>. Write docs using Markdown and Svelte components</li>\n<li><strong>Light and dark mode</strong>. Toggle between light and dark mode</li>\n<li><strong>Syntax highlighting</strong>. Code blocks are automatically highlighted</li>\n<li><strong>SEO-friendly</strong>. Meta tags and Open Graph support out of the box</li>\n<li><strong>Pre-built components</strong>. Tabs, callouts, and more to use within the documentation</li>\n<li><strong>Custom unified plugins</strong>. Custom remark and rehype plugins to give more flexibility over the rendered HTML</li>\n<li><strong>shadcn-svelte</strong>. Beautifully designed Svelte components</li>\n<li><strong>Tailwind v4</strong>. Tailwind CSS v4 is used for styling</li>\n</ul>",
-    "raw": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n\nAfter spending countless hours building documentation sites for various projects, we decided to build a docs package/starter template that we can use for future projects. This project is a result of that effort.\n\nSvecodocs is a starting point/utility library for building documentation sites under the [Svecosystem](https://github.com/svecosystem) umbrella. The code is open source, but it's built and maintained for our own specific needs, so we won't be accepting any public feature requests.\n\nYou are more than welcome to fork the project and customize it to your own needs.\n\n## Features\n\n- **Markdown-based docs**. Write docs using Markdown and Svelte components\n- **Light and dark mode**. Toggle between light and dark mode\n- **Syntax highlighting**. Code blocks are automatically highlighted\n- **SEO-friendly**. Meta tags and Open Graph support out of the box\n- **Pre-built components**. Tabs, callouts, and more to use within the documentation\n- **Custom unified plugins**. Custom remark and rehype plugins to give more flexibility over the rendered HTML\n- **shadcn-svelte**. Beautifully designed Svelte components\n- **Tailwind v4**. Tailwind CSS v4 is used for styling",
+    "content": "<p>Mode Watcher provides simple utilities to manage light &#x26; dark mode in your Svelte apps.</p>\n<h2>Features</h2>\n<ul>\n<li>Dark mode for your Svelte app with two lines of code.</li>\n<li>No flash of unstyled content, compatible with SSR, CSR and SSG.</li>\n<li>Detect and track <code>prefers-color-scheme</code> changes in real-time.</li>\n<li>Theme scrollbars and form controls through the <code>color-scheme</code> property.</li>\n<li>Theme surrounding browser interface through the <code>theme-color</code> meta tag.</li>\n<li>Allows users to toggle between light and dark mode or respect their system preference.</li>\n<li>User preference persistence thanks <code>localStorage</code> - syncs theme across tabs and windows.</li>\n<li>Allows for a default theme to be set.</li>\n<li>Disables CSS transitions during theme changes to prevent flickering.</li>\n</ul>",
+    "raw": "Mode Watcher provides simple utilities to manage light & dark mode in your Svelte apps.\n\n## Features\n\n- Dark mode for your Svelte app with two lines of code.\n- No flash of unstyled content, compatible with SSR, CSR and SSG.\n- Detect and track `prefers-color-scheme` changes in real-time.\n- Theme scrollbars and form controls through the `color-scheme` property.\n- Theme surrounding browser interface through the `theme-color` meta tag.\n- Allows users to toggle between light and dark mode or respect their system preference.\n- User preference persistence thanks `localStorage` - syncs theme across tabs and windows.\n- Allows for a default theme to be set.\n- Disables CSS transitions during theme changes to prevent flickering.",
     "toc": [
       {
         "title": "Features",
@@ -60,160 +34,258 @@
     "slugFull": "/index"
   },
   {
-    "title": "Button",
-    "description": "A button component to use in examples and documentation.",
-    "path": "components/button",
-    "content": "<script>\n\timport { Button, DemoContainer } from \"@svecodocs/kit\";\n</script>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;document.md&#x22;\">&#x3C;script>\n\timport { Button } from \"@svecodocs/kit\";\n&#x3C;/script>\n\n&#x3C;Button>Default&#x3C;/Button>\n&#x3C;Button variant=\"brand\">Brand&#x3C;/Button>\n&#x3C;Button variant=\"ghost\">Ghost&#x3C;/Button>\n&#x3C;Button variant=\"outline\">Outline&#x3C;/Button>\n&#x3C;Button variant=\"subtle\">Subtle&#x3C;/Button>\n&#x3C;Button variant=\"link\">Link&#x3C;/Button>\n</code></pre>\n<h2>Example</h2>\n<h3>Default Size</h3>\n<democontainer class=\"flex items-center gap-2.5 flex-wrap\">\n\t<button>Default</button>\n\t<button variant=\"brand\">Brand</button>\n\t<button variant=\"destructive\">Destructive</button>\n\t<button variant=\"ghost\">Ghost</button>\n\t<button variant=\"outline\">Outline</button>\n\t<button variant=\"subtle\">Subtle</button>\n\t<button variant=\"link\">Link</button>\n</democontainer>\n<h3>Small Size</h3>\n<democontainer class=\"flex items-center gap-4 flex-wrap\">\n\t<button size=\"sm\">Default</button>\n\t<button variant=\"brand\" size=\"sm\">Brand</button>\n\t<button variant=\"destructive\" size=\"sm\">Destructive</button>\n\t<button variant=\"ghost\" size=\"sm\">Ghost</button>\n\t<button variant=\"outline\" size=\"sm\">Outline</button>\n\t<button variant=\"subtle\" size=\"sm\">Subtle</button>\n\t<button variant=\"link\" size=\"sm\">Link</button>\n</democontainer>",
-    "raw": "<script>\n\timport { Button, DemoContainer } from \"@svecodocs/kit\";\n</script>\n\n## Usage\n\n```svelte title=\"document.md\"\n<script>\n\timport { Button } from \"@svecodocs/kit\";\n</script>\n\n<Button>Default</Button>\n<Button variant=\"brand\">Brand</Button>\n<Button variant=\"ghost\">Ghost</Button>\n<Button variant=\"outline\">Outline</Button>\n<Button variant=\"subtle\">Subtle</Button>\n<Button variant=\"link\">Link</Button>\n```\n\n## Example\n\n### Default Size\n\n<DemoContainer class=\"flex items-center gap-2.5 flex-wrap\">\n\t<Button>Default</Button>\n\t<Button variant=\"brand\">Brand</Button>\n\t<Button variant=\"destructive\">Destructive</Button>\n\t<Button variant=\"ghost\">Ghost</Button>\n\t<Button variant=\"outline\">Outline</Button>\n\t<Button variant=\"subtle\">Subtle</Button>\n\t<Button variant=\"link\">Link</Button>\n</DemoContainer>\n\n### Small Size\n\n<DemoContainer class=\"flex items-center gap-4 flex-wrap\">\n\t<Button size=\"sm\">Default</Button>\n\t<Button variant=\"brand\" size=\"sm\">Brand</Button>\n\t<Button variant=\"destructive\" size=\"sm\">Destructive</Button>\n\t<Button variant=\"ghost\" size=\"sm\">Ghost</Button>\n\t<Button variant=\"outline\" size=\"sm\">Outline</Button>\n\t<Button variant=\"subtle\" size=\"sm\">Subtle</Button>\n\t<Button variant=\"link\" size=\"sm\">Link</Button>\n</DemoContainer>",
+    "title": "Mode vs Theme",
+    "description": "A comparison between mode and theme.",
+    "path": "mode-vs-theme",
+    "content": "<p>In Mode Watcher, <em>mode</em> and <em>theme</em> are distinct concepts. They work together, but they're not the same, and knowing the difference is key to using Mode Watcher effectively.</p>\n<h2>Mode</h2>\n<p>The mode represents the user's preference for a light or dark interface. It can be one of the following:</p>\n<ul>\n<li><code>\"light\"</code></li>\n<li><code>\"dark\"</code></li>\n<li><code>\"system\"</code> (follows the operating system’s preference)</li>\n</ul>\n<p>Mode Watcher uses this value to:</p>\n<ul>\n<li>Apply the correct <code>class</code> (<code>light</code> or <code>dark</code>) to the root <code>&#x3C;html></code> element</li>\n<li>Set the corresponding <code>color-scheme</code> (<code>light</code> or <code>dark</code>) for browser rendering</li>\n</ul>\n<p>This ensures consistent styling based on user or system preferences.</p>\n<h2>Theme</h2>\n<p>A theme is a design system that defines the visual identity of your application - colors, typography, spacing, layout, etc.</p>\n<p>Themes can include both light and dark variants. For example:</p>\n<ul>\n<li>A <code>dracula</code> theme might contain both <code>dracula-light</code> and <code>dracula-dark</code> styles.</li>\n<li>Mode Watcher automatically chooses the correct variant based on the current mode.</li>\n</ul>\n<p>You don't need to create separate themes like <code>dracula-light</code> and <code>dracula-dark</code>. Instead, provide a single <code>dracula</code> theme with both variants, and let Mode Watcher handle the switching.</p>\n<h2>Summary</h2>\n<ul>\n<li><strong>Mode</strong> = user's light/dark preference</li>\n<li><strong>Theme</strong> = overall design system (can adapt to mode)</li>\n</ul>\n<p>They're different layers of customization—mode controls which variant of the theme is shown.</p>",
+    "raw": "In Mode Watcher, _mode_ and _theme_ are distinct concepts. They work together, but they're not the same, and knowing the difference is key to using Mode Watcher effectively.\n\n## Mode\n\nThe mode represents the user's preference for a light or dark interface. It can be one of the following:\n\n- `\"light\"`\n- `\"dark\"`\n- `\"system\"` (follows the operating system’s preference)\n\nMode Watcher uses this value to:\n\n- Apply the correct `class` (`light` or `dark`) to the root `<html>` element\n- Set the corresponding `color-scheme` (`light` or `dark`) for browser rendering\n\nThis ensures consistent styling based on user or system preferences.\n\n## Theme\n\nA theme is a design system that defines the visual identity of your application - colors, typography, spacing, layout, etc.\n\nThemes can include both light and dark variants. For example:\n\n- A `dracula` theme might contain both `dracula-light` and `dracula-dark` styles.\n- Mode Watcher automatically chooses the correct variant based on the current mode.\n\nYou don't need to create separate themes like `dracula-light` and `dracula-dark`. Instead, provide a single `dracula` theme with both variants, and let Mode Watcher handle the switching.\n\n## Summary\n\n- **Mode** = user's light/dark preference\n- **Theme** = overall design system (can adapt to mode)\n\nThey're different layers of customization—mode controls which variant of the theme is shown.",
+    "toc": [
+      {
+        "title": "Mode",
+        "url": "#mode",
+        "items": []
+      },
+      {
+        "title": "Theme",
+        "url": "#theme",
+        "items": []
+      },
+      {
+        "title": "Summary",
+        "url": "#summary",
+        "items": []
+      }
+    ],
+    "section": "Overview",
+    "slug": "mode-vs-theme",
+    "slugFull": "/mode-vs-theme"
+  },
+  {
+    "title": "modeStorageKey",
+    "description": "The key used to store the mode in local storage.",
+    "path": "api-reference/mode-storage-key",
+    "content": "<p>The key used to store the <code>mode</code> in local storage.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>modeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's mode preference history.&#x3C;/p>\n&#x3C;button onclick={clearModeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
+    "raw": "The key used to store the `mode` in local storage.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `modeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { modeStorageKey } from \"mode-watcher\";\n\n\tfunction clearModeFromLocalStorage() {\n\t\tlocalStorage.removeItem(modeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's mode preference history.</p>\n<button onclick={clearModeFromLocalStorage}>Clear</button>\n```",
     "toc": [
       {
         "title": "Usage",
         "url": "#usage",
         "items": []
-      },
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/mode-storage-key",
+    "slugFull": "/api-reference/mode-storage-key"
+  },
+  {
+    "title": "<ModeWatcher />",
+    "description": "API Reference for the ModeWatcher component.",
+    "path": "api-reference/mode-watcher",
+    "content": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n<h2>Usage</h2>\n<p>Add the <code>ModeWatcher</code> component to your root <code>+layout.svelte</code> component.</p>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;src/routes/+layout.svelte&#x22;\">&#x3C;script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n&#x3C;/script>\n\n&#x3C;ModeWatcher />\n{@render children()}\n</code></pre>\n<p>The <code>ModeWatcher</code> component will automatically detect the user's preferences and apply/remove the \"dark\" class, along with the corresponding color-scheme style attribute to the html element.</p>\n<h3>Disable Tracking</h3>\n<p><code>ModeWatcher</code> will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to false:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher track={false} />\n</code></pre>\n<h3>Default Mode</h3>\n<p><code>ModeWatcher</code> can be configured with a default mode instead of automatically detecting the user's preference.</p>\n<p>To set a default mode, use the <code>defaultMode</code> prop:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher defaultMode=\"dark\" />\n</code></pre>\n<h3>Themes</h3>\n<p>In addition to the <code>dark</code>, <code>light</code>, and <code>system</code> modes, <code>ModeWatcher</code> can also be configured with a theme which will be applied to the root <code>html</code> element like so:</p>\n<pre><code class=\"language-html\">&#x3C;html data-theme=\"your-custom-theme\">&#x3C;/html>\n</code></pre>\n<h3>Theme Colors</h3>\n<p><code>ModeWatcher</code> can manage the <code>theme-color</code> meta tag for you.</p>\n<p>To enable this, set the <code>themeColors</code> prop to your preferred colors:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n</code></pre>\n<h3>Custom Class Names</h3>\n<p>By default, <code>ModeWatcher</code> will add the <code>dark</code> class to the root <code>html</code> element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the <code>darkClassNames</code> and/or <code>lightClassNames</code> props:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n</code></pre>\n<p>Now, when the mode is dark, the root <code>html</code> element will have the <code>dddd</code> class, and when the mode is light, the root <code>html</code> element will have the <code>fff</code> class.</p>\n<h3>Custom Local Storage Keys</h3>\n<p>By default, <code>ModeWatcher</code> will use the following local storage keys to store the mode and theme:</p>\n<ul>\n<li><code>mode-watcher-mode</code></li>\n<li><code>mode-watcher-theme</code></li>\n</ul>\n<p>You can customize these keys by passing a custom <code>modeStorageKey</code> and/or <code>themeStorageKey</code> to the <code>ModeWatcher</code> component:</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n</code></pre>\n<h3>Nonce</h3>\n<p>You can use the <code>nonce</code> prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the <code>&#x3C;script></code> tag responsible for setting the initial mode before a FOUC occurs.</p>\n<pre><code class=\"language-svelte\">&#x3C;ModeWatcher nonce=\"my-secure-nonce\" />\n</code></pre>\n<h2>Props</h2>\n<p>The <code>ModeWatcher</code> component accepts the following props:</p>\n<pre><code class=\"language-ts\">export type Mode = \"system\" | \"dark\" | \"light\";\nexport type ThemeColors = { dark: string; light: string };\n\nexport type ModeWatcherProps = {\n\t/**\n\t * Whether to automatically track operating system preferences\n\t * and update the mode accordingly.\n\t *\n\t * @defaultValue `true`\n\t */\n\ttrack?: boolean;\n\n\t/**\n\t * The default mode to use instead of the user's preference.\n\t *\n\t * @defaultValue `\"system\"`\n\t */\n\tdefaultMode?: Mode;\n\n\t/**\n\t * The default theme to use, which will be applied to the root `html` element\n\t * and can be managed with the `setTheme` function.\n\t *\n\t * @example\n\t * ```html\n\t * &#x3C;html data-theme=\"your-custom-theme\">&#x3C;/html>\n\t * ```\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tdefaultTheme?: string;\n\n\t/**\n\t * The theme colors to use for each mode.\n\t */\n\tthemeColors?: ThemeColors;\n\n\t/**\n\t * Whether to disable transitions when updating the mode.\n\t */\n\tdisableTransitions?: boolean;\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is dark.\n\t *\n\t * @defaultValue `[\"dark\"]`\n\t */\n\tdarkClassNames?: string[];\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is light.\n\t *\n\t * @defaultValue `[]`\n\t */\n\tlightClassNames?: string[];\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the mode.\n\t *\n\t * @defaultValue `'mode-watcher-mode'`\n\t */\n\tmodeStorageKey?: string;\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the theme.\n\t *\n\t * @defaultValue `'mode-watcher-theme'`\n\t */\n\tthemeStorageKey?: string;\n\n\t/**\n\t * An optional nonce to use for the injected script tag to allow-list mode-watcher\n\t * if you are using a Content Security Policy.\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tnonce?: string;\n\n\t/**\n\t * Whether to disable the injected script tag that sets the initial mode.\n\t * Set this if you are manually injecting the script using a hook.\n\t *\n\t * @defaultValue `false`\n\t */\n\tdisableHeadScriptInjection?: boolean;\n};\n</code></pre>",
+    "raw": "<script>\n\timport { Callout } from '@svecodocs/kit'\n</script>\n\n## Usage\n\nAdd the `ModeWatcher` component to your root `+layout.svelte` component.\n\n```svelte title=\"src/routes/+layout.svelte\"\n<script lang=\"ts\">\n\timport { ModeWatcher } from \"mode-watcher\";\n\tlet { children } = $props();\n</script>\n\n<ModeWatcher />\n{@render children()}\n```\n\nThe `ModeWatcher` component will automatically detect the user's preferences and apply/remove the \"dark\" class, along with the corresponding color-scheme style attribute to the html element.\n\n### Disable Tracking\n\n`ModeWatcher` will automatically track operating system preferences and apply these if no user preference is set. If you wish to disable this behavior, set the track prop to false:\n\n```svelte\n<ModeWatcher track={false} />\n```\n\n### Default Mode\n\n`ModeWatcher` can be configured with a default mode instead of automatically detecting the user's preference.\n\nTo set a default mode, use the `defaultMode` prop:\n\n```svelte\n<ModeWatcher defaultMode=\"dark\" />\n```\n\n### Themes\n\nIn addition to the `dark`, `light`, and `system` modes, `ModeWatcher` can also be configured with a theme which will be applied to the root `html` element like so:\n\n```html\n<html data-theme=\"your-custom-theme\"></html>\n```\n\n### Theme Colors\n\n`ModeWatcher` can manage the `theme-color` meta tag for you.\n\nTo enable this, set the `themeColors` prop to your preferred colors:\n\n```svelte\n<ModeWatcher themeColors={{ dark: \"#000\", light: \"#fff\" }} />\n```\n\n### Custom Class Names\n\nBy default, `ModeWatcher` will add the `dark` class to the root `html` element when the mode is dark, and remove it when the mode is light. You can customize this behavior by passing an array of classNames to the `darkClassNames` and/or `lightClassNames` props:\n\n```svelte\n<ModeWatcher darkClassNames={[\"dddd\"]} lightClassNames={[\"fff\"]} />\n```\n\nNow, when the mode is dark, the root `html` element will have the `dddd` class, and when the mode is light, the root `html` element will have the `fff` class.\n\n### Custom Local Storage Keys\n\nBy default, `ModeWatcher` will use the following local storage keys to store the mode and theme:\n\n- `mode-watcher-mode`\n- `mode-watcher-theme`\n\nYou can customize these keys by passing a custom `modeStorageKey` and/or `themeStorageKey` to the `ModeWatcher` component:\n\n```svelte\n<ModeWatcher modeStorageKey=\"my-mode-key\" themeStorageKey=\"my-theme-key\" />\n```\n\n### Nonce\n\nYou can use the `nonce` prop to allow-list mode-watcher if you are using a Content Security Policy. This will be applied to the `<script>` tag responsible for setting the initial mode before a FOUC occurs.\n\n```svelte\n<ModeWatcher nonce=\"my-secure-nonce\" />\n```\n\n## Props\n\nThe `ModeWatcher` component accepts the following props:\n\n````ts\nexport type Mode = \"system\" | \"dark\" | \"light\";\nexport type ThemeColors = { dark: string; light: string };\n\nexport type ModeWatcherProps = {\n\t/**\n\t * Whether to automatically track operating system preferences\n\t * and update the mode accordingly.\n\t *\n\t * @defaultValue `true`\n\t */\n\ttrack?: boolean;\n\n\t/**\n\t * The default mode to use instead of the user's preference.\n\t *\n\t * @defaultValue `\"system\"`\n\t */\n\tdefaultMode?: Mode;\n\n\t/**\n\t * The default theme to use, which will be applied to the root `html` element\n\t * and can be managed with the `setTheme` function.\n\t *\n\t * @example\n\t * ```html\n\t * <html data-theme=\"your-custom-theme\"></html>\n\t * ```\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tdefaultTheme?: string;\n\n\t/**\n\t * The theme colors to use for each mode.\n\t */\n\tthemeColors?: ThemeColors;\n\n\t/**\n\t * Whether to disable transitions when updating the mode.\n\t */\n\tdisableTransitions?: boolean;\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is dark.\n\t *\n\t * @defaultValue `[\"dark\"]`\n\t */\n\tdarkClassNames?: string[];\n\n\t/**\n\t * The classname to add to the root `html` element when the mode is light.\n\t *\n\t * @defaultValue `[]`\n\t */\n\tlightClassNames?: string[];\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the mode.\n\t *\n\t * @defaultValue `'mode-watcher-mode'`\n\t */\n\tmodeStorageKey?: string;\n\n\t/**\n\t * Optionally provide a custom local storage key to use for storing the theme.\n\t *\n\t * @defaultValue `'mode-watcher-theme'`\n\t */\n\tthemeStorageKey?: string;\n\n\t/**\n\t * An optional nonce to use for the injected script tag to allow-list mode-watcher\n\t * if you are using a Content Security Policy.\n\t *\n\t * @defaultValue `undefined`\n\t */\n\tnonce?: string;\n\n\t/**\n\t * Whether to disable the injected script tag that sets the initial mode.\n\t * Set this if you are manually injecting the script using a hook.\n\t *\n\t * @defaultValue `false`\n\t */\n\tdisableHeadScriptInjection?: boolean;\n};\n````",
+    "toc": [
       {
-        "title": "Example",
-        "url": "#example",
+        "title": "Usage",
+        "url": "#usage",
         "items": [
           {
-            "title": "Default Size",
-            "url": "#default-size",
+            "title": "Disable Tracking",
+            "url": "#disable-tracking",
             "items": []
           },
           {
-            "title": "Small Size",
-            "url": "#small-size",
+            "title": "Default Mode",
+            "url": "#default-mode",
+            "items": []
+          },
+          {
+            "title": "Themes",
+            "url": "#themes",
+            "items": []
+          },
+          {
+            "title": "Theme Colors",
+            "url": "#theme-colors",
+            "items": []
+          },
+          {
+            "title": "Custom Class Names",
+            "url": "#custom-class-names",
+            "items": []
+          },
+          {
+            "title": "Custom Local Storage Keys",
+            "url": "#custom-local-storage-keys",
+            "items": []
+          },
+          {
+            "title": "Nonce",
+            "url": "#nonce",
             "items": []
           }
         ]
+      },
+      {
+        "title": "Props",
+        "url": "#props",
+        "items": []
       }
     ],
-    "section": "Components",
-    "slug": "components/button",
-    "slugFull": "/components/button"
+    "section": "API Reference",
+    "slug": "api-reference/mode-watcher",
+    "slugFull": "/api-reference/mode-watcher"
   },
   {
-    "title": "Callout",
-    "description": "A callout component to highlight important information.",
-    "path": "components/callout",
-    "content": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n\timport Avocado from \"phosphor-svelte/lib/Avocado\";\n</script>\n<p>Callouts (also known as <em>admonitions</em>) are used to highlight a block of text. There are five types of callouts available: <code>'note'</code>, <code>'warning'</code>, <code>'danger'</code>, <code>'tip'</code>, and <code>'success'</code>.</p>\n<p>You can override the default icon for the callout by passing a component via the <code>icon</code> prop.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\" metastring=\"title=&#x22;document.md&#x22;\">&#x3C;script>\n\timport { Callout } from \"$lib/components\";\n&#x3C;/script>\n\n&#x3C;Callout type=\"note\" title=\"Note\">\n\t&#x3C;!-- Space here-->\n\tThis is a note, used to highlight important information or provide additional context. You can use\n\tmarkdown in here as well! Just ensure you include a space between the component and the content in\n\tyour Markdown file.\n\t&#x3C;!-- Space here-->\n&#x3C;/Callout>\n</code></pre>\n<h2>Examples</h2>\n<h3>Warning</h3>\n<callout type=\"warning\">\n<p>This is an example of a warning callout.</p>\n</callout>\n<h3>Note</h3>\n<callout type=\"note\">\n<p>This is an example of a note callout.</p>\n</callout>\n<h3>Danger</h3>\n<callout type=\"danger\">\n<p>This is an example of a danger callout.</p>\n</callout>\n<h3>Tip</h3>\n<callout type=\"tip\">\n<p>This is an example of a tip callout.</p>\n</callout>\n<h3>Success</h3>\n<callout type=\"success\">\n<p>This is an example of a success callout.</p>\n</callout>\n<h3>Custom Icon</h3>\n<callout type=\"note\" icon=\"{Avocado}\">\n<p>This is an example of a note callout with a custom icon.</p>\n</callout>\n<h3>Custom Title</h3>\n<callout type=\"warning\" title=\"Tread carefully\">\n<p>This is an example of a warning callout with a custom title.</p>\n</callout>",
-    "raw": "<script>\n\timport { Callout } from \"@svecodocs/kit\";\n\timport Avocado from \"phosphor-svelte/lib/Avocado\";\n</script>\n\nCallouts (also known as _admonitions_) are used to highlight a block of text. There are five types of callouts available: `'note'`, `'warning'`, `'danger'`, `'tip'`, and `'success'`.\n\nYou can override the default icon for the callout by passing a component via the `icon` prop.\n\n## Usage\n\n```svelte title=\"document.md\"\n<script>\n\timport { Callout } from \"$lib/components\";\n</script>\n\n<Callout type=\"note\" title=\"Note\">\n\t<!-- Space here-->\n\tThis is a note, used to highlight important information or provide additional context. You can use\n\tmarkdown in here as well! Just ensure you include a space between the component and the content in\n\tyour Markdown file.\n\t<!-- Space here-->\n</Callout>\n```\n\n## Examples\n\n### Warning\n\n<Callout type=\"warning\">\n\nThis is an example of a warning callout.\n\n</Callout>\n\n### Note\n\n<Callout type=\"note\">\n\nThis is an example of a note callout.\n\n</Callout>\n\n### Danger\n\n<Callout type=\"danger\">\n\nThis is an example of a danger callout.\n\n</Callout>\n\n### Tip\n\n<Callout type=\"tip\">\n\nThis is an example of a tip callout.\n\n</Callout>\n\n### Success\n\n<Callout type=\"success\">\n\nThis is an example of a success callout.\n\n</Callout>\n\n### Custom Icon\n\n<Callout type=\"note\" icon={Avocado}>\n\nThis is an example of a note callout with a custom icon.\n\n</Callout>\n\n### Custom Title\n\n<Callout type=\"warning\" title=\"Tread carefully\">\n\nThis is an example of a warning callout with a custom title.\n\n</Callout>",
+    "title": "mode",
+    "description": "A state for tracking the current mode.",
+    "path": "api-reference/mode",
+    "content": "<p>A readable state that contains the current mode. It can be <code>\"light\"</code> or <code>\"dark\"</code>, or if evaluated on the server, <code>undefined</code>. For user selectable modes, use <a href=\"/docs/api-reference/user-prefers-mode\"><code>userPrefersMode</code></a>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={handleModeChange}>{$mode}&#x3C;/button>\n</code></pre>",
+    "raw": "A readable state that contains the current mode. It can be `\"light\"` or `\"dark\"`, or if evaluated on the server, `undefined`. For user selectable modes, use [`userPrefersMode`](/docs/api-reference/user-prefers-mode).\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode, mode } from \"mode-watcher\";\n\n\tfunction handleModeChange() {\n\t\tif (mode.current === \"light\") {\n\t\t\tsetMode(\"dark\");\n\t\t} else {\n\t\t\tsetMode(\"light\");\n\t\t}\n\t}\n</script>\n\n<button onclick={handleModeChange}>{$mode}</button>\n```",
     "toc": [
       {
         "title": "Usage",
         "url": "#usage",
         "items": []
-      },
-      {
-        "title": "Examples",
-        "url": "#examples",
-        "items": [
-          {
-            "title": "Warning",
-            "url": "#warning",
-            "items": []
-          },
-          {
-            "title": "Note",
-            "url": "#note",
-            "items": []
-          },
-          {
-            "title": "Danger",
-            "url": "#danger",
-            "items": []
-          },
-          {
-            "title": "Tip",
-            "url": "#tip",
-            "items": []
-          },
-          {
-            "title": "Success",
-            "url": "#success",
-            "items": []
-          },
-          {
-            "title": "Custom Icon",
-            "url": "#custom-icon",
-            "items": []
-          },
-          {
-            "title": "Custom Title",
-            "url": "#custom-title",
-            "items": []
-          }
-        ]
       }
     ],
-    "section": "Components",
-    "slug": "components/callout",
-    "slugFull": "/components/callout"
+    "section": "API Reference",
+    "slug": "api-reference/mode",
+    "slugFull": "/api-reference/mode"
   },
   {
-    "title": "Navigation",
-    "description": "Learn how to customize the navigation in your Svecodocs project.",
-    "path": "configuration/navigation",
-    "content": "<p>Navigation is a key component of every site, documenting the structure of your site and providing a clear path for users to navigate through your content.</p>\n<p>Svecodocs comes with a navigation structure that is designed to be flexible and customizable. Each page in your site should have a corresponding navigation item, and the navigation items should be nested according to their hierarchy.</p>\n<h2>Navigation Structure</h2>\n<h3>Anchors</h3>\n<p>Anchors are links that are displayed at the top of the sidebar and typically used to either highlight important information or provide quick access to linked content.</p>\n<h3>Sections</h3>\n<p>Sections are used to group related navigation items together. They are typically used to organize content into different categories, such as \"Components\", \"Configuration\", and \"Utilities\".</p>",
-    "raw": "Navigation is a key component of every site, documenting the structure of your site and providing a clear path for users to navigate through your content.\n\nSvecodocs comes with a navigation structure that is designed to be flexible and customizable. Each page in your site should have a corresponding navigation item, and the navigation items should be nested according to their hierarchy.\n\n## Navigation Structure\n\n### Anchors\n\nAnchors are links that are displayed at the top of the sidebar and typically used to either highlight important information or provide quick access to linked content.\n\n### Sections\n\nSections are used to group related navigation items together. They are typically used to organize content into different categories, such as \"Components\", \"Configuration\", and \"Utilities\".",
+    "title": "resetMode",
+    "description": "Programatically reset the mode to system preference.",
+    "path": "api-reference/reset-mode",
+    "content": "<p>A function that resets the mode to system preferences.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={resetMode}>System&#x3C;/button>\n</code></pre>",
+    "raw": "A function that resets the mode to system preferences.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { resetMode } from \"mode-watcher\";\n</script>\n\n<button onclick={resetMode}>System</button>\n```",
     "toc": [
       {
-        "title": "Navigation Structure",
-        "url": "#navigation-structure",
-        "items": [
-          {
-            "title": "Anchors",
-            "url": "#anchors",
-            "items": []
-          },
-          {
-            "title": "Sections",
-            "url": "#sections",
-            "items": []
-          }
-        ]
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
       }
     ],
-    "section": "Configuration",
-    "slug": "configuration/navigation",
-    "slugFull": "/configuration/navigation"
+    "section": "API Reference",
+    "slug": "api-reference/reset-mode",
+    "slugFull": "/api-reference/reset-mode"
   },
   {
-    "title": "Theme",
-    "description": "Learn how to customize the theme in your Svecodocs project.",
-    "path": "configuration/theme",
-    "content": "<p>The theme determines the branded color scheme for your site. A theme for each of the TailwindCSS colors is provided by the <code>@svecodocs/kit</code> package. Each theme has been designed to present well in both light and dark mode.</p>\n<h2>Using a theme</h2>\n<p>To use a theme, import the theme file into your <code>src/app.css</code> file <em>before</em> importing the <code>@svecodocs/kit/globals.css</code> file.</p>\n<pre><code class=\"language-css\">/* @import \"@svecodocs/kit/theme-orange.css\"; */\n@import \"@svecodocs/kit/theme-emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n</code></pre>\n<p>It's not recommended to customize the theme to maintain consistency across the UI components that are provided by Svecodocs and align with the provided themes.</p>\n<h2>Available themes</h2>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n<table><thead><tr><th>Theme name</th><th>Import path</th></tr></thead><tbody><tr><td>orange</td><td><code>@svecodocs/kit/theme-orange.css</code></td></tr><tr><td>green</td><td><code>@svecodocs/kit/theme-green.css</code></td></tr><tr><td>blue</td><td><code>@svecodocs/kit/theme-blue.css</code></td></tr><tr><td>purple</td><td><code>@svecodocs/kit/theme-purple.css</code></td></tr><tr><td>pink</td><td><code>@svecodocs/kit/theme-pink.css</code></td></tr><tr><td>lime</td><td><code>@svecodocs/kit/theme-lime.css</code></td></tr><tr><td>yellow</td><td><code>@svecodocs/kit/theme-yellow.css</code></td></tr><tr><td>cyan</td><td><code>@svecodocs/kit/theme-cyan.css</code></td></tr><tr><td>teal</td><td><code>@svecodocs/kit/theme-teal.css</code></td></tr><tr><td>violet</td><td><code>@svecodocs/kit/theme-violet.css</code></td></tr><tr><td>amber</td><td><code>@svecodocs/kit/theme-amber.css</code></td></tr><tr><td>red</td><td><code>@svecodocs/kit/theme-red.css</code></td></tr><tr><td>sky</td><td><code>@svecodocs/kit/theme-sky.css</code></td></tr><tr><td>emerald</td><td><code>@svecodocs/kit/theme-emerald.css</code></td></tr><tr><td>fuchsia</td><td><code>@svecodocs/kit/theme-fuchsia.css</code></td></tr><tr><td>rose</td><td><code>@svecodocs/kit/theme-rose.css</code></td></tr></tbody></table>\n<h2>Tailwind Variables</h2>\n<p>Svecodocs uses TailwindCSS to style the UI components and provides a set of Tailwind variables that can be used to style your examples/custom components.</p>\n<h3>Gray</h3>\n<p>We override the TailwindCSS <code>gray</code> color scale to provide our own grays.</p>\n<h3>Brand</h3>\n<p>You can use the <code>brand</code> color to use the brand color of your project.</p>",
-    "raw": "The theme determines the branded color scheme for your site. A theme for each of the TailwindCSS colors is provided by the `@svecodocs/kit` package. Each theme has been designed to present well in both light and dark mode.\n\n## Using a theme\n\nTo use a theme, import the theme file into your `src/app.css` file _before_ importing the `@svecodocs/kit/globals.css` file.\n\n```css\n/* @import \"@svecodocs/kit/theme-orange.css\"; */\n@import \"@svecodocs/kit/theme-emerald.css\";\n@import \"@svecodocs/kit/globals.css\";\n```\n\nIt's not recommended to customize the theme to maintain consistency across the UI components that are provided by Svecodocs and align with the provided themes.\n\n## Available themes\n\n| Theme name | Import path                        |\n| ---------- | ---------------------------------- |\n| orange     | `@svecodocs/kit/theme-orange.css`  |\n| green      | `@svecodocs/kit/theme-green.css`   |\n| blue       | `@svecodocs/kit/theme-blue.css`    |\n| purple     | `@svecodocs/kit/theme-purple.css`  |\n| pink       | `@svecodocs/kit/theme-pink.css`    |\n| lime       | `@svecodocs/kit/theme-lime.css`    |\n| yellow     | `@svecodocs/kit/theme-yellow.css`  |\n| cyan       | `@svecodocs/kit/theme-cyan.css`    |\n| teal       | `@svecodocs/kit/theme-teal.css`    |\n| violet     | `@svecodocs/kit/theme-violet.css`  |\n| amber      | `@svecodocs/kit/theme-amber.css`   |\n| red        | `@svecodocs/kit/theme-red.css`     |\n| sky        | `@svecodocs/kit/theme-sky.css`     |\n| emerald    | `@svecodocs/kit/theme-emerald.css` |\n| fuchsia    | `@svecodocs/kit/theme-fuchsia.css` |\n| rose       | `@svecodocs/kit/theme-rose.css`    |\n\n## Tailwind Variables\n\nSvecodocs uses TailwindCSS to style the UI components and provides a set of Tailwind variables that can be used to style your examples/custom components.\n\n### Gray\n\nWe override the TailwindCSS `gray` color scale to provide our own grays.\n\n### Brand\n\nYou can use the `brand` color to use the brand color of your project.",
+    "title": "setMode",
+    "description": "Programatically set the mode.",
+    "path": "api-reference/set-mode",
+    "content": "<p>A function that sets the current mode. It accepts a string with the value <code>\"light\"</code>, <code>\"dark\"</code> or <code>\"system\"</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setMode(\"light\")}>Set Light Mode&#x3C;/button>\n&#x3C;button onclick={() => setMode(\"dark\")}>Set Dark Mode&#x3C;/button>\n</code></pre>",
+    "raw": "A function that sets the current mode. It accepts a string with the value `\"light\"`, `\"dark\"` or `\"system\"`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setMode } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setMode(\"light\")}>Set Light Mode</button>\n<button onclick={() => setMode(\"dark\")}>Set Dark Mode</button>\n```",
     "toc": [
       {
-        "title": "Using a theme",
-        "url": "#using-a-theme",
+        "title": "Usage",
+        "url": "#usage",
         "items": []
-      },
-      {
-        "title": "Available themes",
-        "url": "#available-themes",
-        "items": []
-      },
-      {
-        "title": "Tailwind Variables",
-        "url": "#tailwind-variables",
-        "items": [
-          {
-            "title": "Gray",
-            "url": "#gray",
-            "items": []
-          },
-          {
-            "title": "Brand",
-            "url": "#brand",
-            "items": []
-          }
-        ]
       }
     ],
-    "section": "Configuration",
-    "slug": "configuration/theme",
-    "slugFull": "/configuration/theme"
+    "section": "API Reference",
+    "slug": "api-reference/set-mode",
+    "slugFull": "/api-reference/set-mode"
+  },
+  {
+    "title": "setTheme",
+    "description": "Programatically set the custom theme.",
+    "path": "api-reference/set-theme",
+    "content": "<p>A function that sets the current custom theme, not to be confused with <a href=\"/docs/api-reference/set-mode\"><code>setMode</code></a>, which sets the mode (<code>'light'</code>, <code>'dark'</code> or <code>'system'</code>).</p>\n<p>The theme can be set to any arbitrary string value, and is persisted to localStorage and applied to the root <code>html</code> element via the <code>data-theme</code> attribute.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={() => setTheme(\"dracula\")}>Dracula Theme&#x3C;/button>\n&#x3C;button onclick={() => setTheme(\"retro\")}>Retro Theme&#x3C;/button>\n</code></pre>",
+    "raw": "A function that sets the current custom theme, not to be confused with [`setMode`](/docs/api-reference/set-mode), which sets the mode (`'light'`, `'dark'` or `'system'`).\n\nThe theme can be set to any arbitrary string value, and is persisted to localStorage and applied to the root `html` element via the `data-theme` attribute.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme } from \"mode-watcher\";\n</script>\n\n<button onclick={() => setTheme(\"dracula\")}>Dracula Theme</button>\n<button onclick={() => setTheme(\"retro\")}>Retro Theme</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/set-theme",
+    "slugFull": "/api-reference/set-theme"
+  },
+  {
+    "title": "systemPrefersMode",
+    "description": "A state for tracking the system's preferred mode.",
+    "path": "api-reference/system-prefers-mode",
+    "content": "<p>A readable state that represents the operating system's mode preference. It can be <code>\"light\"</code> or <code>\"dark\"</code>, or if evaluated on the server, <code>undefined</code>.</p>\n<p>This state will automatically track changes to the operating system's mode preference unless this is disabled by setting the <code>track</code> prop to <code>false</code> in the <a href=\"/docs/api-reference/mode-watcher\">ModeWatcher</a> component.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>The system prefers mode is: {systemPrefersMode.current}&#x3C;/p>\n</code></pre>",
+    "raw": "A readable state that represents the operating system's mode preference. It can be `\"light\"` or `\"dark\"`, or if evaluated on the server, `undefined`.\n\nThis state will automatically track changes to the operating system's mode preference unless this is disabled by setting the `track` prop to `false` in the [ModeWatcher](/docs/api-reference/mode-watcher) component.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { systemPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>The system prefers mode is: {systemPrefersMode.current}</p>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/system-prefers-mode",
+    "slugFull": "/api-reference/system-prefers-mode"
+  },
+  {
+    "title": "themeStorageKey",
+    "description": "The key used to store the theme in local storage.",
+    "path": "api-reference/theme-storage-key",
+    "content": "<p>The key used to store the <code>theme</code> in local storage.</p>\n<h2>Usage</h2>\n<p>If you wanted to clear the history of the user's mode preference, you could use the <code>themeStorageKey</code> like so:</p>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n&#x3C;/script>\n\n&#x3C;p>Clear the user's theme preference history.&#x3C;/p>\n&#x3C;button onclick={clearThemeFromLocalStorage}>Clear&#x3C;/button>\n</code></pre>",
+    "raw": "The key used to store the `theme` in local storage.\n\n## Usage\n\nIf you wanted to clear the history of the user's mode preference, you could use the `themeStorageKey` like so:\n\n```svelte\n<script lang=\"ts\">\n\timport { themeStorageKey } from \"mode-watcher\";\n\n\tfunction clearThemeFromLocalStorage() {\n\t\tlocalStorage.removeItem(themeStorageKey.current);\n\t}\n</script>\n\n<p>Clear the user's theme preference history.</p>\n<button onclick={clearThemeFromLocalStorage}>Clear</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/theme-storage-key",
+    "slugFull": "/api-reference/theme-storage-key"
+  },
+  {
+    "title": "theme",
+    "description": "A state for tracking the current theme.",
+    "path": "api-reference/theme",
+    "content": "<p>A readable state that contains the current theme, not to be confused with <a href=\"/docs/api-reference/mode\"><code>mode</code></a>, which contains the current mode (<code>'light'</code>, <code>'dark'</code> or <code>'system'</code>). The theme can be any arbitrary string value set by the developer, and can be used in conjunction with <code>mode</code> to create a custom theme switcher, similar to <a href=\"https://daisyui.com\">Daisy UI</a>'s.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n&#x3C;/script>\n\n&#x3C;button onclick={cycleTheme}>{theme.current}&#x3C;/button>\n</code></pre>",
+    "raw": "A readable state that contains the current theme, not to be confused with [`mode`](/docs/api-reference/mode), which contains the current mode (`'light'`, `'dark'` or `'system'`). The theme can be any arbitrary string value set by the developer, and can be used in conjunction with `mode` to create a custom theme switcher, similar to [Daisy UI](https://daisyui.com)'s.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { setTheme, theme } from \"mode-watcher\";\n\n\tfunction cycleTheme() {\n\t\tif (theme.current === \"dracula\") {\n\t\t\tsetTheme(\"retro\");\n\t\t} else {\n\t\t\tsetTheme(\"dracula\");\n\t\t}\n\t}\n</script>\n\n<button onclick={cycleTheme}>{theme.current}</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/theme",
+    "slugFull": "/api-reference/theme"
+  },
+  {
+    "title": "toggleMode",
+    "description": "Programatically toggle the mode.",
+    "path": "api-reference/toggle-mode",
+    "content": "<p>A function that can be used to programatically toggle the mode.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;button onclick={toggleMode}>Toggle Mode&#x3C;/button>\n</code></pre>",
+    "raw": "A function that can be used to programatically toggle the mode.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { toggleMode } from \"mode-watcher\";\n</script>\n\n<button onclick={toggleMode}>Toggle Mode</button>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/toggle-mode",
+    "slugFull": "/api-reference/toggle-mode"
+  },
+  {
+    "title": "userPrefersMode",
+    "description": "A state for tracking the user's preferred mode.",
+    "path": "api-reference/user-prefers-mode",
+    "content": "<p>A writeable store that represents the user's mode preference. It can be <code>\"light\"</code>, <code>\"dark\"</code> or <code>\"system\"</code>.</p>\n<h2>Usage</h2>\n<pre><code class=\"language-svelte\">&#x3C;script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n&#x3C;/script>\n\n&#x3C;p>Your preferred mode is: {userPrefersMode.current}&#x3C;/p>\n</code></pre>",
+    "raw": "A writeable store that represents the user's mode preference. It can be `\"light\"`, `\"dark\"` or `\"system\"`.\n\n## Usage\n\n```svelte\n<script lang=\"ts\">\n\timport { userPrefersMode } from \"mode-watcher\";\n</script>\n\n<p>Your preferred mode is: {userPrefersMode.current}</p>\n```",
+    "toc": [
+      {
+        "title": "Usage",
+        "url": "#usage",
+        "items": []
+      }
+    ],
+    "section": "API Reference",
+    "slug": "api-reference/user-prefers-mode",
+    "slugFull": "/api-reference/user-prefers-mode"
   }
 ]
