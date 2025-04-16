@@ -170,7 +170,6 @@ function createDerivedMode() {
 function createDerivedTheme() {
 	const current = $derived.by(() => {
 		customTheme.current;
-		console.log("customTheme.current changed", customTheme.current);
 		if (!isBrowser) return undefined;
 
 		function update() {
