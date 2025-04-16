@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.0
+
+### Major Changes
+
+- Mode Watcher 1.0 (Svelte 5) ([#112](https://github.com/svecosystem/mode-watcher/pull/112))
+
 ## 0.5.1
 
 ### Patch Changes
