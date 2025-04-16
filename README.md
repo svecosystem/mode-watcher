@@ -25,10 +25,11 @@ Add the `ModeWatcher` component to your root `+layout.svelte` file.
 ```svelte
 <script lang="ts">
 	import { ModeWatcher } from "mode-watcher";
+	let { children } = $props()
 </script>
 
 <ModeWatcher />
-<slot />
+{@render children()}
 ```
 
 The `ModeWatcher` component will automatically detect the user's preferences and apply/remove the `"dark"` class, along with the corresponding `color-scheme` style attribute to the `html` element.
@@ -66,7 +67,7 @@ A function that toggles the current mode.
 	import { toggleMode } from "mode-watcher";
 </script>
 
-<button on:click={toggleMode}>Toggle Mode</button>
+<button onclick={toggleMode}>Toggle Mode</button>
 ```
 
 ### setMode
@@ -78,8 +79,8 @@ A function that sets the current mode. It accepts a string with the value `"ligh
 	import { setMode } from "mode-watcher";
 </script>
 
-<button on:click={() => setMode("light")}>Set Light Mode</button>
-<button on:click={() => setMode("dark")}>Set Dark Mode</button>
+<button onclick={() => setMode("light")}>Set Light Mode</button>
+<button onclick={() => setMode("dark")}>Set Dark Mode</button>
 ```
 
 ### resetMode
@@ -91,7 +92,7 @@ A function that resets the mode to system preferences.
 	import { resetMode } from "mode-watcher";
 </script>
 
-<button on:click={() => resetMode()}>System</button>
+<button onclick={resetMode}>System</button>
 ```
 
 ### mode
@@ -103,7 +104,7 @@ A readable store that contains the current mode. It can be `"light"` or `"dark"`
 	import { setMode, mode } from "mode-watcher";
 
 	function handleModeChange() {
-		if ($mode === "light") {
+		if (mode.current === "light") {
 			setMode("dark");
 		} else {
 			setMode("light");
@@ -111,7 +112,7 @@ A readable store that contains the current mode. It can be `"light"` or `"dark"`
 	}
 </script>
 
-<button on:click={handleModeChange}>{$mode}</button>
+<button onclick={handleModeChange}>{mode.current}</button>
 ```
 
 ### userPrefersMode
