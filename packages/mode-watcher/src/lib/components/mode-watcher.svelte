@@ -1,79 +1,82 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import {
-		defineConfig,
-		disableTransitions as disableTransitionsStore,
-		mode,
-		setMode,
-		setTheme,
-		systemPrefersMode,
-		theme,
-		themeColors as themeColorsStore,
-	} from "./mode.js";
-
-	import type { Mode, ModeWatcherProps, ThemeColors } from "./types.js";
-	import {
-		darkClassNames as darkClassNamesStore,
-		isValidMode,
-		lightClassNames as lightClassNamesStore,
-		modeStorageKey as modeStorageKeyStore,
-		themeStorageKey as themeStorageKeyStore,
-	} from "./stores.js";
 	import ModeWatcherLite from "./mode-watcher-lite.svelte";
 	import ModeWatcherFull from "./mode-watcher-full.svelte";
+	import {
+		darkClassNames,
+		disableTransitions,
+		lightClassNames,
+		modeStorageKey,
+		systemPrefersMode,
+		themeColors,
+		themeStorageKey,
+	} from "$lib/states.svelte.js";
+	import type { ModeWatcherProps } from "$lib/types.js";
+	import { isValidMode } from "$lib/modes.js";
+	import { defineConfig, setMode, setTheme } from "$lib/mode.js";
 
-	type $$Props = ModeWatcherProps;
+	let {
+		track = true,
+		defaultMode = "system",
+		themeColors: themeColorsProp,
+		disableTransitions: disableTransitionsProp = true,
+		darkClassNames: darkClassNamesProp = ["dark"],
+		lightClassNames: lightClassNamesProp = [],
+		defaultTheme = "",
+		nonce = "",
+		themeStorageKey: themeStorageKeyProp = "mode-watcher-theme",
+		modeStorageKey: modeStorageKeyProp = "mode-watcher-mode",
+		disableHeadScriptInjection = false,
+	}: ModeWatcherProps = $props();
 
-	export let track = true;
-	export let defaultMode: Mode = "system";
-	export let themeColors: ThemeColors = undefined;
-	export let disableTransitions = true;
-	export let darkClassNames: string[] = ["dark"];
-	export let lightClassNames: string[] = [];
-	export let defaultTheme: string = "";
-	export let nonce: string = "";
-	export let themeStorageKey: string = "mode-watcher-theme";
-	export let modeStorageKey: string = "mode-watcher-mode";
-	export let disableHeadScriptInjection = false;
+	$effect.pre(() => {
+		disableTransitions.current = disableTransitionsProp;
+	});
 
-	$: disableTransitionsStore.set(disableTransitions);
-	$: themeColorsStore.set(themeColors);
-	$: darkClassNamesStore.set(darkClassNames);
-	$: lightClassNamesStore.set(lightClassNames);
-	$: modeStorageKeyStore.set(modeStorageKey);
-	$: themeStorageKeyStore.set(themeStorageKey);
+	$effect.pre(() => {
+		themeColors.current = themeColorsProp;
+	});
+
+	$effect.pre(() => {
+		darkClassNames.current = darkClassNamesProp;
+	});
+
+	$effect.pre(() => {
+		lightClassNames.current = lightClassNamesProp;
+	});
+
+	$effect.pre(() => {
+		modeStorageKey.current = modeStorageKeyProp;
+	});
+
+	$effect.pre(() => {
+		themeStorageKey.current = themeStorageKeyProp;
+	});
 
 	onMount(() => {
-		const modeUnsubscribe = mode.subscribe(() => {});
-		const themeUnsubscribe = theme.subscribe(() => {});
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		const localStorageMode = localStorage.getItem($modeStorageKeyStore);
+		const localStorageMode = localStorage.getItem(modeStorageKey.current);
 		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
-		const localStorageTheme = localStorage.getItem($themeStorageKeyStore);
+		const localStorageTheme = localStorage.getItem(themeStorageKey.current);
 		setTheme(localStorageTheme || defaultTheme);
-
-		return () => {
-			modeUnsubscribe();
-			themeUnsubscribe();
-		};
 	});
 
 	const initConfig = defineConfig({
 		defaultMode,
-		themeColors,
-		darkClassNames,
-		lightClassNames,
+		themeColors: themeColorsProp,
+		darkClassNames: darkClassNamesProp,
+		lightClassNames: lightClassNamesProp,
 		defaultTheme,
-		modeStorageKey,
-		themeStorageKey,
+		modeStorageKey: modeStorageKeyProp,
+		themeStorageKey: themeStorageKeyProp,
 	});
 
-	$: trueNonce = typeof window === "undefined" ? nonce : "";
+	const trueNonce = $derived(typeof window === "undefined" ? nonce : "");
 </script>
 
 {#if disableHeadScriptInjection}
-	<ModeWatcherLite {themeColors} />
+	<ModeWatcherLite themeColors={themeColors.current} />
 {:else}
-	<ModeWatcherFull {trueNonce} {initConfig} {themeColors} />
+	<ModeWatcherFull {trueNonce} {initConfig} themeColors={themeColors.current} />
 {/if}

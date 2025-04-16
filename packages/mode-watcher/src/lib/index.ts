@@ -1,16 +1,18 @@
 import {
 	generateSetInitialModeExpression,
-	mode,
-	modeStorageKey,
 	resetMode,
 	setMode,
 	setTheme,
-	systemPrefersMode,
-	theme,
-	themeStorageKey,
 	toggleMode,
-	userPrefersMode,
 } from "./mode.js";
+import {
+	mode,
+	modeStorageKey,
+	themeStorageKey,
+	theme,
+	userPrefersMode,
+	systemPrefersMode,
+} from "./states.svelte.js";
 
 export {
 	generateSetInitialModeExpression,
@@ -26,4 +28,4 @@ export {
 	themeStorageKey,
 };
 
-export { default as ModeWatcher } from "./mode-watcher.svelte";
+export { default as ModeWatcher } from "./components/mode-watcher.svelte";

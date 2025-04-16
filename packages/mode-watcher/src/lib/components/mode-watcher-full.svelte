@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { setInitialMode } from "./mode.js";
-	import type { ThemeColors } from "./types.js";
+	import { setInitialMode } from "../mode.js";
+	import type { ThemeColors } from "../types.js";
 
-	export let trueNonce: string = "";
-	export let initConfig: Parameters<typeof setInitialMode>[0];
-	export let themeColors: ThemeColors = undefined;
+	let {
+		trueNonce = "",
+		initConfig,
+		themeColors,
+	}: {
+		trueNonce: string;
+		initConfig: Parameters<typeof setInitialMode>[0];
+		themeColors: ThemeColors;
+	} = $props();
 </script>
 
 <svelte:head>
@@ -14,7 +20,7 @@
 		<!-- but that snippet does not run in vitest -->
 		<meta name="theme-color" content={themeColors.dark} />
 	{/if}
-	<!-- eslint-disable-next-line svelte/no-at-html-tags, prefer-template -->
+	<!-- eslint-disable-next-line svelte/no-at-html-tags, prefer-template, svelte/no-unused-svelte-ignore --><!-- svelte-ignore hydration_html_changed -->
 	{@html `<script${trueNonce ? ` nonce=${trueNonce}` : ""}>(` +
 		setInitialMode.toString() +
 		`)(` +
