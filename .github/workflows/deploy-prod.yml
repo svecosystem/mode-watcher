@@ -4,12 +4,12 @@ on:
         branches:
             - main
         paths:
-            - sites/docs/**
+            - docs/**
             - packages/mode-watcher/**
 
 jobs:
     deploy-production:
-        runs-on: ubuntu-latest
+        runs-on: macos-latest
         permissions:
             contents: read
             deployments: write
@@ -39,5 +39,5 @@ jobs:
                   githubToken: ${{ secrets.GITHUB_TOKEN }}
                   projectName: mode-watcher
                   directory: ./.svelte-kit/cloudflare
-                  workingDirectory: sites/docs
+                  workingDirectory: docs
                   deploymentName: Production
