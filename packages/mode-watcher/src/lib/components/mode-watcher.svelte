@@ -6,8 +6,10 @@
 		darkClassNames,
 		disableTransitions,
 		lightClassNames,
+		mode,
 		modeStorageKey,
 		systemPrefersMode,
+		theme,
 		themeColors,
 		themeStorageKey,
 	} from "$lib/states.svelte.js";
@@ -51,6 +53,14 @@
 
 	$effect.pre(() => {
 		themeStorageKey.current = themeStorageKeyProp;
+	});
+
+	$effect.pre(() => {
+		mode.current;
+	});
+
+	$effect.pre(() => {
+		theme.current;
 	});
 
 	onMount(() => {

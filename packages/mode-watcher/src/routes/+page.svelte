@@ -28,10 +28,6 @@
 			return themeColorElement.outerHTML;
 		}
 	});
-
-	$effect.pre(() => {
-		theme.current;
-	});
 </script>
 
 <div class="container space-y-4 py-12">
