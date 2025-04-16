@@ -1,5 +1,6 @@
 name: 🐛 Bug report
 description: Report an issue with mode-watcher
+labels: [traige]
 body:
     - type: markdown
       attributes:

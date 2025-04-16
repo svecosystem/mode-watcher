@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
     - name: Get Help
-      url: https://github.com/huntabyte/mode-watcher/discussions/new?category=help
+      url: https://github.com/svecosystem/mode-watcher/discussions/new?category=help
       about: If you can't get something to work the way you expect, open a question in our discussion forums.
     - name: Discord
       url: https://discord.gg/rePvPCE9dh

@@ -74,3 +74,5 @@ web_modules/
 .env.production.local
 .env.local
 
+docs/.velite
+docs/.wrangler
