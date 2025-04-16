@@ -42,6 +42,7 @@ export default ts.config(
 				},
 			],
 			"@typescript-eslint/no-unused-expressions": "off",
+			"svelte/no-unused-svelte-ignore": "off",
 		},
 	},
 	{
@@ -52,11 +53,8 @@ export default ts.config(
 			".svelte-kit/**/*",
 			"docs/.svelte-kit/**/*",
 			".svelte-kit",
-			"start/.svelte-kit/**/*",
-			"start/node_modules/**/*",
-			"start/build/**/*",
-			"packages/kit/dist/**/*",
-			"packages/kit/.svelte-kit/**/*",
+			"packages/mode-watcher/dist/**/*",
+			"packages/mode-watcher/.svelte-kit/**/*",
 		],
 	}
 );

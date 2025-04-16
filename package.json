@@ -14,7 +14,8 @@
 		"ci:publish": "pnpm build:packages && changeset publish",
 		"dev": "pnpm -F \"./packages/**\" svelte-kit sync && pnpm -r --parallel --reporter append-only --color dev",
 		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint ."
+		"lint": "prettier --check . && eslint .",
+		"test": "pnpm -r test"
 	},
 	"engines": {
 		"pnpm": ">=9.0.0",
