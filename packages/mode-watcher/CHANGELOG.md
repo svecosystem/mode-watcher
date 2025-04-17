@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.2
+
+### Patch Changes
+
+- fix: FOUC ([#122](https://github.com/svecosystem/mode-watcher/pull/122))
+
 ## 1.0.1
 
 ### Patch Changes
