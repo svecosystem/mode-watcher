@@ -10,6 +10,7 @@
 	},
 	"scripts": {
 		"dev": "pnpm watch",
+		"dev:sandbox": "vite",
 		"build": "pnpm package",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",
