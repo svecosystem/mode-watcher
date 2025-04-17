@@ -99,7 +99,10 @@ function createSystemMode() {
 		track = active;
 	}
 
-	const mediaQueryState = new MediaQuery("prefers-color-scheme: light");
+	const mediaQueryState =
+		typeof window !== "undefined" && "matchMedia" in window
+			? new MediaQuery("prefers-color-scheme: light")
+			: { current: false };
 
 	$effect.root(() => {
 		$effect.pre(() => {
