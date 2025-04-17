@@ -13,6 +13,7 @@
 		"check": "pnpm build:packages && pnpm -r check",
 		"ci:publish": "pnpm build:packages && changeset publish",
 		"dev": "pnpm -F \"./packages/**\" svelte-kit sync && pnpm -r --parallel --reporter append-only --color dev",
+		"dev:sandbox": "pnpm -F \"./packages/**\" svelte-kit sync && pnpm -r --parallel --reporter append-only --color dev:sandbox",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test": "pnpm -r test"
