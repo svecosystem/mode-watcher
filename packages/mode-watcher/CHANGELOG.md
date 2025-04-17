@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.1
+
+### Patch Changes
+
+- fix: `window.matchMedia` is not defined ([#120](https://github.com/svecosystem/mode-watcher/pull/120))
+
 ## 1.0.0
 
 ### Major Changes
