@@ -55,6 +55,7 @@ export default ts.config(
 			".svelte-kit",
 			"packages/mode-watcher/dist/**/*",
 			"packages/mode-watcher/.svelte-kit/**/*",
+			"packages/mode-watcher/src/lib/set-initial-mode.js",
 		],
 	}
 );
