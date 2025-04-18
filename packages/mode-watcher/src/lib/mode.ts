@@ -1,5 +1,6 @@
 import { derivedMode, customTheme, userPrefersMode } from "./states.svelte.js";
 import type { Mode, ThemeColors } from "./types.js";
+import setInitialMode from "./set-initial-mode.js?raw";
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
@@ -25,7 +26,7 @@ export function defineConfig(config: SetInitialModeArgs) {
 	return config;
 }
 
-type SetInitialModeArgs = {
+export type SetInitialModeArgs = {
 	defaultMode?: Mode;
 	themeColors?: ThemeColors;
 	darkClassNames?: string[];
@@ -35,52 +36,9 @@ type SetInitialModeArgs = {
 	themeStorageKey?: string;
 };
 
-/** Used to set the mode on initial page load to prevent FOUC */
-export function setInitialMode({
-	defaultMode = "system",
-	themeColors,
-	darkClassNames = ["dark"],
-	lightClassNames = [],
-	defaultTheme = "",
-	modeStorageKey = "mode-watcher-mode",
-	themeStorageKey = "mode-watcher-theme",
-}: SetInitialModeArgs) {
-	const rootEl = document.documentElement;
-	const mode = localStorage.getItem(modeStorageKey) ?? defaultMode;
-	const theme = localStorage.getItem(themeStorageKey) ?? defaultTheme;
-	const light =
-		mode === "light" ||
-		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
-	if (light) {
-		if (darkClassNames.length) rootEl.classList.remove(...darkClassNames);
-		if (lightClassNames.length) rootEl.classList.add(...lightClassNames);
-	} else {
-		if (lightClassNames.length) rootEl.classList.remove(...lightClassNames);
-		if (darkClassNames.length) rootEl.classList.add(...darkClassNames);
-	}
-	rootEl.style.colorScheme = light ? "light" : "dark";
-
-	if (themeColors) {
-		const themeMetaEl = document.querySelector('meta[name="theme-color"]');
-		if (themeMetaEl) {
-			themeMetaEl.setAttribute(
-				"content",
-				mode === "light" ? themeColors.light : themeColors.dark
-			);
-		}
-	}
-
-	if (theme) {
-		rootEl.setAttribute("data-theme", theme);
-		localStorage.setItem(themeStorageKey, theme);
-	}
-
-	localStorage.setItem(modeStorageKey, mode);
-}
-
 /**
  * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
  */
 export function generateSetInitialModeExpression(config: SetInitialModeArgs = {}): string {
-	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
+	return `(${setInitialMode})(${JSON.stringify(config)});`;
 }

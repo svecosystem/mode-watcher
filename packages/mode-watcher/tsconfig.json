@@ -12,5 +12,16 @@
 		"moduleResolution": "NodeNext",
 		"module": "NodeNext",
 		"types": ["node"]
-	}
+	},
+	// copying over the svelte tsconfig excludes to add set-initial-mode
+	"exclude": [
+		"node_modules/**",
+		"src/service-worker.js",
+		"src/service-worker/**/*.js",
+		"src/service-worker.ts",
+		"src/service-worker/**/*.ts",
+		"src/service-worker.d.ts",
+		"src/service-worker/**/*.d.ts",
+		"src/lib/set-initial-mode.js"
+	]
 }
