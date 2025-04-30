@@ -1,41 +1,14 @@
 import { box } from "svelte-toolbelt";
-import { isBrowser, noopStorage, sanitizeClassNames } from "./utils.js";
-import { isValidMode } from "./modes.js";
-import type { Mode, ThemeColors } from "./types.js";
-import { PersistedState } from "runed";
-import { MediaQuery } from "svelte/reactivity";
+import { isBrowser, sanitizeClassNames } from "./utils.js";
+import type { ThemeColors } from "./types.js";
 import { withoutTransition } from "./without-transition.js";
-
-/**
- * The key used to store the `mode` in localStorage.
- */
-export const modeStorageKey = box<string>("mode-watcher-mode");
-
-/**
- * The key used to store the `theme` in localStorage.
- */
-export const themeStorageKey = box<string>("mode-watcher-theme");
-
-/**
- * Writable state that represents the user's preferred mode
- * (`"dark"`, `"light"` or `"system"`)
- */
-export const userPrefersMode = createUserPrefersMode();
-
-/**
- * Readable store that represents the system's preferred mode (`"dark"`, `"light"` or `undefined`)
- */
-export const systemPrefersMode = createSystemMode();
+import { systemPrefersMode, userPrefersMode } from "./mode-states.svelte.js";
+import { customTheme } from "./theme-state.svelte.js";
 
 /**
  * Theme colors for light and dark modes.
  */
 export const themeColors = box<ThemeColors>(undefined);
-
-/**
- * A custom theme to apply and persist to the root `html` element.
- */
-export const customTheme = createCustomTheme();
 
 /**
  * Whether to disable transitions when changing the mode.
@@ -51,74 +24,6 @@ export const darkClassNames = box<string[]>([]);
  * The classnames to add to the root `html` element when the mode is light.
  */
 export const lightClassNames = box<string[]>([]);
-
-function createUserPrefersMode() {
-	const defaultValue: Mode = "system";
-
-	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(modeStorageKey.current);
-	const value = isValidMode(initialValue) ? initialValue : defaultValue;
-
-	return new PersistedState<Mode>(modeStorageKey.current, value, {
-		serializer: {
-			serialize: (v) => v,
-			deserialize: (v) => {
-				if (isValidMode(v)) return v;
-				return defaultValue;
-			},
-		},
-	});
-}
-
-function createCustomTheme() {
-	const storage = isBrowser ? localStorage : noopStorage;
-	const initialValue = storage.getItem(themeStorageKey.current);
-	const value = initialValue === null || initialValue === undefined ? "" : initialValue;
-	return new PersistedState<string>(themeStorageKey.current, value, {
-		serializer: {
-			serialize: (v) => {
-				if (typeof v !== "string") return "";
-				return v;
-			},
-			deserialize: (v) => v,
-		},
-	});
-}
-
-function createSystemMode() {
-	const defaultValue = undefined;
-	let track = true;
-	let current = $state<"light" | "dark" | undefined>(defaultValue);
-
-	function query() {
-		if (!isBrowser) return;
-		current = mediaQueryState.current ? "light" : "dark";
-	}
-
-	function tracking(active: boolean) {
-		track = active;
-	}
-
-	const mediaQueryState =
-		typeof window !== "undefined" && "matchMedia" in window
-			? new MediaQuery("prefers-color-scheme: light")
-			: { current: false };
-
-	$effect.root(() => {
-		$effect.pre(() => {
-			if (!track) return;
-			query();
-		});
-	});
-
-	return {
-		get current() {
-			return current;
-		},
-		query,
-		tracking,
-	};
-}
 
 function createDerivedMode() {
 	const current = $derived.by(() => {

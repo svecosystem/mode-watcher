@@ -1,4 +1,6 @@
-import { derivedMode, customTheme, userPrefersMode } from "./states.svelte.js";
+import { userPrefersMode } from "./mode-states.svelte.js";
+import { customTheme } from "./theme-state.svelte.js";
+import { derivedMode } from "./states.svelte.js";
 import type { Mode, ThemeColors } from "./types.js";
 
 /** Toggle between light and dark mode */

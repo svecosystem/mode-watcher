@@ -2,20 +2,19 @@
 	import { onMount } from "svelte";
 	import ModeWatcherLite from "./mode-watcher-lite.svelte";
 	import ModeWatcherFull from "./mode-watcher-full.svelte";
+	import { modeStorageKey, themeStorageKey } from "$lib/storage-keys.svelte.js";
 	import {
 		darkClassNames,
 		disableTransitions,
 		lightClassNames,
 		mode,
-		modeStorageKey,
-		systemPrefersMode,
 		theme,
 		themeColors,
-		themeStorageKey,
 	} from "$lib/states.svelte.js";
 	import type { ModeWatcherProps } from "$lib/types.js";
 	import { isValidMode } from "$lib/modes.js";
 	import { defineConfig, setMode, setTheme } from "$lib/mode.js";
+	import { systemPrefersMode } from "$lib/mode-states.svelte.js";
 
 	let {
 		track = true,
@@ -30,6 +29,13 @@
 		modeStorageKey: modeStorageKeyProp = "mode-watcher-mode",
 		disableHeadScriptInjection = false,
 	}: ModeWatcherProps = $props();
+
+	modeStorageKey.current = modeStorageKeyProp;
+	themeStorageKey.current = themeStorageKeyProp;
+	darkClassNames.current = darkClassNamesProp;
+	lightClassNames.current = lightClassNamesProp;
+	disableTransitions.current = disableTransitionsProp;
+	themeColors.current = themeColorsProp;
 
 	$effect.pre(() => {
 		disableTransitions.current = disableTransitionsProp;
@@ -57,9 +63,8 @@
 
 	$effect.pre(() => {
 		mode.current;
-	});
-
-	$effect.pre(() => {
+		modeStorageKey.current;
+		themeStorageKey.current;
 		theme.current;
 	});
 

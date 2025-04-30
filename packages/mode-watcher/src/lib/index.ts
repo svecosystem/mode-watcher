@@ -5,14 +5,9 @@ import {
 	setTheme,
 	toggleMode,
 } from "./mode.js";
-import {
-	mode,
-	modeStorageKey,
-	themeStorageKey,
-	theme,
-	userPrefersMode,
-	systemPrefersMode,
-} from "./states.svelte.js";
+import { modeStorageKey, themeStorageKey } from "./storage-keys.svelte.js";
+import { mode, theme } from "./states.svelte.js";
+import { userPrefersMode, systemPrefersMode } from "./mode-states.svelte.js";
 
 export {
 	generateSetInitialModeExpression,
@@ -27,5 +22,5 @@ export {
 	setTheme,
 	themeStorageKey,
 };
-
+export type { SystemModeValue, UserPrefersMode, SystemPrefersMode } from "./mode-states.svelte.js";
 export { default as ModeWatcher } from "./components/mode-watcher.svelte";
