@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.3
+
+### Patch Changes
+
+- fix: ensure to always use custom storage keys if provided ([#130](https://github.com/svecosystem/mode-watcher/pull/130))
+
 ## 1.0.2
 
 ### Patch Changes
