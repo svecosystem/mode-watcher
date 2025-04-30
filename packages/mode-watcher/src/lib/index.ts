@@ -1,5 +1,6 @@
 import {
 	generateSetInitialModeExpression,
+	createInitialModeExpression,
 	resetMode,
 	setMode,
 	setTheme,
@@ -11,6 +12,7 @@ import { userPrefersMode, systemPrefersMode } from "./mode-states.svelte.js";
 
 export {
 	generateSetInitialModeExpression,
+	createInitialModeExpression,
 	setMode,
 	toggleMode,
 	resetMode,
