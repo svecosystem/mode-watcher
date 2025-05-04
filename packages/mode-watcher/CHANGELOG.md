@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.5
+
+### Patch Changes
+
+- fix: prevent passing an empty token to classList.add/remove ([#134](https://github.com/svecosystem/mode-watcher/pull/134))
+
 ## 1.0.4
 
 ### Patch Changes
