@@ -1,6 +1,6 @@
 {
 	"name": "mode-watcher",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "SSR-friendly light and dark mode for SvelteKit",
 	"license": "MIT",
 	"repository": {
