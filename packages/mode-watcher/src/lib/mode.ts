@@ -54,11 +54,11 @@ export function setInitialMode({
 		mode === "light" ||
 		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
 	if (light) {
-		if (darkClassNames.length) rootEl.classList.remove(...darkClassNames);
-		if (lightClassNames.length) rootEl.classList.add(...lightClassNames);
+		if (darkClassNames.length) rootEl.classList.remove(...darkClassNames.filter(Boolean));
+		if (lightClassNames.length) rootEl.classList.add(...lightClassNames.filter(Boolean));
 	} else {
-		if (lightClassNames.length) rootEl.classList.remove(...lightClassNames);
-		if (darkClassNames.length) rootEl.classList.add(...darkClassNames);
+		if (lightClassNames.length) rootEl.classList.remove(...lightClassNames.filter(Boolean));
+		if (darkClassNames.length) rootEl.classList.add(...darkClassNames.filter(Boolean));
 	}
 	rootEl.style.colorScheme = light ? "light" : "dark";
 
