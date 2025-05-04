@@ -5,5 +5,5 @@
 	let { children } = $props();
 </script>
 
-<ModeWatcher themeColors={{ dark: "black", light: "white" }} />
+<ModeWatcher themeColors={{ dark: "black", light: "white" }} disableTransitions />
 {@render children()}

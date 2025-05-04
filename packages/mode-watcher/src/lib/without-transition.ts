@@ -2,11 +2,23 @@
 
 let timeoutAction: number;
 let timeoutEnable: number;
+/**
+ * Whether this is the first time the function has been
+ * called, which will be true for the initial load, where
+ * we shouldn't need to disable any transitions, as there
+ * is nothing to transition from.
+ */
+let hasLoaded = false;
 
 // Perform a task without any css transitions
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function withoutTransition(action: () => any) {
 	if (typeof document === "undefined") return;
+	if (!hasLoaded) {
+		hasLoaded = true;
+		action();
+		return;
+	}
 	// Clear fallback timeouts
 	clearTimeout(timeoutAction);
 	clearTimeout(timeoutEnable);
