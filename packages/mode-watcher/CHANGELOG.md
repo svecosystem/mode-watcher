@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.6
+
+### Patch Changes
+
+- perf: prevent running `withoutTransition` on initial load as there is nothing to transition from ([#136](https://github.com/svecosystem/mode-watcher/pull/136))
+
 ## 1.0.5
 
 ### Patch Changes
