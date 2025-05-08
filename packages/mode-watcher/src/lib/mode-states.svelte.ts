@@ -55,7 +55,7 @@ export class SystemPrefersMode {
 	#track = true;
 	#current = $state<SystemModeValue>(this.#defaultValue);
 	#mediaQueryState =
-		typeof window !== "undefined" && "matchMedia" in window
+		typeof window !== "undefined" && typeof window.matchMedia === "function"
 			? new MediaQuery("prefers-color-scheme: light")
 			: { current: false };
 
