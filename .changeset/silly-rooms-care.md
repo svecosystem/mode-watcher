@@ -2,4 +2,4 @@
 "mode-watcher": patch
 ---
 
-fix: `window.matchMedia` is not defined as function
+fix: ensure `window.matchMedia` is defined as function before calling
