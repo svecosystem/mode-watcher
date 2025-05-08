@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.7
+
+### Patch Changes
+
+- fix: ensure `window.matchMedia` is defined as function before calling ([#138](https://github.com/svecosystem/mode-watcher/pull/138))
+
 ## 1.0.6
 
 ### Patch Changes
