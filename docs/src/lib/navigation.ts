@@ -26,6 +26,13 @@ const utilities = allDocs
 		href: `/docs/${doc.slug}`,
 	}));
 
+const testing = allDocs
+	.filter((doc) => doc.section === "Testing")
+	.map((doc) => ({
+		title: doc.title,
+		href: `/docs/${doc.slug}`,
+	}));
+
 export const navigation = defineNavigation({
 	anchors: [
 		{
@@ -61,6 +68,10 @@ export const navigation = defineNavigation({
 		{
 			title: "Utilities",
 			items: utilities,
+		},
+		{
+			title: "Testing",
+			items: testing,
 		},
 	],
 });
