@@ -9,56 +9,69 @@ let timeoutEnable: number;
  * is nothing to transition from.
  */
 let hasLoaded = false;
+let styleElement: HTMLStyleElement | null = null;
+
+// Create reusable style element
+function getStyleElement() {
+	if (styleElement) return styleElement;
+
+	styleElement = document.createElement("style");
+	styleElement.appendChild(
+		document.createTextNode(`* {
+		-webkit-transition: none !important;
+		-moz-transition: none !important;
+		-o-transition: none !important;
+		-ms-transition: none !important;
+		transition: none !important;
+	}`)
+	);
+	return styleElement;
+}
 
 // Perform a task without any css transitions
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function withoutTransition(action: () => any) {
 	if (typeof document === "undefined") return;
+
+	// Skip transition disabling on initial load
 	if (!hasLoaded) {
 		hasLoaded = true;
-		action();
+		// defer action to avoid blocking initial render
+		if (typeof window.requestAnimationFrame !== "undefined") {
+			window.requestAnimationFrame(action);
+		} else {
+			setTimeout(action, 0);
+		}
 		return;
 	}
-	// Clear fallback timeouts
+
 	clearTimeout(timeoutAction);
 	clearTimeout(timeoutEnable);
 
-	// Create style element to disable transitions
-	const style = document.createElement("style");
-	const css = document.createTextNode(`* {
-     -webkit-transition: none !important;
-     -moz-transition: none !important;
-     -o-transition: none !important;
-     -ms-transition: none !important;
-     transition: none !important;
-  }`);
-	style.appendChild(css);
-
-	// Functions to insert and remove style element
+	const style = getStyleElement();
 	const disable = () => document.head.appendChild(style);
-	const enable = () => document.head.removeChild(style);
+	const enable = () => {
+		if (style.parentNode) {
+			document.head.removeChild(style);
+		}
+	};
 
-	// Best method, getComputedStyle forces browser to repaint
-	if (typeof window.getComputedStyle !== "undefined") {
-		disable();
-		action();
-		window.getComputedStyle(style).opacity;
-		enable();
-		return;
-	}
-
-	// Better method, requestAnimationFrame processes function before next repaint
+	// Use requestAnimationFrame for better performance
 	if (typeof window.requestAnimationFrame !== "undefined") {
 		disable();
-		action();
-		window.requestAnimationFrame(enable);
+		// defer action to next frame to avoid blocking
+		window.requestAnimationFrame(() => {
+			action();
+			// defer enable to ensure action completes
+			window.requestAnimationFrame(enable);
+		});
 		return;
 	}
 
-	// Fallback
+	// Fallback for older browsers
 	disable();
 	timeoutAction = window.setTimeout(() => {
 		action();
-		timeoutEnable = window.setTimeout(enable, 120);
-	}, 120);
+		timeoutEnable = window.setTimeout(enable, 16); // ~1 frame at 60fps
+	}, 16);
 }
