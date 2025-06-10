@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.8
+
+### Patch Changes
+
+- perf: improve `withoutTransition` ([#141](https://github.com/svecosystem/mode-watcher/pull/141))
+
 ## 1.0.7
 
 ### Patch Changes
