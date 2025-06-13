@@ -82,14 +82,14 @@ export function setInitialMode({
 
 /**
  * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
- *
- * @deprecated Use `createInitialModeExpression` instead.
  */
-export function generateSetInitialModeExpression(config: SetInitialModeArgs = {}): string {
+export function createInitialModeExpression(config: SetInitialModeArgs = {}): string {
 	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
 }
 
 /**
  * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
+ *
+ * @deprecated Use `createInitialModeExpression` instead.
  */
-export const createInitialModeExpression = generateSetInitialModeExpression;
+export const generateSetInitialModeExpression = createInitialModeExpression;
