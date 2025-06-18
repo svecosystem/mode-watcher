@@ -1,5 +1,11 @@
 # mode-watcher
 
+## 1.0.9
+
+### Patch Changes
+
+- fix: correct deprecation of `generateSetInitialModeExpression` ([#143](https://github.com/svecosystem/mode-watcher/pull/143))
+
 ## 1.0.8
 
 ### Patch Changes
