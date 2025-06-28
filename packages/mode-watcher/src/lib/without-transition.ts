@@ -30,7 +30,7 @@ function getStyleElement() {
 
 // Perform a task without any css transitions
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function withoutTransition(action: () => any) {
+export function withoutTransition(action: () => any, synchronous = false) {
 	if (typeof document === "undefined") return;
 
 	// Skip transition disabling on initial load
@@ -62,15 +62,23 @@ export function withoutTransition(action: () => any) {
 		}
 	};
 
+	function executeAction() {
+		action();
+		// defer enable to ensure action completes
+		window.requestAnimationFrame(enable);
+	}
+
 	// Use requestAnimationFrame for better performance
 	if (typeof window.requestAnimationFrame !== "undefined") {
 		disable();
-		// defer action to next frame to avoid blocking
-		window.requestAnimationFrame(() => {
-			action();
-			// defer enable to ensure action completes
-			window.requestAnimationFrame(enable);
-		});
+		if (synchronous) {
+			executeAction();
+		} else {
+			// defer action to next frame to avoid blocking
+			window.requestAnimationFrame(() => {
+				executeAction();
+			});
+		}
 		return;
 	}
 
@@ -78,6 +86,6 @@ export function withoutTransition(action: () => any) {
 	disable();
 	timeoutAction = window.setTimeout(() => {
 		action();
-		timeoutEnable = window.setTimeout(enable, 16); // ~1 frame at 60fps
+		timeoutEnable = window.setTimeout(enable, 16);
 	}, 16);
 }

@@ -8,6 +8,7 @@
 		disableTransitions,
 		lightClassNames,
 		mode,
+		synchronousModeChanges,
 		theme,
 		themeColors,
 	} from "$lib/states.svelte.js";
@@ -28,6 +29,7 @@
 		themeStorageKey: themeStorageKeyProp = "mode-watcher-theme",
 		modeStorageKey: modeStorageKeyProp = "mode-watcher-mode",
 		disableHeadScriptInjection = false,
+		synchronousModeChanges: synchronousModeChangesProp = false,
 	}: ModeWatcherProps = $props();
 
 	modeStorageKey.current = modeStorageKeyProp;
@@ -36,6 +38,11 @@
 	lightClassNames.current = lightClassNamesProp;
 	disableTransitions.current = disableTransitionsProp;
 	themeColors.current = themeColorsProp;
+	synchronousModeChanges.current = synchronousModeChangesProp;
+
+	$effect.pre(() => {
+		synchronousModeChanges.current = synchronousModeChangesProp;
+	});
 
 	$effect.pre(() => {
 		disableTransitions.current = disableTransitionsProp;
