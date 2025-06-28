@@ -1,5 +1,15 @@
 # mode-watcher
 
+## 1.1.0
+
+### Minor Changes
+
+- feat: expose `synchronousModeChanges` prop to opt out of performance improvements for synchronous mode changes. Defaults to `false`. ([#147](https://github.com/svecosystem/mode-watcher/pull/147))
+
+### Patch Changes
+
+- fix: correct deprecation of `generateSetInitialModeExpression` ([#143](https://github.com/svecosystem/mode-watcher/pull/143))
+
 ## 1.0.8
 
 ### Patch Changes
