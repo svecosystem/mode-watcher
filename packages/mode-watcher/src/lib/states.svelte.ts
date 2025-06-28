@@ -4,6 +4,7 @@ import type { ThemeColors } from "./types.js";
 import { withoutTransition } from "./without-transition.js";
 import { systemPrefersMode, userPrefersMode } from "./mode-states.svelte.js";
 import { customTheme } from "./theme-state.svelte.js";
+import { untrack } from "svelte";
 
 /**
  * Theme colors for light and dark modes.
@@ -14,6 +15,13 @@ export const themeColors = box<ThemeColors>(undefined);
  * Whether to disable transitions when changing the mode.
  */
 export const disableTransitions = box(true);
+
+/**
+ * Whether to run the mode changes synchronously instead of using
+ * an animation frame. If true, will have an impact on blocking performance
+ * due to blocking the main thread.
+ */
+export const synchronousModeChanges = box(false);
 
 /**
  * The classnames to add to the root `html` element when the mode is dark.
@@ -60,7 +68,7 @@ function createDerivedMode() {
 		}
 
 		if (disableTransitions.current) {
-			withoutTransition(update);
+			withoutTransition(update, synchronousModeChanges.current);
 		} else {
 			update();
 		}
@@ -86,7 +94,10 @@ function createDerivedTheme() {
 		}
 
 		if (disableTransitions.current) {
-			withoutTransition(update);
+			withoutTransition(
+				update,
+				untrack(() => synchronousModeChanges.current)
+			);
 		} else {
 			update();
 		}

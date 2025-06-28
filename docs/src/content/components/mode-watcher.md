@@ -153,3 +153,11 @@ The classes to add to the root `html` element when the mode is `'light'`.
 <PropField name="disableHeadScriptInjection" type="boolean" defaultValue="false">
 	Whether to disable the injected script tag that sets the initial mode. Set this if you are manually injecting the script using a hook.
 </PropField>
+
+<PropField name="synchronousModeChanges" type="boolean" defaultValue="false">
+
+Whether to run the mode changes synchronously instead of using an animation frame. If true, will have an impact on blocking performance due to blocking the main thread.
+
+Only applicable if `disableTransitions` is set to `true`.
+
+</PropField>
