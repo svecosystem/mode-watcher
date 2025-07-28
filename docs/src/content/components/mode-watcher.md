@@ -125,7 +125,7 @@ The theme colors to use for each mode.
 	</PropField>
 </Collapsible>
 </PropField>
-<PropField name="disableTransitions" type="boolean" defaultValue="false">
+<PropField name="disableTransitions" type="boolean" defaultValue="true">
 	Whether to disable transitions when updating the mode.
 </PropField>
 <PropField name="darkClassNames" type="string[]" defaultValue="['dark']">
