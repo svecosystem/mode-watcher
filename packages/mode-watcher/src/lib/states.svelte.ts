@@ -1,6 +1,6 @@
 import { box } from "svelte-toolbelt";
 import { isBrowser, sanitizeClassNames } from "./utils.js";
-import type { ThemeColors } from "./types.js";
+import type { Mode, ThemeColors } from "./types.js";
 import { withoutTransition } from "./without-transition.js";
 import { systemPrefersMode, userPrefersMode } from "./mode-states.svelte.js";
 import { customTheme } from "./theme-state.svelte.js";
@@ -33,13 +33,21 @@ export const darkClassNames = box<string[]>([]);
  */
 export const lightClassNames = box<string[]>([]);
 
+/**
+ * A non-persistent override for the user's preferred mode.
+ * When set, this value takes precedence over the persisted `userPrefersMode`.
+ */
+export const sessionUserPrefersMode = box<Mode | undefined>(undefined);
+
 function createDerivedMode() {
 	const current = $derived.by(() => {
 		if (!isBrowser) return undefined;
-		const derivedMode =
-			userPrefersMode.current === "system"
-				? systemPrefersMode.current
+		const preferredMode =
+			sessionUserPrefersMode.current !== undefined
+				? sessionUserPrefersMode.current
 				: userPrefersMode.current;
+		const derivedMode =
+			preferredMode === "system" ? systemPrefersMode.current : preferredMode;
 		const sanitizedDarkClassNames = sanitizeClassNames(darkClassNames.current);
 		const sanitizedLightClassNames = sanitizeClassNames(lightClassNames.current);
 

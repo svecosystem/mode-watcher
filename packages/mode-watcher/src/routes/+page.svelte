@@ -73,4 +73,10 @@
 	>
 		Reset
 	</button>
+	<button
+		class="bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500"
+		onclick={() => setMode("light", { persist: false })}
+	>
+		Set Light Mode Without Persisting
+	</button>
 </div>

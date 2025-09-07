@@ -1,20 +1,32 @@
 import { userPrefersMode } from "./mode-states.svelte.js";
 import { customTheme } from "./theme-state.svelte.js";
-import { derivedMode } from "./states.svelte.js";
+import { derivedMode, sessionUserPrefersMode } from "./states.svelte.js";
 import type { Mode, ThemeColors } from "./types.js";
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
 	userPrefersMode.current = derivedMode.current === "dark" ? "light" : "dark";
+	sessionUserPrefersMode.current = undefined;
 }
 
+export type SetModeOptions = {
+	persist?: boolean;
+};
+
 /** Set the mode to light or dark */
-export function setMode(mode: Mode): void {
-	userPrefersMode.current = mode;
+export function setMode(mode: Mode, options?: SetModeOptions): void {
+	const persist = options?.persist ?? true;
+	if (persist) {
+		sessionUserPrefersMode.current = undefined;
+		userPrefersMode.current = mode;
+	} else {
+		sessionUserPrefersMode.current = mode;
+	}
 }
 
 /** Reset the mode to operating system preference */
 export function resetMode(): void {
+	sessionUserPrefersMode.current = undefined;
 	userPrefersMode.current = "system";
 }
 
