@@ -2,6 +2,7 @@
 	import {
 		mode,
 		resetMode,
+		clearSessionMode,
 		setMode,
 		systemPrefersMode,
 		theme,
@@ -75,8 +76,14 @@
 	</button>
 	<button
 		class="bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500"
-		onclick={() => setMode("light", { persist: false })}
+		onclick={() => setMode("light", { sessionOnly: true })}
 	>
 		Set Light Mode Without Persisting
+	</button>
+	<button
+		class="bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500"
+		onclick={clearSessionMode}
+	>
+		Clear Session Mode
 	</button>
 </div>

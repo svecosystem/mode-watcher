@@ -10,17 +10,17 @@ export function toggleMode(): void {
 }
 
 export type SetModeOptions = {
-	persist?: boolean;
+	/** Apply only for this session; do not persist to localStorage. */
+	sessionOnly?: boolean;
 };
 
 /** Set the mode to light or dark */
 export function setMode(mode: Mode, options?: SetModeOptions): void {
-	const persist = options?.persist ?? true;
-	if (persist) {
+	if (options?.sessionOnly) {
+		sessionUserPrefersMode.current = mode;
+	} else {
 		sessionUserPrefersMode.current = undefined;
 		userPrefersMode.current = mode;
-	} else {
-		sessionUserPrefersMode.current = mode;
 	}
 }
 
@@ -28,6 +28,11 @@ export function setMode(mode: Mode, options?: SetModeOptions): void {
 export function resetMode(): void {
 	sessionUserPrefersMode.current = undefined;
 	userPrefersMode.current = "system";
+}
+
+/** Reset the current session-only override, falling back to persisted/user/system */
+export function clearSessionMode(): void {
+	sessionUserPrefersMode.current = undefined;
 }
 
 /** Set the theme to a custom value */
@@ -64,13 +69,18 @@ export function setInitialMode({
 	const theme = localStorage.getItem(themeStorageKey) ?? defaultTheme;
 	const light =
 		mode === "light" ||
-		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
+		(mode === "system" &&
+			window.matchMedia("(prefers-color-scheme: light)").matches);
 	if (light) {
-		if (darkClassNames.length) rootEl.classList.remove(...darkClassNames.filter(Boolean));
-		if (lightClassNames.length) rootEl.classList.add(...lightClassNames.filter(Boolean));
+		if (darkClassNames.length)
+			rootEl.classList.remove(...darkClassNames.filter(Boolean));
+		if (lightClassNames.length)
+			rootEl.classList.add(...lightClassNames.filter(Boolean));
 	} else {
-		if (lightClassNames.length) rootEl.classList.remove(...lightClassNames.filter(Boolean));
-		if (darkClassNames.length) rootEl.classList.add(...darkClassNames.filter(Boolean));
+		if (lightClassNames.length)
+			rootEl.classList.remove(...lightClassNames.filter(Boolean));
+		if (darkClassNames.length)
+			rootEl.classList.add(...darkClassNames.filter(Boolean));
 	}
 	rootEl.style.colorScheme = light ? "light" : "dark";
 
@@ -79,7 +89,7 @@ export function setInitialMode({
 		if (themeMetaEl) {
 			themeMetaEl.setAttribute(
 				"content",
-				mode === "light" ? themeColors.light : themeColors.dark
+				mode === "light" ? themeColors.light : themeColors.dark,
 			);
 		}
 	}
@@ -95,7 +105,9 @@ export function setInitialMode({
 /**
  * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
  */
-export function createInitialModeExpression(config: SetInitialModeArgs = {}): string {
+export function createInitialModeExpression(
+	config: SetInitialModeArgs = {},
+): string {
 	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
 }
 

@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { userEvent } from "@testing-library/user-event";
 import { tick } from "svelte";
 import { mediaQueryState } from "../../scripts/setupTest.js";
+import { setMode, clearSessionMode, modeStorageKey } from "$lib/index.js";
 import Mode from "./Mode.svelte";
 import StealthMode from "./StealthMode.svelte";
 import type { ModeWatcherProps } from "$lib/types.js";
@@ -351,6 +352,36 @@ describe("mode-watcher", () => {
 		await user.click(toggle);
 		const classes2 = getClasses(rootEl);
 		expect(classes2).toContain("custom-l-class");
+	});
+
+	it("applies mode for session only without persisting to localStorage", async () => {
+		const { rootEl } = setup();
+		expect(getClasses(rootEl)).toContain("dark");
+		expect(localStorage.getItem(modeStorageKey.current)).toBe("system");
+
+		setMode("light", { sessionOnly: true });
+		await tick();
+
+		expect(getClasses(rootEl)).not.toContain("dark");
+		expect(getColorScheme(rootEl)).toBe("light");
+		// localStorage unchanged
+		expect(localStorage.getItem(modeStorageKey.current)).toBe("system");
+	});
+
+	it("clears session-only override and reverts to persisted value", async () => {
+		const { rootEl } = setup();
+		// start with session-only light
+		setMode("light", { sessionOnly: true });
+		await tick();
+		expect(getColorScheme(rootEl)).toBe("light");
+		// clear override
+		clearSessionMode();
+		await tick();
+		// should revert to system -> dark
+		expect(getClasses(rootEl)).toContain("dark");
+		expect(getColorScheme(rootEl)).toBe("dark");
+		// localStorage still system
+		expect(localStorage.getItem(modeStorageKey.current)).toBe("system");
 	});
 
 	it("allows the user to set a custom theme via the `defaultTheme` prop", async () => {

@@ -27,20 +27,36 @@ This updates both the visual mode and the persisted preference in `localStorage`
 
 You can also not persist the mode to `localStorage` by passing the `persist` option as `false`. This can be useful if you need to set the mode to a specific value for a specific part of your website. (ex: marketing part vs docs part, where in marketing part you want to set the mode to `light` and in docs part you want the user to choose the mode).
 
+`(marketing) group - layout.svelte`
+
 ```svelte
 <script lang="ts">
 	import { setMode } from "mode-watcher";
-</script>
 
-<button onclick={() => setMode("light", { persist: false })}>
-	Set Light Mode Only for this session!
-</button>
+	onMount(() => {
+		setMode("light", { sessionOnly: true });
+	});
+</script>
 ```
+
+`(docs) group - layout.svelte`
+
+```svelte
+<script lang="ts">
+	import { clearSessionMode } from "mode-watcher";
+
+	onMount(() => {
+		clearSessionMode();
+	});
+</script>
+```
+
+Then you get the marketing with light mode as you like, and the docs part will revert to the user's local storage preference!
 
 ## Options
 
 The `setMode` utility accepts the following options:
 
-<PropField name="persist" type="boolean" defaultValue="true">
+<PropField name="sessionOnly" type="boolean" defaultValue="true">
 	Whether to persist the theme to `localStorage`.
 </PropField>
