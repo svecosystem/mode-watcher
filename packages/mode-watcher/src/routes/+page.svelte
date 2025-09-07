@@ -2,6 +2,7 @@
 	import {
 		mode,
 		resetMode,
+		clearTemporaryMode,
 		setMode,
 		systemPrefersMode,
 		theme,
@@ -72,5 +73,17 @@
 		onclick={resetMode}
 	>
 		Reset
+	</button>
+	<button
+		class="bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500"
+		onclick={() => setMode("light", { temporaryOnly: true })}
+	>
+		Set Light Mode Without Persisting
+	</button>
+	<button
+		class="bg-primary text-background rounded-sm px-2 py-1 transition-colors duration-500"
+		onclick={clearTemporaryMode}
+	>
+		Clear Temporary Mode
 	</button>
 </div>

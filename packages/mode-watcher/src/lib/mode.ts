@@ -1,21 +1,38 @@
 import { userPrefersMode } from "./mode-states.svelte.js";
 import { customTheme } from "./theme-state.svelte.js";
-import { derivedMode } from "./states.svelte.js";
+import { derivedMode, temporaryUserPrefersMode } from "./states.svelte.js";
 import type { Mode, ThemeColors } from "./types.js";
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
 	userPrefersMode.current = derivedMode.current === "dark" ? "light" : "dark";
+	temporaryUserPrefersMode.current = undefined;
 }
 
+export type SetModeOptions = {
+	/** Apply only temporarily; do not persist to localStorage. */
+	temporaryOnly?: boolean;
+};
+
 /** Set the mode to light or dark */
-export function setMode(mode: Mode): void {
-	userPrefersMode.current = mode;
+export function setMode(mode: Mode, options?: SetModeOptions): void {
+	if (options?.temporaryOnly) {
+		temporaryUserPrefersMode.current = mode;
+	} else {
+		temporaryUserPrefersMode.current = undefined;
+		userPrefersMode.current = mode;
+	}
 }
 
 /** Reset the mode to operating system preference */
 export function resetMode(): void {
+	temporaryUserPrefersMode.current = undefined;
 	userPrefersMode.current = "system";
+}
+
+/** Reset the current session-only override, falling back to persisted/user/system */
+export function clearTemporaryMode(): void {
+	temporaryUserPrefersMode.current = undefined;
 }
 
 /** Set the theme to a custom value */
@@ -52,13 +69,18 @@ export function setInitialMode({
 	const theme = localStorage.getItem(themeStorageKey) ?? defaultTheme;
 	const light =
 		mode === "light" ||
-		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
+		(mode === "system" &&
+			window.matchMedia("(prefers-color-scheme: light)").matches);
 	if (light) {
-		if (darkClassNames.length) rootEl.classList.remove(...darkClassNames.filter(Boolean));
-		if (lightClassNames.length) rootEl.classList.add(...lightClassNames.filter(Boolean));
+		if (darkClassNames.length)
+			rootEl.classList.remove(...darkClassNames.filter(Boolean));
+		if (lightClassNames.length)
+			rootEl.classList.add(...lightClassNames.filter(Boolean));
 	} else {
-		if (lightClassNames.length) rootEl.classList.remove(...lightClassNames.filter(Boolean));
-		if (darkClassNames.length) rootEl.classList.add(...darkClassNames.filter(Boolean));
+		if (lightClassNames.length)
+			rootEl.classList.remove(...lightClassNames.filter(Boolean));
+		if (darkClassNames.length)
+			rootEl.classList.add(...darkClassNames.filter(Boolean));
 	}
 	rootEl.style.colorScheme = light ? "light" : "dark";
 
@@ -67,7 +89,7 @@ export function setInitialMode({
 		if (themeMetaEl) {
 			themeMetaEl.setAttribute(
 				"content",
-				mode === "light" ? themeColors.light : themeColors.dark
+				mode === "light" ? themeColors.light : themeColors.dark,
 			);
 		}
 	}
@@ -83,7 +105,9 @@ export function setInitialMode({
 /**
  * A type-safe way to generate the source expression used to set the initial mode and avoid FOUC.
  */
-export function createInitialModeExpression(config: SetInitialModeArgs = {}): string {
+export function createInitialModeExpression(
+	config: SetInitialModeArgs = {},
+): string {
 	return `(${setInitialMode.toString()})(${JSON.stringify(config)});`;
 }
 

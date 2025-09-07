@@ -2,6 +2,7 @@ import {
 	generateSetInitialModeExpression,
 	createInitialModeExpression,
 	resetMode,
+	clearTemporaryMode,
 	setMode,
 	setTheme,
 	toggleMode,
@@ -16,6 +17,7 @@ export {
 	setMode,
 	toggleMode,
 	resetMode,
+	clearTemporaryMode,
 	modeStorageKey,
 	userPrefersMode,
 	systemPrefersMode,
@@ -24,5 +26,9 @@ export {
 	setTheme,
 	themeStorageKey,
 };
-export type { SystemModeValue, UserPrefersMode, SystemPrefersMode } from "./mode-states.svelte.js";
+export type {
+	SystemModeValue,
+	UserPrefersMode,
+	SystemPrefersMode,
+} from "./mode-states.svelte.js";
 export { default as ModeWatcher } from "./components/mode-watcher.svelte";
