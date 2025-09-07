@@ -1,38 +1,38 @@
 import { userPrefersMode } from "./mode-states.svelte.js";
 import { customTheme } from "./theme-state.svelte.js";
-import { derivedMode, sessionUserPrefersMode } from "./states.svelte.js";
+import { derivedMode, temporaryUserPrefersMode } from "./states.svelte.js";
 import type { Mode, ThemeColors } from "./types.js";
 
 /** Toggle between light and dark mode */
 export function toggleMode(): void {
 	userPrefersMode.current = derivedMode.current === "dark" ? "light" : "dark";
-	sessionUserPrefersMode.current = undefined;
+	temporaryUserPrefersMode.current = undefined;
 }
 
 export type SetModeOptions = {
-	/** Apply only for this session; do not persist to localStorage. */
-	sessionOnly?: boolean;
+	/** Apply only temporarily; do not persist to localStorage. */
+	temporaryOnly?: boolean;
 };
 
 /** Set the mode to light or dark */
 export function setMode(mode: Mode, options?: SetModeOptions): void {
-	if (options?.sessionOnly) {
-		sessionUserPrefersMode.current = mode;
+	if (options?.temporaryOnly) {
+		temporaryUserPrefersMode.current = mode;
 	} else {
-		sessionUserPrefersMode.current = undefined;
+		temporaryUserPrefersMode.current = undefined;
 		userPrefersMode.current = mode;
 	}
 }
 
 /** Reset the mode to operating system preference */
 export function resetMode(): void {
-	sessionUserPrefersMode.current = undefined;
+	temporaryUserPrefersMode.current = undefined;
 	userPrefersMode.current = "system";
 }
 
 /** Reset the current session-only override, falling back to persisted/user/system */
-export function clearSessionMode(): void {
-	sessionUserPrefersMode.current = undefined;
+export function clearTemporaryMode(): void {
+	temporaryUserPrefersMode.current = undefined;
 }
 
 /** Set the theme to a custom value */

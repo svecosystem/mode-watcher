@@ -1,10 +1,10 @@
 ---
-title: clearSessionMode
-description: Clears the session-only override and reverts to the persisted or system mode.
+title: clearTemporaryMode
+description: Clears the temporary override and reverts to the persisted or system mode.
 section: Utilities
 ---
 
-`clearSessionMode` removes any temporary, session-only mode set via `setMode(..., { sessionOnly: true })`.
+`clearTemporaryMode` removes any temporary mode set via `setMode(..., { temporaryOnly: true })`.
 
 After calling this, the active mode falls back to the user's persisted preference (from `localStorage`) or to the system preference if none is set.
 
@@ -12,10 +12,10 @@ After calling this, the active mode falls back to the user's persisted preferenc
 
 ```svelte
 <script lang="ts">
-	import { clearSessionMode } from "mode-watcher";
+	import { clearTemporaryMode } from "mode-watcher";
 </script>
 
-<button onclick={clearSessionMode}>Use persisted/system preference</button>
+<button onclick={clearTemporaryMode}>Use persisted/system preference</button>
 ```
 
 ## See also

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { userEvent } from "@testing-library/user-event";
 import { tick } from "svelte";
 import { mediaQueryState } from "../../scripts/setupTest.js";
-import { setMode, clearSessionMode, modeStorageKey } from "$lib/index.js";
+import { setMode, clearTemporaryMode, modeStorageKey } from "$lib/index.js";
 import Mode from "./Mode.svelte";
 import StealthMode from "./StealthMode.svelte";
 import type { ModeWatcherProps } from "$lib/types.js";
@@ -354,12 +354,12 @@ describe("mode-watcher", () => {
 		expect(classes2).toContain("custom-l-class");
 	});
 
-	it("applies mode for session only without persisting to localStorage", async () => {
+	it("applies mode temporarily without persisting to localStorage", async () => {
 		const { rootEl } = setup();
 		expect(getClasses(rootEl)).toContain("dark");
 		expect(localStorage.getItem(modeStorageKey.current)).toBe("system");
 
-		setMode("light", { sessionOnly: true });
+		setMode("light", { temporaryOnly: true });
 		await tick();
 
 		expect(getClasses(rootEl)).not.toContain("dark");
@@ -368,14 +368,14 @@ describe("mode-watcher", () => {
 		expect(localStorage.getItem(modeStorageKey.current)).toBe("system");
 	});
 
-	it("clears session-only override and reverts to persisted value", async () => {
+	it("clears temporary override and reverts to persisted value", async () => {
 		const { rootEl } = setup();
-		// start with session-only light
-		setMode("light", { sessionOnly: true });
+		// start with temporary-only light
+		setMode("light", { temporaryOnly: true });
 		await tick();
 		expect(getColorScheme(rootEl)).toBe("light");
 		// clear override
-		clearSessionMode();
+		clearTemporaryMode();
 		await tick();
 		// should revert to system -> dark
 		expect(getClasses(rootEl)).toContain("dark");

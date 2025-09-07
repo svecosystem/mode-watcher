@@ -12,7 +12,7 @@ section: Utilities
 
 It accepts one of three string values: `"light"`, `"dark"`, or `"system"`.
 
-This updates both the visual mode and the persisted preference in `localStorage`. You can also pass it options to customize the behavior, such as wether or not to persist it to `localStorage`.
+This updates both the visual mode and the persisted preference in `localStorage`. You can also pass it options to customize the behavior, such as applying it temporarily without persisting it to `localStorage`.
 
 ## Usage
 
@@ -25,7 +25,7 @@ This updates both the visual mode and the persisted preference in `localStorage`
 <button onclick={() => setMode("dark")}>Set Dark Mode</button>
 ```
 
-You can also not persist the mode to `localStorage` by passing the `persist` option as `false`. This can be useful if you need to set the mode to a specific value for a specific part of your website. (ex: marketing part vs docs part, where in marketing part you want to set the mode to `light` and in docs part you want the user to choose the mode).
+You can also apply the mode temporarily (without persisting to `localStorage`) by passing the `temporaryOnly` option as `true`. This can be useful if you need to set the mode to a specific value for a specific part of your website. (ex: marketing part vs docs part, where in marketing part you want to set the mode to `light` and in docs part you want the user to choose the mode).
 
 `(marketing) group - layout.svelte`
 
@@ -34,7 +34,7 @@ You can also not persist the mode to `localStorage` by passing the `persist` opt
 	import { setMode } from "mode-watcher";
 
 	onMount(() => {
-		setMode("light", { sessionOnly: true });
+		setMode("light", { temporaryOnly: true });
 	});
 </script>
 ```
@@ -43,10 +43,10 @@ You can also not persist the mode to `localStorage` by passing the `persist` opt
 
 ```svelte
 <script lang="ts">
-	import { clearSessionMode } from "mode-watcher";
+	import { clearTemporaryMode } from "mode-watcher";
 
 	onMount(() => {
-		clearSessionMode();
+		clearTemporaryMode();
 	});
 </script>
 ```
@@ -57,6 +57,6 @@ Then you get the marketing with light mode as you like, and the docs part will r
 
 The `setMode` utility accepts the following options:
 
-<PropField name="sessionOnly" type="boolean" defaultValue="true">
-	Whether to persist the theme to `localStorage`.
+<PropField name="temporaryOnly" type="boolean" defaultValue="false">
+	Whether to apply the mode only temporarily (do not persist to `localStorage`).
 </PropField>

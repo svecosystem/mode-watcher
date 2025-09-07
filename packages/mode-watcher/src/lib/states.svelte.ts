@@ -37,14 +37,14 @@ export const lightClassNames = box<string[]>([]);
  * A non-persistent override for the user's preferred mode.
  * When set, this value takes precedence over the persisted `userPrefersMode`.
  */
-export const sessionUserPrefersMode = box<Mode | undefined>(undefined);
+export const temporaryUserPrefersMode = box<Mode | undefined>(undefined);
 
 function createDerivedMode() {
 	const current = $derived.by(() => {
 		if (!isBrowser) return undefined;
 		const preferredMode =
-			sessionUserPrefersMode.current !== undefined
-				? sessionUserPrefersMode.current
+			temporaryUserPrefersMode.current !== undefined
+				? temporaryUserPrefersMode.current
 				: userPrefersMode.current;
 		const derivedMode =
 			preferredMode === "system" ? systemPrefersMode.current : preferredMode;
