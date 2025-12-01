@@ -12,6 +12,9 @@ jobs:
         name: Build & Publish @latest Release
         if: github.repository == 'svecosystem/mode-watcher'
         runs-on: ubuntu-latest
+        permissions:
+            contents: read
+            id-token: write
         steps:
             - uses: actions/checkout@v4
               with:
@@ -33,5 +36,6 @@ jobs:
                   title: "chore(release): version package"
                   publish: pnpm ci:publish
               env:
+                  NPM_CONFIG_PROVENANCE: true
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
