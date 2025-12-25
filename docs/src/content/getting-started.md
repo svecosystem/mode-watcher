@@ -51,3 +51,9 @@ Here's an example of how to use the `toggleMode` function to toggle the mode:
 For additional information and configuration, please refer to the [API reference](/docs/api-reference/mode-watcher).
 
 </Steps>
+
+## CSR/SPA/SSG Users
+
+If you're using SvelteKit with `ssr: false`, `adapter-static` with a fallback page, or any other client-side rendered setup, you may experience a flash of unstyled content (FOUC) before mode-watcher hydrates.
+
+See the [CSR/SPA FOUC Prevention](/docs/guides/csr-spa-fouc) guide for a simple inline script solution.

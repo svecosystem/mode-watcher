@@ -21,6 +21,12 @@ Use `createInitialModeExpression` when:
 
 This approach is ideal for security-sensitive environments or platforms with strict CSP headers, where inline scripts must include a trusted nonce.
 
+<Callout type="info">
+
+**Using CSR/SPA/SSG?** This utility requires server hooks, which don't run for prerendered or client-side rendered pages. See the [CSR/SPA FOUC Prevention](/docs/guides/csr-spa-fouc) guide instead.
+
+</Callout>
+
 ## Usage
 
 To use `createInitialModeExpression`, you need two things:
