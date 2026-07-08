@@ -15,6 +15,7 @@
 	import type { ModeWatcherProps } from "$lib/types.js";
 	import { isValidMode } from "$lib/modes.js";
 	import { defineConfig, setMode, setTheme } from "$lib/mode.js";
+	import { local } from "$lib/storage.js";
 	import { systemPrefersMode } from "$lib/mode-states.svelte.js";
 
 	let {
@@ -78,9 +79,9 @@
 	onMount(() => {
 		systemPrefersMode.tracking(track);
 		systemPrefersMode.query();
-		const localStorageMode = localStorage.getItem(modeStorageKey.current);
+		const localStorageMode = local.get(modeStorageKey.current);
 		setMode(isValidMode(localStorageMode) ? localStorageMode : defaultMode);
-		const localStorageTheme = localStorage.getItem(themeStorageKey.current);
+		const localStorageTheme = local.get(themeStorageKey.current);
 		setTheme(localStorageTheme || defaultTheme);
 	});
 

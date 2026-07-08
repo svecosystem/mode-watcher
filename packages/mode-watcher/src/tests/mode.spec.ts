@@ -34,7 +34,11 @@ function setup(props: Partial<ModeWatcherProps> = {}) {
 
 describe("mode-watcher", () => {
 	afterEach(() => {
-		localStorage.clear();
+		try {
+			localStorage.clear();
+		} catch {
+			// disabled or unavailable (shouldn't happen)
+		}
 	});
 
 	it("renders mode", async () => {

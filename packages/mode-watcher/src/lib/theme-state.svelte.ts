@@ -1,5 +1,6 @@
 import { PersistedState, watch } from "runed";
 import { themeStorageKey } from "./storage-keys.svelte.js";
+import { local } from "./storage.js";
 import { isBrowser, noopStorage } from "./utils.js";
 
 class CustomTheme {
@@ -29,7 +30,7 @@ class CustomTheme {
 					const currModeValue = this.#persisted.current;
 					this.#persisted = this.#makePersisted(currModeValue);
 					if (prevStorageKey) {
-						localStorage.removeItem(prevStorageKey);
+						local.remove(prevStorageKey);
 					}
 				}
 			);

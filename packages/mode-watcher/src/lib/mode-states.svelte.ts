@@ -3,6 +3,7 @@ import { isBrowser, noopStorage } from "./utils.js";
 import type { Mode } from "./types.js";
 import { modeStorageKey } from "./storage-keys.svelte.js";
 import { isValidMode } from "./modes.js";
+import { local } from "./storage.js";
 import { MediaQuery } from "svelte/reactivity";
 
 export class UserPrefersMode {
@@ -32,7 +33,7 @@ export class UserPrefersMode {
 					const currModeValue = this.#persisted.current;
 					this.#persisted = this.#makePersisted(currModeValue);
 					if (prevStorageKey) {
-						localStorage.removeItem(prevStorageKey);
+						local.remove(prevStorageKey);
 					}
 				}
 			);

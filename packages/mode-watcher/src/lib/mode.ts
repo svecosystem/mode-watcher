@@ -48,8 +48,18 @@ export function setInitialMode({
 	themeStorageKey = "mode-watcher-theme",
 }: SetInitialModeArgs) {
 	const rootEl = document.documentElement;
-	const mode = localStorage.getItem(modeStorageKey) ?? defaultMode;
-	const theme = localStorage.getItem(themeStorageKey) ?? defaultTheme;
+	let mode: string = defaultMode;
+	try {
+		mode = localStorage.getItem(modeStorageKey) ?? defaultMode;
+	} catch {
+		// disabled or unavailable
+	}
+	let theme: string = defaultTheme;
+	try {
+		theme = localStorage.getItem(themeStorageKey) ?? defaultTheme;
+	} catch {
+		// disabled or unavailable
+	}
 	const light =
 		mode === "light" ||
 		(mode === "system" && window.matchMedia("(prefers-color-scheme: light)").matches);
@@ -74,10 +84,18 @@ export function setInitialMode({
 
 	if (theme) {
 		rootEl.setAttribute("data-theme", theme);
-		localStorage.setItem(themeStorageKey, theme);
+		try {
+			localStorage.setItem(themeStorageKey, theme);
+		} catch {
+			// disabled or unavailable
+		}
 	}
 
-	localStorage.setItem(modeStorageKey, mode);
+	try {
+		localStorage.setItem(modeStorageKey, mode);
+	} catch {
+		// disabled or unavailable
+	}
 }
 
 /**
